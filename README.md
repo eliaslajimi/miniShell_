@@ -1,5 +1,5 @@
 # miniShell
-![Cshell](http://xaharts.org/xamsi_calku/vrici/lamp_chank107.jpg =300x100)
+![Cshell](http://xaharts.org/xamsi_calku/vrici/lamp_chank107.jpg) <!-- .element height="50%" width="50%" -->
 Cshell
 ## Shell Implementation (IN THEORY)
 ### The Parser
