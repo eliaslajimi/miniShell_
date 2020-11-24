@@ -11,7 +11,7 @@ Related operators are:
 - *>*
 - *>>*
 - *<*
-- *|* (what is the extent of pipe usage? not simple redirect).
+- | (what is the extent of pipe usage? not simple redirect).
 ### Shell Subsystems
 #### Environment Variables
 Setting up an environment with its variables.
