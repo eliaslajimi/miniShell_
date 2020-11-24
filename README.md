@@ -1,6 +1,4 @@
 # miniShell
-![Cshell](http://xaharts.org/xamsi_calku/vrici/lamp_chank107.jpg) <!-- .element height="50%" width="50%" -->
-Cshell
 ## Shell Implementation (IN THEORY)
 ### The Parser
 The *parser* will read the command line and transpose it into a data structure *Command Table*.
