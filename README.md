@@ -8,9 +8,9 @@ The executor also takes care of the redirections -> *Standard Input/Standard Out
 ![signal flow of typical command](https://i.ibb.co/Rb8nhC9/Screen-Shot-2020-11-24-at-17-22-05.png)
 **It is to be noted that '>& errfile' should redirect **ERROR LOG** of each command to errfile**
 Related operators are:
--*>*
--*>>*
--*<*
+- *>*
+- *>>*
+- *<*
 - *|* (what is the extent of pipe usage? not simple redirect).
 ### Shell Subsystems
 #### Environment Variables
