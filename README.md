@@ -33,5 +33,12 @@ Related separators are:
 - *\n* (others of the same kind ?)
 - *Signals*
 ### SIGNALS:
-
+Signals can be interpreted as *separators* although they tend to implicate more drastic changes to current runnign processes.
+- Ctrl + C *interrupts the current foreground process running. process's command table is therefore deleted and not interpreted*
+### More on Parser:
+#### Lexer:
+takes input characters and put them into word called tokens.
+#### Parser:
+Processes the tokens according to inner semmantic to be able to build command tables.
+![flow chart of miniShell project](https://i.ibb.co/PNwWScf/shell.jpg)
 ## Shell Implementation (IN PRACTICE)
