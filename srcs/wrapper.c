@@ -1,13 +1,15 @@
 #include "minishell.h"
 
- int     minishell_wrapper(c_table *ctable)
+ int     minishell_wrapper()
  {
-	char *inputcmd;
+	char	*inputcmd;
+	c_table	ctable;
+
+	init_struct(&ctable);
 
 	write(1, ">> ", 3);
 	inputcmd = NULL;
 	get_next_line(1, &inputcmd);
-	minishell_wrapper(ctable);
+	minishell_wrapper();
 	return (0);
  }
-
