@@ -1,0 +1,1 @@
+echo "bonjour" | grep salut > file1 | pwd | ls >> *a* < file2 > 'sal"ut"toto' heyo
