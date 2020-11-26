@@ -7,13 +7,31 @@
 # include <stdlib.h>
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 32
+#  define AMPERSAND 1 /*separator*/
+#  define COMMA 2 /*separator*/
 # endif
 
-int     minishell_wrapper();
+/*command table*/
+typedef struct		t_table
+{
+	int		echo;
+	int		cd;
+	int		pwd;
+	int		exprt;
+	int		unset;
+	int		env;
+	int		exit;
+	int		separator;
+	char		**flags;
+	char		**args;
+	struct t_table	*next;	
+}			c_table;
 
-//UTILS
+/*init function to start new prompt*/
+int     minishell_wrapper(c_table *);
+int	init_struct(c_table *);
+
+/*utils*/
 int	get_next_line(int fd, char **line);
-int	ft_strchr_pos(const char *s, int c);
-char	*ft_strjoin_to_eol(char *s1, char *buf);
 
 #endif
