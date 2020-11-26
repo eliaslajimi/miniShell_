@@ -7,8 +7,8 @@
 # include <stdlib.h>
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 32
-#  define AMPERSAND 1 /*separator*/
-#  define COMMA 2 /*separator*/
+#  define AMPERSAND 1	/*separator*/
+#  define COMMA 2	/*separator*/
 # endif
 
 /*command table*/
@@ -28,7 +28,7 @@ typedef struct		t_table
 }			c_table;
 
 /*init function to start new prompt*/
-int     minishell_wrapper();
+int     minishell();
 int	init_struct(c_table *);
 
 /*utils*/

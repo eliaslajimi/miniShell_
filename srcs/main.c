@@ -2,6 +2,6 @@
 
 int	main()
 {
-	minishell_wrapper();
+	minishell();
 	return (0);
 }
