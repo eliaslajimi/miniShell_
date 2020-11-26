@@ -25,7 +25,7 @@ char		*word_token(char *line)
 	char	*token;
 
 	i = 0;
-	while (ft_isprint(line[i]) == 1 && line[i] != ' ')
+	while (ft_isprint(line[i]) == 1 && !(ft_isin(line[i]," ;|><$")))
 		i++;
 	token = ft_strndup(line, i);
 	return (token);
