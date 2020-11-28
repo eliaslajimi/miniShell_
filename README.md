@@ -63,10 +63,12 @@ int main()
 }
 
 ```
-To successfully identify which of the two process is running, the program should refer to the variable t_pid pid directly.
-** It is to be noted the system will make a copy of the parent's adresses. Therefore both parent and child have different adresses **
+To successfully identify which of the two process is running, the program should refer to the variable pid_t pid directly.
+**It is to be noted the system will make a copy of the parent's adresses. Therefore both parent and child have different adresses**
 
-Now pipe should work the same, here's a diagram that explains my approach pipe and more generally the multithreading in minishell.
+## My approach to pipe:
 ![pipe](https://i.ibb.co/BwXKxys/pipe.png)
+## My approach to Minishell:
+![minishell](https://i.ibb.co/wQb8yDH/overall-shell.png)
 ## Shell Implementation (IN PRACTICE)
 
