@@ -67,7 +67,7 @@ To successfully identify which of the two process is running, the program should
 **It is to be noted the system will make a copy of the parent's adresses. Therefore both parent and child have different adresses**
 
 ## My approach to pipe:
-![pipe](https://i.ibb.co/BwXKxys/pipe.png)
+![pipe](https://i.ibb.co/wz9mmQw/pipe.png)
 ## My approach to Minishell:
 ![minishell](https://i.ibb.co/wQb8yDH/overall-shell.png)
 ## Shell Implementation (IN PRACTICE)
