@@ -28,7 +28,7 @@ typedef struct		t_table
 }			c_table;
 
 /*init function to start new prompt*/
-int     minishell();
+int     minishell(c_table *ctable);
 int	init_struct(c_table *);
 
 /*utils*/

@@ -41,4 +41,32 @@ takes input characters and put them into word called tokens.
 #### Parser:
 Processes the tokens according to inner semmantic to be able to build command tables.
 ![flow chart of miniShell project](https://i.ibb.co/PNwWScf/shell.jpg)
+#### Introduction to the pipe() system call
+Similarly to pipe(), fork() is used to create processes. It takes *no arguments* and return a process ID.
+fork() will then start a child process *identical* to the original parent process, and both process will execute the instruction following the
+fork.
+```
+int main()
+{
+	pid_t pid;
+	
+	pid = fork();
+	if (pid == 0)
+		write(1, "pid is 0\n", strlen("pid is 0\n"));
+	else 
+	{
+		write(1, "pid is ", strlen("pid is "));
+		write(1, itoa((int)pid), strlen(itoa((int)pid)));
+		write(1, "\n", 1);
+	}
+	return (0);
+}
+
+```
+To successfully identify which of the two process is running, the program should refer to the variable t_pid pid directly.
+** It is to be noted the system will make a copy of the parent's adresses. Therefore both parent and child have different adresses **
+
+Now pipe should work the same, here's a diagram that explains my approach pipe and more generally the multithreading in minishell.
+![pipe](https://i.ibb.co/BwXKxys/pipe.png)
 ## Shell Implementation (IN PRACTICE)
+
