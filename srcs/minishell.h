@@ -28,22 +28,28 @@ typedef struct		t_table
 }			c_table;
 
 /*init function to start new prompt*/
-int     minishell(c_table *ctable);
 int	init_struct(c_table *);
+int     minishell();
+
+/*minishell modules*/
+int	lexer(char *);
+int	subshell(char *);
+int	parser(c_table *);
+int	executor(c_table *);
 
 /*utils*/
 int	get_next_line(int fd, char **line);
 
 /*lexer_utils*/
-int		ft_isin(int c, char *set);
-int		skip_spaces(char *line);
+int	ft_isin(int c, char *set);
+int	skip_spaces(char *line);
 char	*ft_strdup(const char *s1);
 char	*ft_strndup(const char *s1, int n);
 size_t	ft_strlen(const char *s);
-int		ft_isalpha(int c);
-int		ft_isprint(int c);
+int	ft_isalpha(int c);
+int	ft_isprint(int c);
 void	ft_strdel(char **s);
-int		skip_quote(char *line, char quote, int i);
+int	skip_quote(char *line, char quote, int i);
 
 /*lexer_tokens*/
 char	*quote_token(char *line);

@@ -41,8 +41,8 @@ char		**expanse_array(char **array, int previous_size, char *new_token)
 
 static char	**lex_line(char **isolated_tokens, char *input_line)
 {
-	int		i;
-	int		array_size;
+	int	i;
+	int	array_size;
 	char	*token;
 
 	i = 0;
@@ -61,7 +61,7 @@ static char	**lex_line(char **isolated_tokens, char *input_line)
 	return (isolated_tokens);
 }
 
-static char	**ft_lexer(char *input_line)
+static char	**lexer(char *input_line)
 {
 	char	**isolated_tokens;
 
@@ -70,23 +70,4 @@ static char	**ft_lexer(char *input_line)
 	isolated_tokens[0] = NULL;
 	isolated_tokens = lex_line(isolated_tokens, input_line);
 	return (isolated_tokens);
-}
-
-int main(int argc, char **argv)
-{
-	int	fd;
-	char *line;
-	if (argc == 2)
-	{
-		fd = open(argv[1], O_RDONLY);
-		get_next_line(fd, &line);
-		char **ans = ft_lexer(line);
-		int i = -1;
-		printf("[%s]\n", line);
-		while (ans[++i])
-			printf("[%s]\n", ans[i]);
-	}
-	else
-		printf("Il faut un argument.\n");
-	return (0);
 }

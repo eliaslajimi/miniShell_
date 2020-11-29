@@ -9,7 +9,7 @@
 	write(1, ">> ", 3);
 	inputcmd = NULL;
 	get_next_line(1, &inputcmd);
-	ctable = ctable->next;
+	lexer(inputcmd);
 	minishell();
 	return (0);
  }
