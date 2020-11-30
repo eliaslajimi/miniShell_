@@ -1,0 +1,98 @@
+#include "minishell.h"
+
+int	is_command(char *token)
+{
+	return (ft_strcmp(token, "echo") 
+	|| ft_strcmp(token, "cd") || ft_strcmp(token, "pwd")
+	|| ft_strcmp(token, "export") || ft_strcmp(token, "unset")
+	|| ft_strcmp(token, "env") || ft_strcmp(token, "exit"));
+}
+
+int	is_redirec(char *token)
+{
+	return (ft_strcmp(token, ">>") || ft_strcmp(token, ">") 
+	|| ft_strcmp(token, "<"));
+}
+
+int	is_flag(char *token)
+{
+	return (token[0] == '-');
+}
+
+int	is_pipe(char *token, c_table *ctable)
+{
+	if (ft_strcmp(token, "|"))
+		return ((ctable->pipeout = 1) && (ctable->next->pipein = 1));
+	return (0);
+}
+
+int	is_quote(char c)
+{
+	if (c == 96 || c == 39 || c == 34)
+		return (c);
+	return (0);
+}
+
+char	*is_subshell(char *token)
+{
+	char *str;
+
+	str = malloc(2);
+	if (is_quote(token[0]))
+	{
+		str[1] = 0;
+		str[0] = token[0];
+		return (str);
+	}
+	return (NULL);
+}
+
+int	separator(char *token)
+{
+	if (ft_strcmp(token, ";"))
+		return (COMMA);
+	else if (ft_strcmp(token, "&&"))
+		return (AMPERSAND);
+	return (0);
+}
+
+int	redirection(c_table *ctable, char *token, char *file)
+{
+	if (ft_strcmp(token, ">"))
+	{
+		ctable->out = OVERRIDE;	
+		ctable->fileout = ft_strdup(file);
+	}
+	else if (ft_strcmp(token, ">>"))
+	{
+		ctable->out = APPEND;	
+		ctable->fileout = ft_strdup(file);
+	}
+	else if (ft_strcmp(token, "<"))
+	{
+		ctable->in = 1;	
+		ctable->filein = ft_strdup(file);
+	}
+	return (0);
+}
+
+int	parser(c_table *ctable, char **tokens)
+{
+	while (*tokens)
+	{
+		if (is_command(*tokens))
+			ctable->command = ft_strdup(*tokens);
+		else if (is_flag(*tokens))
+			*ctable->flags= ft_strdup(*tokens);
+		else if ((ctable->separator = separator(*tokens)))
+			next_struct(ctable);
+		else if (is_pipe(*tokens, ctable))
+			next_struct(ctable);
+		else if (is_subshell(*tokens))
+			*ctable->args++ = ft_strtrim(*tokens, is_subshell(*tokens)); 
+		else if (is_redirec(*tokens))
+			redirection(ctable, *tokens, ++*tokens);
+		tokens++;
+	}
+	return (0);	
+}

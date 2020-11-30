@@ -55,16 +55,6 @@ char	*ft_strndup(const char *s1, int n)
 	return (new_s);
 }
 
-size_t		ft_strlen(const char *s)
-{
-	size_t i;
-
-	i = 0;
-	while (s && s[i])
-		i++;
-	return (i);
-}
-
 int		ft_isalpha(int c)
 {
 	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
