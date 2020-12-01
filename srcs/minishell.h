@@ -31,7 +31,7 @@ typedef struct		t_table
 
 /*minishell modules*/
 int     minishell();
-char	**lexer(char *);
+char	**lexer(char *input_line);
 int	subshell(char *);
 int	parser(c_table *, char **);
 int	executor(c_table *);
@@ -53,20 +53,20 @@ void	next_struct(c_table **ctable);
 void	print_struct(c_table *ctable);
 
 /*lexer_utils*/
-//int	ft_isin(int c, char *set);
-//int	skip_spaces(char *line);
+int	ft_isin(int c, char *set);
+int	skip_spaces(char *line);
 //size_t	ft_strlen(const char *s);
 //int	ft_isalpha(int c);
-//int	ft_isprint(int c);
-//void	ft_strdel(char **s);
+int	ft_isprint(int c);
+void	ft_strdel(char **s);
 //int	skip_quote(char *line, char quote, int i);
 
 ///*lexer_tokens*/
-//char	*quote_token(char *line);
-//char	*redirec_token(char *line);
-//char	*semic_token(char *line);
-//char	*pipe_token(char *line);
-//char	*word_token(char *line);
-//char	*dollar_token(char *line);
+char	*quote_token(char *line);
+char	*redirec_token(char *line);
+char	*semic_token(char *line);
+char	*pipe_token(char *line);
+char	*word_token(char *line);
+char	*dollar_token(char *line);
 
 #endif
