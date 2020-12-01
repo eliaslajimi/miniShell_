@@ -2,7 +2,7 @@
 
 int	is_command(char *token)
 {
-	return (ft_strcmp(token, "echo") 
+	return (ft_strcmp(token, "echo") || ft_strcmp(token, "grep")
 	|| ft_strcmp(token, "cd") || ft_strcmp(token, "pwd")
 	|| ft_strcmp(token, "export") || ft_strcmp(token, "unset")
 	|| ft_strcmp(token, "env") || ft_strcmp(token, "exit"));
@@ -22,7 +22,7 @@ int	is_flag(char *token)
 int	is_pipe(char *token, c_table *ctable)
 {
 	if (ft_strcmp(token, "|"))
-		return ((ctable->pipeout = 1) && (ctable->next->pipein = 1));
+		return ((ctable->pipeout = 1));
 	return (0);
 }
 
@@ -56,23 +56,19 @@ int	separator(char *token)
 	return (0);
 }
 
-int	redirection(c_table *ctable, char *token, char *file)
+int	redirection(c_table *ctable, char **token)
 {
-	if (ft_strcmp(token, ">"))
-	{
-		ctable->out = OVERRIDE;	
+	char *redirec;
+	char *file;
+
+	redirec = *token;
+	file = *(++token);
+	if (ft_strncmp(redirec, ">>", 2) && (ctable->out = APPEND))
 		ctable->fileout = ft_strdup(file);
-	}
-	else if (ft_strcmp(token, ">>"))
-	{
-		ctable->out = APPEND;	
+	else if (ft_strcmp(redirec, ">") && (ctable->out = OVERRIDE))
 		ctable->fileout = ft_strdup(file);
-	}
-	else if (ft_strcmp(token, "<"))
-	{
-		ctable->in = 1;	
+	else if (ft_strcmp(redirec, "<") && (ctable->in = 1))
 		ctable->filein = ft_strdup(file);
-	}
 	return (0);
 }
 
@@ -83,15 +79,17 @@ int	parser(c_table *ctable, char **tokens)
 		if (is_command(*tokens))
 			ctable->command = ft_strdup(*tokens);
 		else if (is_flag(*tokens))
-			*ctable->flags= ft_strdup(*tokens);
+			ctable->flags = ft_strjoin(ctable->flags, *tokens);
 		else if ((ctable->separator = separator(*tokens)))
-			next_struct(ctable);
+			next_struct(&ctable);
 		else if (is_pipe(*tokens, ctable))
-			next_struct(ctable);
+			next_struct(&ctable);
 		else if (is_subshell(*tokens))
-			*ctable->args++ = ft_strtrim(*tokens, is_subshell(*tokens)); 
+			ctable->args = ft_strtrim(*tokens, is_subshell(*tokens)); 
 		else if (is_redirec(*tokens))
-			redirection(ctable, *tokens, ++*tokens);
+			redirection(ctable, tokens++);
+		else if ((ctable->args = ft_strjoin(ctable->args ,  " ")))
+			ctable->args = ft_strjoin(ctable->args ,  *tokens); 
 		tokens++;
 	}
 	return (0);	

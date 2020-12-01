@@ -9,8 +9,8 @@
 #  define BUFFER_SIZE 32
 #  define AMPERSAND 1	
 #  define COMMA 2	
-#  define OVERRIDE 1
-#  define APPEND 2
+#  define OVERRIDE 2
+#  define APPEND 3
 # endif
 
 /*command table*/
@@ -20,8 +20,8 @@ typedef struct		t_table
 	int		pipein;
 	int		pipeout;
 	char		*command;
-	char		**flags;
-	char		**args;
+	char		*flags;
+	char		*args;
 	int		in;
 	int		out;
 	char		*filein;
@@ -39,15 +39,17 @@ int	executor(c_table *);
 /*utils*/
 int	get_next_line(int fd, char **line);
 int	ft_strcmp(char *, char *);
+int	ft_strncmp(const char *, const char *, size_t );
 int	ft_strlen(const char *s);
-char	*ft_strdup(const char *s1);
 char	**ft_split(char *, char);
 char	*ft_strtrim(char const *, char const *);
 char	*ft_substr(char *, int , int );
 char	*ft_strndup(const char *s1, int n);
+char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strdup(char *s1);
 
-int	init_struct(c_table *);
-void	next_struct(c_table *ctable);
+int	init_struct(c_table **);
+void	next_struct(c_table **ctable);
 void	print_struct(c_table *ctable);
 
 /*lexer_utils*/

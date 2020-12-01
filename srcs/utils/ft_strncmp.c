@@ -20,10 +20,10 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	while ( i < n && s1[i] && s2[i])
 	{
 		if (s1[i] != s2[i])
-			return (1);
+			return (0);
 		i++;
 	}
-	return (0);
+	return (i == n);
 }
 
 int ft_strcmp(char *s1, char *s2)
