@@ -47,6 +47,7 @@ char	*ft_substr(char *, int , int );
 char	*ft_strndup(const char *s1, int n);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strdup(char *s1);
+void	*ft_calloc(int count, int size);
 
 int	init_struct(c_table **);
 void	next_struct(c_table **ctable);

@@ -3,15 +3,17 @@
  int     minishell()
  {
 	char	*inputcmd;
+	char	**tokens;
 
 	c_table	*init, *ctable;
 	init_struct(&init);
 	ctable = init;
 	write(1, ">> ", 3);
 	get_next_line(1, &inputcmd);
-	parser(ctable, lexer(inputcmd));
+	tokens = lexer(inputcmd);	
+	parser(ctable, tokens);
+	free(tokens);
 	print_struct(init);
-	free(ctable);
 	minishell();
 	return (0);
  }

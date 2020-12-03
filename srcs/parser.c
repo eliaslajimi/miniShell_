@@ -76,20 +76,23 @@ int	parser(c_table *ctable, char **tokens)
 {
 	while (*tokens)
 	{
+		if (ft_strcmp(*tokens, "exit")) 
+			exit(0);	
+
 		if (is_command(*tokens))
-			ctable->command = ft_strdup(*tokens);
+			ctable->command = *tokens;
 		else if (is_flag(*tokens))
 			ctable->flags = ft_strjoin(ctable->flags, *tokens);
 		else if ((ctable->separator = separator(*tokens)))
 			next_struct(&ctable);
 		else if (is_pipe(*tokens, ctable))
 			next_struct(&ctable);
-		else if (is_subshell(*tokens))
-			ctable->args = ft_strtrim(*tokens, is_subshell(*tokens)); 
+//		else if (is_subshell(*tokens))//subshell is solely processes at lexer stage.
+//			ctable->args = *tokens; 
 		else if (is_redirec(*tokens))
 			redirection(ctable, tokens++);
 		else if ((ctable->args = ft_strjoin(ctable->args ,  " ")))
-			ctable->args = ft_strjoin(ctable->args ,  *tokens); 
+			ctable->args = ft_strjoin(ctable->args , *tokens); 
 		tokens++;
 	}
 	return (0);	

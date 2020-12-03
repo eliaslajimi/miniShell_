@@ -35,7 +35,7 @@ char	*ft_strdup(char *s1)
 	return (NULL);
 }
 
-char	*ft_strndup(const char *s1, int n)
+char	*ft_strndup(char const *s1, int n)
 {
 	int		i;
 	int		j;

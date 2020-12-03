@@ -6,12 +6,11 @@ int	init_struct(c_table **ctable)
 	(*ctable)->separator = 0;
 	(*ctable)->pipein = 0;
 	(*ctable)->pipeout = 0;
-	(*ctable)->command = NULL;
-	(*ctable)->flags = malloc(1); 
-	(*ctable)->args = malloc(1); 
+	(*ctable)->command = "";
+	(*ctable)->flags = ft_calloc(1, 1);
+	(*ctable)->args = ft_calloc(1, 1); 
 	(*ctable)->in = 0;
 	(*ctable)->out = 1;
-	(*ctable)->flags = "";
 	(*ctable)->filein = "";
 	(*ctable)->fileout = "";
 	(*ctable)->next = NULL;
@@ -28,11 +27,19 @@ void next_struct(c_table **ctable)
 	(*ctable)->next = NULL;
 }
 
+void free_struct(c_table *ctable)
+{
+	free(ctable->flags);
+	free(ctable->args);
+	free(ctable);
+}
+
 void print_struct(c_table *ctable)
 {	
 	int i;
 
 	i = 0;
+	c_table *temp;
 	while (ctable != NULL)
 	{
 		printf("\n============================================\n");
@@ -47,7 +54,10 @@ void print_struct(c_table *ctable)
 		printf("ctable%d: file in:	[%s]\n", i, ctable->filein); 
 		printf("ctable%d: file out:	[%s]\n", i, ctable->fileout); 
 		printf("============================================\n");
+		
+		temp = ctable;
 		ctable = ctable->next;	
+		free_struct(temp);
 		i++;
 	}
 }
