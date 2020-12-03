@@ -51,7 +51,7 @@ int	separator(char *token)
 {
 	if (ft_strcmp(token, ";"))
 		return (COMMA);
-	else if (ft_strcmp(token, "&&"))
+	else if (ft_strncmp(token, "&&", 2))
 		return (AMPERSAND);
 	return (0);
 }

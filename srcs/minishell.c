@@ -4,7 +4,6 @@
  {
 	char	*inputcmd;
 
-	//inputcmd = NULL;
 	c_table	*init, *ctable;
 	init_struct(&init);
 	ctable = init;
