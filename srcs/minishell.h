@@ -55,11 +55,9 @@ void	print_struct(c_table *ctable);
 /*lexer_utils*/
 int	ft_isin(int c, char *set);
 int	skip_spaces(char *line);
-//size_t	ft_strlen(const char *s);
-//int	ft_isalpha(int c);
 int	ft_isprint(int c);
 void	ft_strdel(char **s);
-//int	skip_quote(char *line, char quote, int i);
+char	*matching_quotes(char *line);
 
 ///*lexer_tokens*/
 char	*quote_token(char *line);
