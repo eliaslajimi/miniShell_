@@ -63,11 +63,11 @@ int	redirection(c_table *ctable, char **token)
 
 	redirec = *token;
 	file = *(++token);
-	if (ft_strncmp(redirec, ">>", 2) && (ctable->out = APPEND))
+	if (ft_strncmp(redirec, ">>", 2) && (ctable->out |= APPEND))
 		ctable->fileout = ft_strdup(file);
-	else if (ft_strcmp(redirec, ">") && (ctable->out = OVERRIDE))
+	else if (ft_strcmp(redirec, ">") && (ctable->out |= TRUNC))
 		ctable->fileout = ft_strdup(file);
-	else if (ft_strcmp(redirec, "<") && (ctable->in = 1))
+	else if (ft_strcmp(redirec, "<") && (ctable->in |= READ))
 		ctable->filein = ft_strdup(file);
 	return (0);
 }

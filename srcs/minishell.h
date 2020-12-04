@@ -9,8 +9,9 @@
 #  define BUFFER_SIZE 32
 #  define AMPERSAND 1	
 #  define COMMA 2	
-#  define OVERRIDE 2
-#  define APPEND 3
+#  define READ 0
+#  define TRUNC 01000
+#  define APPEND 02000
 # endif
 
 /*command table*/
@@ -49,9 +50,11 @@ char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strdup(char *s1);
 void	*ft_calloc(int count, int size);
 
+/*Struct Utils*/
 int	init_struct(c_table **);
 void	next_struct(c_table **ctable);
 void	print_struct(c_table *ctable);
+void	free_struct(c_table *ctable);
 
 /*lexer_utils*/
 int	ft_isin(int c, char *set);

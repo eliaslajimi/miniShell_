@@ -12,8 +12,9 @@
 	get_next_line(1, &inputcmd);
 	tokens = lexer(inputcmd);	
 	parser(ctable, tokens);
-	free(tokens);
+	executor(init);	
 	print_struct(init);
+	free(tokens);
 	minishell();
 	return (0);
  }
