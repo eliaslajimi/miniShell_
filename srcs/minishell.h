@@ -83,6 +83,6 @@ int		env_builtin(t_list *env_lst, int fd);
 t_list	*get_env_var(char **envp);
 
 /*pwd*/
-void	pwd_builtin(t_list *env_list);
+void	pwd(void);
 
 #endif
