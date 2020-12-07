@@ -14,6 +14,13 @@
 # endif
 
 /*command table*/
+
+typedef struct		s_list
+{
+	void			*content;
+	struct s_list	*next;
+}					t_list;
+
 typedef struct		t_table
 {
 	int		separator;
@@ -66,5 +73,13 @@ char	*semic_token(char *line);
 char	*pipe_token(char *line);
 char	*word_token(char *line);
 char	*dollar_token(char *line);
+
+/*env*/
+void	ft_lstadd_back(t_list **alst, t_list *new);
+t_list	*ft_lstlast(t_list *lst);
+t_list	*ft_lstnew(void *content);
+void	*ft_memcpy(void *dst, const void *src, size_t n);
+int		env_builtin(t_list *env_lst, int fd);
+t_list	*get_env_var(char **envp);
 
 #endif
