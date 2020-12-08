@@ -6,12 +6,12 @@ int	getfd(char *file, int mode)
 	fd = open(file, mode);
 	return (fd);
 }
-
 int	setpipe(int *fdin)
 {
 	int fd[2];
 	pipe(fd);
-	*fdin = fd[1];
+	if (*fdin == 1)		/*only applies pipe if no file redirection*/
+		*fdin = fd[1];
 	return (fd[0]);
 }
 
@@ -28,15 +28,17 @@ void	next_exec(c_table *ctable)
 		free_struct(n);
 	if (ctable)
 		executor(ctable);
-	exit(0);
+	if (!id)
+		exit(0);
 }
 
 int	commands(c_table *ctable)
 {
 	int ret;
 
-	/*if (ft_strcmp(ctable->command, "grep"))
-		** ret = grep(ctable->arg, ctable->flags, ctable->in, ctable->out); //hypethetical prototyping of builtins
+	/*hypethetical prototyping for the builtins
+	**if (ft_strcmp(ctable->command, "grep"))
+		** ret = grep(ctable->arg, ctable->flags, ctable->in, ctable->out); 
 	**if (ft_strcmp(ctable->command, "echo"))
 		** ret = echo(ctable->arg, ctable->flags, ctable->in, ctable->out);
 	**if (ft_strcmp(ctable->command, "pwd"))
@@ -47,10 +49,8 @@ int	commands(c_table *ctable)
 	return (ret);
 }
 
-int	executor(c_table *ctable)
+void	executor(c_table *ctable)
 {
-	int id;
-
 	if (ctable->pipeout)
 		ctable->next->pipein = setpipe(&ctable->out);
 	if (ctable->pipein)
@@ -59,10 +59,10 @@ int	executor(c_table *ctable)
 		ctable->in = getfd(ctable->filein, ctable->in);
 	if (ctable->fileout)
 		ctable->out = getfd(ctable->fileout, ctable->out);
-	if (ctable->pipeout && (id = fork())) //let me write this please/piece of functional concision 
-		if(!id)//0 is the child process
+	if (ctable->pipeout && (id = fork()))
+		if(!id)
 			executor(ctable->next);
 	commands(ctable);
-	return (0);
+	minishell();
 }
 

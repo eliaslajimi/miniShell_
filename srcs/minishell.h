@@ -30,12 +30,15 @@ typedef struct		t_table
 	struct t_table	*next;	
 }			c_table;
 
+/*PROCESS*/
+int	id;
+
 /*minishell modules*/
 int     minishell();
 char	**lexer(char *input_line);
 int	subshell(char *);
 int	parser(c_table *, char **);
-int	executor(c_table *);
+void	executor(c_table *);
 
 /*utils*/
 int	get_next_line(int fd, char **line);

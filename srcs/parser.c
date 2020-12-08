@@ -95,5 +95,6 @@ int	parser(c_table *ctable, char **tokens)
 			ctable->args = ft_strjoin(ctable->args , *tokens); 
 		tokens++;
 	}
+	print_struct(ctable);
 	return (0);	
 }

@@ -21,6 +21,7 @@ void next_struct(c_table **ctable)
 {
 	c_table *next;
 	
+	print_struct(*ctable);
 	init_struct(&next);
 	(*ctable)->next = next;
 	(*ctable) = (*ctable)->next;
@@ -36,28 +37,16 @@ void free_struct(c_table *ctable)
 
 void print_struct(c_table *ctable)
 {	
-	int i;
-
-	i = 0;
-	c_table *temp;
-	while (ctable != NULL)
-	{
-		printf("\n============================================\n");
-		printf("ctable%d: separator:	[%d]\n", i, ctable->separator); 
-		printf("ctable%d: pipein:	[%d]\n", i, ctable->pipein); 
-		printf("ctable%d: pipeout:	[%d]\n", i, ctable->pipeout); 
-		printf("ctable%d: command:	[%s]\n", i, ctable->command); 
-		printf("ctable%d: flag:		[%s]\n", i, ctable->flags); 
-		printf("ctable%d: args:		[%s]\n", i, ctable->args); 
-		printf("ctable%d: in:		[%d]\n", i, ctable->in); 
-		printf("ctable%d: out:		[%d]\n", i, ctable->out); 
-		printf("ctable%d: file in:	[%s]\n", i, ctable->filein); 
-		printf("ctable%d: file out:	[%s]\n", i, ctable->fileout); 
-		printf("============================================\n");
-		
-		temp = ctable;
-		ctable = ctable->next;	
-		free_struct(temp);
-		i++;
-	}
+	printf("\n============================================\n");
+	printf("ctable: separator:	[%d]\n", ctable->separator); 
+	printf("ctable: pipein:		[%d]\n", ctable->pipein); 
+	printf("ctable: pipeout:	[%d]\n", ctable->pipeout); 
+	printf("ctable: command:	[%s]\n", ctable->command); 
+	printf("ctable: flag:		[%s]\n", ctable->flags); 
+	printf("ctable: args:		[%s]\n", ctable->args); 
+	printf("ctable: in:		[%d]\n", ctable->in); 
+	printf("ctable: out:		[%d]\n", ctable->out); 
+	printf("ctable: file in:	[%s]\n", ctable->filein); 
+	printf("ctable: file out:	[%s]\n", ctable->fileout); 
+	printf("============================================\n");
 }
