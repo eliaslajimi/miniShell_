@@ -20,7 +20,6 @@ int	init_struct(c_table **ctable)
 void next_struct(c_table **ctable)
 {
 	c_table *next;
-	
 	print_struct(*ctable);
 	init_struct(&next);
 	(*ctable)->next = next;

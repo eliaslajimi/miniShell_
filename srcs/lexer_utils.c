@@ -36,14 +36,6 @@ int		ft_isprint(int c)
 	return (0);
 }
 
-void	ft_strdel(char **s)
-{
-	if (s != NULL)
-	{
-		free(*s);
-		*s = NULL;
-	}
-}
 
 int		skip_quote(char *line, char quote, int i)
 {
