@@ -48,7 +48,7 @@ int	commands(c_table *ctable)
 	 **if (ft_strcmp(ctable->command, "echo"))
 	 **	ret = (ctable->arg, ctable->flags, ctable->in, ctable->out); */
 	if (ft_strcmp(ctable->command, "env"))
-		result = env_builtin(ctable->flags);
+		result = env_builtin();
 	next_exec(ctable);
 	return (ret);
 }
