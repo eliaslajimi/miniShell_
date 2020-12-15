@@ -36,6 +36,7 @@ void	next_exec(c_table *ctable)
 int	commands(c_table *ctable)
 {
 	int ret;
+	char *result;
 
 	/*hypethetical prototyping for the builtins
 	 **if (ft_strcmp(ctable->command, "grep"))
@@ -46,6 +47,8 @@ int	commands(c_table *ctable)
 	 **	ret = pwd(ctable->arg, ctable->flags, ctable->in, ctable->out);
 	 **if (ft_strcmp(ctable->command, "echo"))
 	 **	ret = (ctable->arg, ctable->flags, ctable->in, ctable->out); */
+	if (ft_strcmp(ctable->command, "env"))
+		result = env_builtin(ctable->flags);
 	next_exec(ctable);
 	return (ret);
 }
