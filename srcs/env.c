@@ -1,8 +1,8 @@
 #include "minishell.h"
 
-t_list	*get_env_var(char **envp)
+t_list	*setEnv(char **envp)
 {
-	int	i;
+	int		i;
 	t_list	*env_lst;
 	t_list	*newlst;
 
@@ -20,20 +20,19 @@ t_list	*get_env_var(char **envp)
 	return (env_lst);
 }
 
-int		env_builtin(t_list *env_lst, int fd)
+char	*env_builtin(char *flags)
 {
 	char	*result;
-	t_list	*tmp;
+	t_list	*tmp_lst;
 
-	tmp = env_lst;
-	result = NULL;
-	while (tmp->next)
+	tmp_lst = g_env;
+	result = ft_strdup("");
+	while (tmp_lst->next)
 	{
-		printf("%s\n", tmp->content);
-		//ft_putendl_fd(tmp->content, fd);
-		//result = ft_strjoin(result, tmp->content);
-		tmp = tmp->next;
+		result = ft_strjoin(result, tmp_lst->content);
+		result = ft_strjoin(result, "\n");
+		tmp_lst = tmp_lst->next;
 	}
-	result = ft_strjoin(result, tmp->content);
-	return (0);
+	result = ft_strjoin(result, tmp_lst->content);
+	return (result);
 }

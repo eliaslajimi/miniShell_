@@ -2,10 +2,11 @@
 
 int	getfd(char *file, int mode)
 {
-	int fd;
+	int	fd;
 	fd = open(file, mode);
 	return (fd);
 }
+
 int	setpipe(int *fdin)
 {
 	int fd[2];
@@ -17,7 +18,7 @@ int	setpipe(int *fdin)
 
 void	next_exec(c_table *ctable)
 {
-	c_table *n;
+	c_table	*n;
 
 	n = ctable;
 	if (ctable->pipeout)
@@ -37,14 +38,14 @@ int	commands(c_table *ctable)
 	int ret;
 
 	/*hypethetical prototyping for the builtins
-	**if (ft_strcmp(ctable->command, "grep"))
-		** ret = grep(ctable->arg, ctable->flags, ctable->in, ctable->out); 
-	**if (ft_strcmp(ctable->command, "echo"))
-		** ret = echo(ctable->arg, ctable->flags, ctable->in, ctable->out);
-	**if (ft_strcmp(ctable->command, "pwd"))
-		** ret = pwd(ctable->arg, ctable->flags, ctable->in, ctable->out);
-	**if (ft_strcmp(ctable->command, "echo"))
-		** ret = (ctable->arg, ctable->flags, ctable->in, ctable->out); */
+	 **if (ft_strcmp(ctable->command, "grep"))
+	 **	ret = grep(ctable->arg, ctable->flags, ctable->in, ctable->out); 
+	 **if (ft_strcmp(ctable->command, "echo"))
+	 **	ret = echo(ctable->arg, ctable->flags, ctable->in, ctable->out);
+	 **if (ft_strcmp(ctable->command, "pwd"))
+	 **	ret = pwd(ctable->arg, ctable->flags, ctable->in, ctable->out);
+	 **if (ft_strcmp(ctable->command, "echo"))
+	 **	ret = (ctable->arg, ctable->flags, ctable->in, ctable->out); */
 	next_exec(ctable);
 	return (ret);
 }
