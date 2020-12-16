@@ -13,8 +13,8 @@
 	tokens = lexer(inputcmd);	
 	parser(ctable, tokens);
 	executor(init);	
-	print_struct(init);
 	free(tokens);
-	minishell();
+	//free_struct(init);
+	//minishell();
 	return (0);
  }

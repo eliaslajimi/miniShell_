@@ -22,15 +22,15 @@ void	next_exec(c_table *ctable)
 
 	n = ctable;
 	if (ctable->pipeout)
+	{
 		while (ctable)
 			if ((n = ctable) && (ctable = ctable->next))	
 				free_struct(n);
-	if (ctable && (ctable = ctable->next))
-		free_struct(n);
-	if (ctable)
-		executor(ctable);
-	if (!id)
 		exit(0);
+	}
+	if ((ctable = ctable->next) && (ctable))
+		executor(ctable);
+	minishell();
 }
 
 int	commands(c_table *ctable)
@@ -47,14 +47,18 @@ int	commands(c_table *ctable)
 	 **	ret = pwd(ctable->arg, ctable->flags, ctable->in, ctable->out);
 	 **if (ft_strcmp(ctable->command, "echo"))
 	 **	ret = (ctable->arg, ctable->flags, ctable->in, ctable->out); */
-	if (ft_strcmp(ctable->command, "env"))
-		result = env_builtin();
+	//if (ft_strcmp(ctable->command, "env"))
+		//result = env_builtin();
+	//print_struct(ctable);
 	next_exec(ctable);
 	return (ret);
 }
 
 void	executor(c_table *ctable)
 {
+	c_table *n;
+
+	print_struct(ctable);
 	if (ctable->pipeout)
 		ctable->next->pipein = setpipe(&ctable->out);
 	if (ctable->pipein)
@@ -63,10 +67,12 @@ void	executor(c_table *ctable)
 		ctable->in = getfd(ctable->filein, ctable->in);
 	if (ctable->fileout)
 		ctable->out = getfd(ctable->fileout, ctable->out);
-	if (ctable->pipeout && (id = fork()))
-		if(!id)
+	if (ctable->pipeout)
+	{
+		id = fork();
+		if(id)
 			executor(ctable->next);
+	}
 	commands(ctable);
-	minishell();
 }
 

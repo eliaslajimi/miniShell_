@@ -84,9 +84,9 @@ int	parser(c_table *ctable, char **tokens)
 		else if (is_flag(*tokens))
 			ctable->flags = ft_strjoin(ctable->flags, *tokens);
 		else if ((ctable->separator = separator(*tokens)))
-			next_struct(&ctable);
+			add_struct(&ctable);
 		else if (is_pipe(*tokens, ctable))
-			next_struct(&ctable);
+			add_struct(&ctable);
 //		else if (is_subshell(*tokens))//subshell is solely processes at lexer stage.
 //			ctable->args = *tokens; 
 		else if (is_redirec(*tokens))
@@ -95,6 +95,5 @@ int	parser(c_table *ctable, char **tokens)
 			ctable->args = ft_strjoin(ctable->args , *tokens); 
 		tokens++;
 	}
-	print_struct(ctable);
 	return (0);	
 }

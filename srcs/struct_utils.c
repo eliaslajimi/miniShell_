@@ -17,14 +17,22 @@ int	init_struct(c_table **ctable)
 	return (0);
 }
 
-void next_struct(c_table **ctable)
+void add_struct(c_table **ctable)
 {
 	c_table *next;
-	print_struct(*ctable);
 	init_struct(&next);
 	(*ctable)->next = next;
 	(*ctable) = (*ctable)->next;
 	(*ctable)->next = NULL;
+}
+
+void next_struct(c_table **ctable)
+{
+	c_table *n;
+
+	n = *ctable;
+	(*ctable) = (*ctable)->next;
+	free_struct(n);
 }
 
 void free_struct(c_table *ctable)

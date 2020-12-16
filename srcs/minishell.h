@@ -69,7 +69,8 @@ void	ft_free_array(char **tab);
 int		ft_lstsize(t_list *lst);
 
 /*Struct Utils*/
-int		init_struct(c_table **);
+int	init_struct(c_table **);
+void	add_struct(c_table **ctable);
 void	next_struct(c_table **ctable);
 void	print_struct(c_table *ctable);
 void	free_struct(c_table *ctable);
