@@ -67,12 +67,8 @@ void	executor(c_table *ctable)
 		ctable->in = getfd(ctable->filein, ctable->in);
 	if (ctable->fileout)
 		ctable->out = getfd(ctable->fileout, ctable->out);
-	if (ctable->pipeout)
-	{
-		id = fork();
-		if(id)
-			executor(ctable->next);
-	}
+	if (ctable->pipeout && (id = fork()))
+		executor(ctable->next);
 	commands(ctable);
 }
 
