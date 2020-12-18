@@ -34,6 +34,5 @@ char	*env_builtin(char *flags)
 		tmp_lst = tmp_lst->next;
 	}
 	result = ft_strjoin(result, tmp_lst->content);
-	printf("%s\n", result);
 	return (result);
 }
