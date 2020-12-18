@@ -103,7 +103,7 @@ char	*env_builtin();
 t_list	*setEnv(char **envp);
 
 /*export*/
-int		exportfunc(t_list *env_lst, char *arg);
+int		export_builtin(char *arg);
 int		print_sorted_list(t_list *env_lst);
 char	*find_node(t_list **lst, char *data);
 
@@ -111,5 +111,6 @@ char	*find_node(t_list **lst, char *data);
 void	pwd(void);
 
 /*unset*/
-int		unsetfunc(t_list *lst, char *arg, char *exportarg);
+int		unsetfunc(char *arg, char *exportarg);
+
 #endif
