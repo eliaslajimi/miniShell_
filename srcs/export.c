@@ -13,7 +13,7 @@ int		export_builtin(char *arg)
 	{
 		split_arg = ft_split(arg, '=');
 		if (find_node(&env_lst, split_arg[0]) != NULL)
-			unsetfunc(env_lst, split_arg[0], "void");
+			unsetfunc(split_arg[0], "void");
 		ft_free_array(split_arg);
 		while (arg[i] != '=')
 			i++;

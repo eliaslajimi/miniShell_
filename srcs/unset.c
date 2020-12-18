@@ -15,7 +15,7 @@ int	unsetfunc(char *arg, char *exportarg)
 		else
 			param = exportarg;
 		arglen = ft_strlen(param);
-		res = ft_lstdelnode(&lst, param, arglen);
+		res = ft_lstdelnode(&env_lst, param, arglen);
 	}
 	return (0);
 }
