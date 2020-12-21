@@ -1,5 +1,10 @@
 #include "minishell.h"
 
+void	wrapper()
+{
+	minishell();
+}
+
  int     minishell()
  {
 	char	*inputcmd;
@@ -14,6 +19,6 @@
 	parser(ctable, tokens);
 	executor(init);	
 	free(tokens);
-	minishell();
+	wrapper();	//this function is solely there to mute wall/wextra/werror error.
 	return (0);
  }

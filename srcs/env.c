@@ -20,7 +20,7 @@ t_list	*setEnv(char **envp)
 	return (env_lst);
 }
 
-char	*env_builtin(char *flags)
+char	*env_builtin()
 {
 	char	*result;
 	t_list	*tmp_lst;

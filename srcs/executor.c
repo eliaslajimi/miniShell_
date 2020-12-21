@@ -35,8 +35,8 @@ void	next_exec(c_table *ctable)
 int	commands(c_table *ctable)
 {
 	int ret;
-	char *result;
 
+	ret = 0;
 	/*hypethetical prototyping for the builtins
 	 **if (ft_strcmp(ctable->command, "grep"))
 	 **	ret = grep(ctable->arg, ctable->flags, ctable->in, ctable->out); 
@@ -55,9 +55,7 @@ int	commands(c_table *ctable)
 
 void	executor(c_table *ctable)
 {
-	c_table *n;
-
-	print_struct(ctable);
+	print_struct(ctable); //to be deleted
 	if (ctable->pipeout)
 		ctable->next->pipein = setpipe(&ctable->out);
 	if (ctable->pipein)

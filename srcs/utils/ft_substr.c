@@ -24,12 +24,12 @@ char		*ft_substr(char *s, int start, int len)
 		len = 0;
 	else if (start + len > ft_strlen(s))
 		len = ft_strlen(s) - start;
-	while (s[i] && i < start)
+	while (s[i] && (int)i < start)
 		++i;
 	if (!(sub = (char*)malloc(len + 1 * sizeof(char))))
 		return (NULL);
 	i = 0;
-	while (i < len && i < ft_strlen(s) + 1)
+	while ((int)i < len && (int)i < ft_strlen(s) + 1)
 	{
 		sub[i] = s[start];
 		++i;

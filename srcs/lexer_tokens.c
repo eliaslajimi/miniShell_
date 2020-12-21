@@ -6,6 +6,7 @@ char		*dollar_token(char *line)
 	char	*token;
 
 	i = 1;
+	token = "";
 	if (line[i] == '?')
 		token = ft_strdup("$?");
 	else if (line[1] == ' ')
@@ -31,7 +32,7 @@ char		*word_token(char *line)
 	return (token);
 }
 
-char	*pipe_token(char *line)
+char	*pipe_token()
 {
 	char	*token;
 
@@ -39,7 +40,7 @@ char	*pipe_token(char *line)
 	return (token);
 }
 
-char	*semic_token(char *line)
+char	*semic_token()
 {
 	char	*token;
 
@@ -50,7 +51,8 @@ char	*semic_token(char *line)
 char	*redirec_token(char *line)
 {
 	char *token;
-
+	
+	token = "";
 	if (line[0] == '>')
 	{
 		if (line[1] == '>')
