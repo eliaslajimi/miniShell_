@@ -21,7 +21,7 @@ void	next_exec(c_table *ctable)
 	c_table	*n;
 
 	n = ctable;
-	if (ctable->pipeout)
+	if (ctable->pipein && !ctable->pipeout)
 	{
 		while (ctable)
 			if ((n = ctable) && (ctable = ctable->next))	
@@ -30,7 +30,6 @@ void	next_exec(c_table *ctable)
 	}
 	if ((ctable = ctable->next) && (ctable))
 		executor(ctable);
-	minishell();
 }
 
 int	commands(c_table *ctable)
@@ -67,7 +66,7 @@ void	executor(c_table *ctable)
 		ctable->in = getfd(ctable->filein, ctable->in);
 	if (ctable->fileout)
 		ctable->out = getfd(ctable->fileout, ctable->out);
-	if (ctable->pipeout && (id = fork()))
+	if (ctable->pipeout && !(id = fork()))
 		executor(ctable->next);
 	commands(ctable);
 }

@@ -75,9 +75,10 @@ To successfully identify which of the two process is running, the program should
 The Minishell REPL is divided into a couple of funtions. The first one is the lexer. This one will use several simple utils and iterate through the string identifying 
 key tokens. It'll then return a double pointer char to a parsing function. The parser has the same semantic, but this time identify the role of each token and assign it 
 to a structure. once a separator is identify it passes on to a new structure and keep assigning each token to its specific role within its command table until a NULL flag 
-is crossed. Once that is done, it will pass on to the executor which will iterate through each command table and apply its builtin with the correct redirection.
+is crossed. Once that is done, it will pass on to the executor which will iterate through each command table and apply its builtin with the correct in/out/args/flags.
+#### Pipe
+forking in this project is used mainly to handle realtime
+multiprocessing with
 
 #### Troubleshoot:
 - 'exitr' exits regardless 
--	semantic problem, pipe will change the mode `out` to the actual fd to which it wants to ouput. This creates a conflict if a redirection is applied in addition to pipe
-	as the mode as already been changed to the output. [for ref: 

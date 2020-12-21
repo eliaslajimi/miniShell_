@@ -14,5 +14,6 @@
 	parser(ctable, tokens);
 	executor(init);	
 	free(tokens);
+	minishell();
 	return (0);
  }
