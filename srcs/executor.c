@@ -37,11 +37,11 @@ int	commands(c_table *ctable)
 	int ret;
 
 	ret = 0;
+	 if (ft_strcmp(ctable->command, "echo"))
+	 	ret = echo(ctable->args, ctable->flags, ctable->in, ctable->out);
 	/*hypethetical prototyping for the builtins
 	 **if (ft_strcmp(ctable->command, "grep"))
 	 **	ret = grep(ctable->arg, ctable->flags, ctable->in, ctable->out); 
-	 **if (ft_strcmp(ctable->command, "echo"))
-	 **	ret = echo(ctable->arg, ctable->flags, ctable->in, ctable->out);
 	 **if (ft_strcmp(ctable->command, "pwd"))
 	 **	ret = pwd(ctable->arg, ctable->flags, ctable->in, ctable->out);
 	 **if (ft_strcmp(ctable->command, "echo"))
@@ -55,14 +55,13 @@ int	commands(c_table *ctable)
 
 void	executor(c_table *ctable)
 {
-	print_struct(ctable); //to be deleted
 	if (ctable->pipeout)
 		ctable->next->pipein = setpipe(&ctable->out);
 	if (ctable->pipein)
 		ctable->in = ctable->pipein;
-	if (ctable->filein)
+	if (!ft_strcmp(ctable->filein, ""))
 		ctable->in = getfd(ctable->filein, ctable->in);
-	if (ctable->fileout)
+	if (!ft_strcmp(ctable->fileout, ""))
 		ctable->out = getfd(ctable->fileout, ctable->out);
 	if (ctable->pipeout && !(id = fork()))
 		executor(ctable->next);

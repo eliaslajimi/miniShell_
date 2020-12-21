@@ -1,7 +1,8 @@
 CC = gcc
 SRCDIR = ./srcs/*.c
 UTILDIR = ./srcs/utils/*.c
-FLAGS = -g -Wall -Wextra -Werror $(SRCDIR) $(UTILDIR)
+TARGET = minishell
+FLAGS = -o $(TARGET) -g -Wall -Wextra -Werror $(SRCDIR) $(UTILDIR)
 DEPS = srcs/minishell.h #not needed
 
 all: 

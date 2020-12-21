@@ -52,6 +52,8 @@ int	subshell(char *);
 int	parser(c_table *, char **);
 void	executor(c_table *);
 int	args(char **argv);
+int	print(char *s, int fd);
+int	echo(char *arg, char *flags, int in, int out);
 
 /*utils*/
 int	get_next_line(int fd, char **line);

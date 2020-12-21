@@ -91,7 +91,7 @@ int	parser(c_table *ctable, char **tokens)
 //			ctable->args = *tokens; 
 		else if (is_redirec(*tokens))
 			redirection(ctable, tokens++);
-		else if ((ctable->args = ft_strjoin(ctable->args ,  " ")))
+		else if ( (ft_strcmp(ctable->args, "")) || (ctable->args = ft_strjoin(ctable->args ,  " ")))
 			ctable->args = ft_strjoin(ctable->args , *tokens); 
 		tokens++;
 	}
