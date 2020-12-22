@@ -111,7 +111,7 @@ int	print_sorted_list(t_list *env_lst);
 char	*find_node(t_list **lst, char *data);
 
 /*pwd*/
-void	pwd(void);
+char	*pwd(int bufsize);
 
 /*unset*/
 int	unsetfunc(char *arg, char *exportarg);

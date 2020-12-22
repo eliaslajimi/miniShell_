@@ -1,11 +1,17 @@
 #include "minishell.h"
 
-void	pwd(void)
+char	*pwd(int bufsize)
 {
-	char	*str;
+	char	*buf;
+	char	*currentdir;
 
-	str = NULL;
-	if (!(str = getcwd(str, 0)))
-		return ; //ERROR
-	printf("%s \n", str);
+	buf = NULL;
+	if ((currentdir = getcwd(buf, bufsize)) == NULL)
+	{
+		//errno = ERANGE 		How to set this properly?
+		bufsize += 100;
+		pwd(bufsize);
+	}
+	free(buf);
+	return (currentdir);
 }
