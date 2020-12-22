@@ -9,6 +9,7 @@ char	*pwd(int bufsize)
 	if ((currentdir = getcwd(buf, bufsize)) == NULL)
 	{
 		//errno = ERANGE 		How to set this properly?
+		printf("mooooore buff sizzzzze\n");
 		bufsize += 100;
 		pwd(bufsize);
 	}

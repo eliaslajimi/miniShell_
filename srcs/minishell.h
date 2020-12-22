@@ -116,4 +116,7 @@ char	*pwd(int bufsize);
 /*unset*/
 int	unsetfunc(char *arg, char *exportarg);
 
+/*absolute path*/
+char    *absolute_path(char *cmd);
+
 #endif
