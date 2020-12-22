@@ -106,8 +106,7 @@ char	*env_builtin();
 t_list	*setEnv(char **envp);
 
 /*export*/
-int	export_builtin(char *arg);
-int	print_sorted_list(t_list *env_lst);
+char	*export_builtin(char *arg);
 char	*find_node(t_list **lst, char *data);
 
 /*pwd*/

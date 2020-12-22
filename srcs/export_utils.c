@@ -64,10 +64,14 @@ char	*find_node(t_list **lst, char *data)
 	iter = *lst;
 	while (iter)
 	{
-		if (ft_strncmp(iter->content, data, ft_strlen(data)) == 0)
+		if (ft_strncmp(iter->content, data, ft_strlen(data)) != 0)
+		{
 			return (iter->content);
+		}
 		else if (iter->next == NULL)
+		{
 			break;
+		}
 		iter = iter->next;
 	}
 	return (NULL);

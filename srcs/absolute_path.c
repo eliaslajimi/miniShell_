@@ -60,7 +60,6 @@ char    *absolute_path(char *cmd)
         tmp = tmp->next;
     if (!(path = ft_strdup(tmp->content)))
     {
-        printf("    made up path\n");
         path = ft_strdup("/bin:/usr/local/bin:/usr/bin:/usr/local/sbin");
     }
     return (cmdpath(path, cmd));
