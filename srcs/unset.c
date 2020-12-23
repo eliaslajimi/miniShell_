@@ -10,7 +10,7 @@ int	unsetfunc(char *arg, char *exportarg)
 	env_lst = g_env;
 	if (ft_strcmp(arg, "") != 0)
 	{
-		if (ft_strcmp(exportarg, "void") == 0)
+		if (ft_strcmp(exportarg, "void") != 0)
 			param = arg;
 		else
 			param = exportarg;
