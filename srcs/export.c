@@ -1,9 +1,5 @@
 #include "minishell.h"
 
-static char	*print_sorted_list(t_list *env_lst) // only for testing for the moment
-{
-	return (env_builtin());
-}
 char	*export_builtin(char *arg)
 {
 	int		i;
@@ -32,6 +28,6 @@ char	*export_builtin(char *arg)
 	}
 	else
 	{
-		return (print_sorted_list(env_lst));
+		return (env_builtin());
 	}
 }
