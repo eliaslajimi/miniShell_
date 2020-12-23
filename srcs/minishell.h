@@ -18,25 +18,25 @@
 
 typedef struct		s_list
 {
-	void		*content;
+	void			*content;
 	struct s_list	*next;
-}			t_list;
+}					t_list;
 
 typedef struct		t_table
 {
-	int		separator;
-	int		pipein;
-	int		pipeout;
-	char		*command;
-	char		*flags;
-	char		*args;
-	int		in;
-	int		out;
-	char		*filein;
-	char		*fileout;
+	int				separator;
+	int				pipein;
+	int				pipeout;
+	char			*command;
+	char			*flags;
+	char			*args;
+	int				in;
+	int				out;
+	char			*filein;
+	char			*fileout;
 	struct t_table	*next;
-	t_list		*env;
-}			c_table;
+	t_list			*env;
+}					c_table;
 
 /*global variable*/
 
@@ -46,20 +46,20 @@ t_list	*g_env;
 int	id;
 
 /*minishell modules*/
-int	minishell();
+int		minishell();
 char	**lexer(char *input_line);
-int	subshell(char *);
-int	parser(c_table *, char **);
+int		subshell(char *);
+int		parser(c_table *, char **);
 void	executor(c_table *);
-int	args(char **argv);
-int	print(char *s, int fd);
-int	echo(char *arg, char *flags, int in, int out);
+int		args(char **argv);
+int		print(char *s, int fd);
+int		echo(char *arg, char *flags, int in, int out);
 
 /*utils*/
-int	get_next_line(int fd, char **line);
-int	ft_strcmp(char *, char *);
-int	ft_strncmp(const char *, const char *, size_t );
-int	ft_strlen(const char *s);
+int		get_next_line(int fd, char **line);
+int		ft_strcmp(char *, char *);
+int		ft_strncmp(const char *, const char *, size_t );
+int		ft_strlen(const char *s);
 char	**ft_split(char *, char);
 char	*ft_strtrim(char const *, char const *);
 char	*ft_substr(char *, int , int );
@@ -67,9 +67,12 @@ char	*ft_strndup(const char *s1, int n);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strdup(char *s1);
 void	*ft_calloc(int count, int size);
-int	ft_lstdelnode(t_list **lst, char *data, int datalen);
+int		ft_lstdelnode(t_list **lst, char *data, int datalen);
 void	ft_free_array(char **tab);
-int	ft_lstsize(t_list *lst);
+int		ft_lstsize(t_list *lst);
+void	ft_lstadd_back(t_list **alst, t_list *new);
+t_list	*ft_lstlast(t_list *lst);
+t_list	*ft_lstnew(void *content);
 
 /*Struct Utils*/
 int	init_struct(c_table **);
@@ -79,17 +82,11 @@ void	print_struct(c_table *ctable);
 void	free_struct(c_table *ctable);
 
 /*lexer_utils*/
-int	ft_isin(int c, char *set);
-int	skip_spaces(char *line);
-//size_t	ft_strlen(const char *s);
-//int	ft_isalpha(int c);
-int	ft_isprint(int c);
+int		ft_isin(int c, char *set);
+int		skip_spaces(char *line);
+int		ft_isprint(int c);
 void	ft_strdel(char **s);
 char	*matching_quotes(char *);
-
-//int	skip_quote(char *line, char quote, int i);
-
-///*lexer_tokens*/
 char	*quote_token(char *line);
 char	*redirec_token(char *line);
 char	*semic_token(char *line);
@@ -98,24 +95,22 @@ char	*word_token(char *line);
 char	*dollar_token(char *line);
 
 /*env*/
-void	ft_lstadd_back(t_list **alst, t_list *new);
-t_list	*ft_lstlast(t_list *lst);
-t_list	*ft_lstnew(void *content);
+int		env_builtin();
 void	*ft_memcpy(void *dst, const void *src, size_t n);
-char	*env_builtin();
 t_list	*setEnv(char **envp);
 
 /*export*/
-char	*export_builtin(char *arg);
+int		*export_builtin(char *arg);
 char	*find_node(t_list **lst, char *data);
+char	*join_sorted_list(t_list *env_lst);
 
 /*pwd*/
-char	*pwd();
+int		pwd_builtin();
 
 /*unset*/
-int	unsetfunc(char *arg, char *exportarg);
+int		unset_builtin(char *arg, char *exportarg);
 
 /*absolute path*/
-char    *absolute_path(char *cmd);
+char	*absolute_path(char *cmd);
 
 #endif
