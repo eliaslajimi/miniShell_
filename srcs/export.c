@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int			export_builtin(char *arg)
+int			export_builtin(char *arg, int out)
 {
 	int		i;
 	char	**split_arg;
@@ -28,6 +28,6 @@ int			export_builtin(char *arg)
 	}
 	else
 	{
-		return (join_sorted_list(env_lst));
+		return (join_sorted_list(env_lst, out));
 	}
 }

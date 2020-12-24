@@ -31,15 +31,13 @@ static char	*iter_and_join(int nbfalse, char *booltab, t_list *env_lst)
 		}
 		booltab[j] = '0';
 		tmp = ft_strjoin(wtfallocthis, tmp);
-		
-		declarex_lst = ft_strjoin(declarex_lst, tmp);
-		
+		declarex_lst = ft_strjoin(declarex_lst, tmp);	
 		declarex_lst = ft_strjoin(declarex_lst, "\n");
 	}
 	return (declarex_lst);
 }
 
-int			join_sorted_list(t_list *env_lst)
+int			join_sorted_list(t_list *env_lst, int out)
 {
 	int		i;
 	int		listsize;
@@ -50,13 +48,13 @@ int			join_sorted_list(t_list *env_lst)
 	listsize = ft_lstsize(env_lst);
 	if (!(booltab = ft_calloc(listsize, 1)))
 	{
-		print("calloc error", 1);
+		print("calloc error", 2);
 		return (1);
 	}
 	while (i++ < listsize)
 		booltab[i] = '1';
 	nbfalse = listsize;
-	print(iter_and_join(nbfalse, booltab, env_lst), 1);
+	print(iter_and_join(nbfalse, booltab, env_lst), out);
 	return (0); //0 quand ca a marché
 }
 

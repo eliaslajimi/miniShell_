@@ -72,6 +72,7 @@ void	*ft_calloc(int count, int size);
 void	ft_free_array(char **tab);
 int		ft_lstsize(t_list *lst);
 void	ft_lstadd_back(t_list **alst, t_list *new);
+void	*ft_memcpy(void *dst, const void *src, size_t n);
 t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstnew(void *content);
 
@@ -96,17 +97,16 @@ char	*word_token(char *line);
 char	*dollar_token(char *line);
 
 /*env*/
-int		env_builtin();
-void	*ft_memcpy(void *dst, const void *src, size_t n);
+int		env_builtin(int out);
 t_list	*setEnv(char **envp);
 
 /*export*/
-int		export_builtin(char *arg);
+int		export_builtin(char *arg, int out);
 char	*find_node(t_list **lst, char *data);
-int		join_sorted_list(t_list *env_lst);
+int		join_sorted_list(t_list *env_lst, int out);
 
 /*pwd*/
-int		pwd_builtin();
+int		pwd_builtin(int out);
 
 /*unset*/
 int		unset_builtin(char *arg, char *exportarg);

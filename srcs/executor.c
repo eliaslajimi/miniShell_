@@ -40,19 +40,18 @@ int	commands(c_table *ctable)
 	if (ft_strcmp(ctable->command, "echo") == 0)
 		ret = echo(ctable->args, ctable->flags, ctable->in, ctable->out);
 	else if (ft_strcmp(ctable->command, "env") == 0)
-		ret = env_builtin();
+		ret = env_builtin(ctable->out);
 	else if (ft_strcmp(ctable->command, "unset") == 0)
 		ret = unset_builtin(ctable->args, "void");
 	else if (ft_strcmp(ctable->command, "export") == 0)
-		ret = export_builtin(ctable->args);
+		ret = export_builtin(ctable->args, ctable->out);
 	else if (ft_strcmp(ctable->command, "pwd") == 0)
-		ret = pwd_builtin();
+		ret = pwd_builtin(ctable->out);
 	else
 	{
 		ctable->command = ft_strdup(absolute_path(ctable->command));
 		fork_cmd(ctable->command);
 	}
-	
 	//print_struct(ctable);
 	next_exec(ctable);
 	return (ret);
