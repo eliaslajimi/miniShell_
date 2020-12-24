@@ -56,7 +56,7 @@ char    *absolute_path(char *cmd)
     t_list  *tmp;
 
     tmp = g_env;
-    while (tmp->next && ft_strncmp(tmp->content, "PATH", 4) == 0)
+    while (tmp->next && ft_strncmp(tmp->content, "PATH", 4) != 0)
         tmp = tmp->next;
     if (!(path = ft_strdup(tmp->content)))
     {

@@ -5,6 +5,8 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <signal.h>
+# include <sys/types.h>
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 32
 #  define AMPERSAND 1	
@@ -111,5 +113,6 @@ int		unset_builtin(char *arg, char *exportarg);
 
 /*absolute path*/
 char	*absolute_path(char *cmd);
+int		fork_cmd(char *cmd);
 
 #endif

@@ -37,17 +37,22 @@ int	commands(c_table *ctable)
 	int ret;
 
 	ret = 0;
-	printf("command is %s\n", ctable->command);
 	if (ft_strcmp(ctable->command, "echo") == 0)
 		ret = echo(ctable->args, ctable->flags, ctable->in, ctable->out);
-	if (ft_strcmp(ctable->command, "env") == 0)
+	else if (ft_strcmp(ctable->command, "env") == 0)
 		ret = env_builtin();
-	if (ft_strcmp(ctable->command, "unset") == 0)
+	else if (ft_strcmp(ctable->command, "unset") == 0)
 		ret = unset_builtin(ctable->args, "void");
-	if (ft_strcmp(ctable->command, "export") == 0)
+	else if (ft_strcmp(ctable->command, "export") == 0)
 		ret = export_builtin(ctable->args);
-	if (ft_strcmp(ctable->command, "pwd") == 0)
+	else if (ft_strcmp(ctable->command, "pwd") == 0)
 		ret = pwd_builtin();
+	else
+	{
+		ctable->command = ft_strdup(absolute_path(ctable->command));
+		fork_cmd(ctable->command);
+	}
+	
 	//print_struct(ctable);
 	next_exec(ctable);
 	return (ret);

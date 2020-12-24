@@ -11,7 +11,6 @@ int			export_builtin(char *arg)
 	env_lst = g_env;
 	if (ft_isin('=', arg))
 	{
-		printf("we're in\n");
 		split_arg = ft_split(arg, '=');
 		if (find_node(&env_lst, split_arg[0]) != NULL)
 		{
@@ -29,7 +28,6 @@ int			export_builtin(char *arg)
 	}
 	else
 	{
-		printf("we're in the other in\n");
 		return (join_sorted_list(env_lst));
 	}
 }
