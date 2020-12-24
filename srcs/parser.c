@@ -2,15 +2,15 @@
 
 int	is_command(char *token)
 {
-	return (ft_strcmp(token, "echo") || ft_strcmp(token, "grep")
-	|| ft_strcmp(token, "cd") || ft_strcmp(token, "pwd")
-	|| ft_strcmp(token, "export") || ft_strcmp(token, "unset")
-	|| ft_strcmp(token, "env") || ft_strcmp(token, "exit"));
+	return (ft_strcmp(token, "echo") == 0 || ft_strcmp(token, "grep") == 0
+	|| ft_strcmp(token, "cd") == 0|| ft_strcmp(token, "pwd") == 0
+	|| ft_strcmp(token, "export") == 0 || ft_strcmp(token, "unset")
+	|| ft_strcmp(token, "env") == 0 || ft_strcmp(token, "exit") == 0);
 }
 
 int	is_redirec(char *token)
 {
-	return (ft_strcmp(token, ">>") || ft_strcmp(token, ">") 
+	return (ft_strcmp(token, ">>") == 0 || ft_strcmp(token, ">") == 0 
 	|| ft_strcmp(token, "<"));
 }
 
@@ -21,7 +21,7 @@ int	is_flag(char *token)
 
 int	is_pipe(char *token, c_table *ctable)
 {
-	if (ft_strcmp(token, "|"))
+	if (ft_strcmp(token, "|") == 0)
 		return ((ctable->pipeout = 1));
 	return (0);
 }
@@ -49,9 +49,9 @@ char	*is_subshell(char *token)
 
 int	separator(char *token)
 {
-	if (ft_strcmp(token, ";"))
+	if (ft_strcmp(token, ";") == 0)
 		return (COMMA);
-	else if (ft_strncmp(token, "&&", 2))
+	else if (ft_strncmp(token, "&&", 2) == 0)
 		return (AMPERSAND);
 	return (0);
 }
@@ -63,11 +63,11 @@ int	redirection(c_table *ctable, char **token)
 
 	redirec = *token;
 	file = *(++token);
-	if (ft_strncmp(redirec, ">>", 2) && (ctable->out |= APPEND))
+	if (ft_strncmp(redirec, ">>", 2) == 0 && (ctable->out |= APPEND))
 		ctable->fileout = ft_strdup(file);
-	else if (ft_strcmp(redirec, ">") && (ctable->out |= TRUNC))
+	else if (ft_strcmp(redirec, ">") == 0 && (ctable->out |= TRUNC))
 		ctable->fileout = ft_strdup(file);
-	else if (ft_strcmp(redirec, "<") && (ctable->in |= READ))
+	else if (ft_strcmp(redirec, "<") == 0 && (ctable->in |= READ))
 		ctable->filein = ft_strdup(file);
 	return (0);
 }
@@ -76,7 +76,7 @@ int	parser(c_table *ctable, char **tokens)
 {
 	while (*tokens)
 	{
-		if (ft_strcmp(*tokens, "exit")) 
+		if (ft_strcmp(*tokens, "exit") == 0) 
 			exit(0);	
 
 		if (is_command(*tokens))
@@ -91,7 +91,7 @@ int	parser(c_table *ctable, char **tokens)
 //			ctable->args = *tokens; 
 		else if (is_redirec(*tokens))
 			redirection(ctable, tokens++);
-		else if ( (ft_strcmp(ctable->args, "")) || (ctable->args = ft_strjoin(ctable->args ,  " ")))
+		else if ( (ft_strcmp(ctable->args, "") == 0) || (ctable->args = ft_strjoin(ctable->args ,  " ")))
 			ctable->args = ft_strjoin(ctable->args , *tokens); 
 		tokens++;
 	}

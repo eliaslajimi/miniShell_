@@ -20,7 +20,7 @@ t_list	*setEnv(char **envp)
 	return (env_lst);
 }
 
-char	*env_builtin()
+int		env_builtin()
 {
 	char	*result;
 	t_list	*tmp_lst;
@@ -34,5 +34,6 @@ char	*env_builtin()
 		tmp_lst = tmp_lst->next;
 	}
 	result = ft_strjoin(result, tmp_lst->content);
-	return (result);
+	print(result, 1);
+	return (0); // 0 quand ca a marché
 }

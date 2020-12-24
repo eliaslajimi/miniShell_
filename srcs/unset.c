@@ -1,6 +1,32 @@
 #include "minishell.h"
 
-int	unsetfunc(char *arg, char *exportarg)
+static int	 ft_lstdelnode(t_list **lst, char *data, int datalen)
+{
+	t_list	*current;
+	t_list	*previous;
+
+	previous = NULL;
+	current = *lst;
+	while (current)
+	{
+		if (ft_strncmp(current->content, data, datalen) == 0)
+		{
+			if (previous == NULL)
+				*lst = current->next;
+			else
+				previous->next = current->next;
+			free(current);
+			return (1);
+		}
+		if (current->next == NULL)
+			break;
+		previous = current;
+		current = current->next;
+	}
+	return (0);
+}
+
+int	unset_builtin(char *arg, char *exportarg)
 {
 	int		res;
 	int		arglen;
@@ -10,7 +36,7 @@ int	unsetfunc(char *arg, char *exportarg)
 	env_lst = g_env;
 	if (ft_strcmp(arg, "") != 0)
 	{
-		if (ft_strcmp(exportarg, "void") != 0)
+		if (ft_strcmp(exportarg, "void") == 0)
 			param = arg;
 		else
 			param = exportarg;

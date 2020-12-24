@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-char	*pwd()
+int	pwd_builtin()
 {
 	int		bufsize;
 	char	*buf;
@@ -8,8 +8,8 @@ char	*pwd()
 
 	bufsize = 0;
 	buf = NULL;
-	if ((currentdir = getcwd(buf, bufsize)) == NULL)
-		pwd(bufsize);
+	currentdir = getcwd(buf, bufsize);
 	free(buf);
-	return (currentdir);
+	print(currentdir, 1);
+	return (0);
 }

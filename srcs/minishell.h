@@ -57,7 +57,7 @@ int		echo(char *arg, char *flags, int in, int out);
 
 /*utils*/
 int		get_next_line(int fd, char **line);
-int		ft_strcmp(char *, char *);
+int		ft_strcmp(const char *, const char *);
 int		ft_strncmp(const char *, const char *, size_t );
 int		ft_strlen(const char *s);
 char	**ft_split(char *, char);
@@ -67,7 +67,6 @@ char	*ft_strndup(const char *s1, int n);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strdup(char *s1);
 void	*ft_calloc(int count, int size);
-int		ft_lstdelnode(t_list **lst, char *data, int datalen);
 void	ft_free_array(char **tab);
 int		ft_lstsize(t_list *lst);
 void	ft_lstadd_back(t_list **alst, t_list *new);
@@ -100,9 +99,9 @@ void	*ft_memcpy(void *dst, const void *src, size_t n);
 t_list	*setEnv(char **envp);
 
 /*export*/
-int		*export_builtin(char *arg);
+int		export_builtin(char *arg);
 char	*find_node(t_list **lst, char *data);
-char	*join_sorted_list(t_list *env_lst);
+int		join_sorted_list(t_list *env_lst);
 
 /*pwd*/
 int		pwd_builtin();

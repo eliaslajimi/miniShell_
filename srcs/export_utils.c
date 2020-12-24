@@ -1,22 +1,17 @@
 #include "minishell.h"
 
-static void	printit(char *tmp)
+static char	*iter_and_join(int nbfalse, char *booltab, t_list *env_lst)
 {
-	write(1, "declare -x \"", 12);
-	write(1, tmp, ft_strlen(tmp));
-	ft_strdel(&tmp);
-	write(1, "\"\n", 2);
-}
-
-static void	iter_and_print(int nbfalse, char *booltab, t_list *env_lst)
-{
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	t_list	*iter;
 	char	*tmp;
-
+	char	*declarex_lst;
+	char	*wtfallocthis;
+	
 	while (--nbfalse >= 0)
 	{
+		wtfallocthis = ft_strdup("declare -x "); // a proteger
 		i = -1;
 		j = 0;
 		iter = env_lst;
@@ -34,27 +29,32 @@ static void	iter_and_print(int nbfalse, char *booltab, t_list *env_lst)
 			iter = iter->next;
 		}
 		booltab[j] = '0';
-		printit(tmp);
+		tmp = ft_strjoin(wtfallocthis, tmp);
+		declarex_lst = ft_strjoin(declarex_lst, tmp);
+		declarex_lst = ft_strjoin(declarex_lst, "\n");
 	}
+	return (declarex_lst);
 }
 
-int			print_sorted_list(t_list *env_lst)
+int			join_sorted_list(t_list *env_lst)
 {
 	int		i;
 	int		listsize;
 	int		nbfalse;
 	char	*booltab;
-	t_list	*iter;
 
 	i = 0;
 	listsize = ft_lstsize(env_lst);
-	booltab = ft_calloc(listsize, 1);
-	iter = env_lst;
+	if (!(booltab = ft_calloc(listsize, 1)))
+	{
+		print("calloc error", 1);
+		return (1);
+	}
 	while (i++ < listsize)
 		booltab[i] = '1';
 	nbfalse = listsize;
-	iter_and_print(nbfalse, booltab, env_lst);
-	return (0);
+	print(iter_and_join(nbfalse, booltab, env_lst), 1);
+	return (0); //0 quand ca a marché
 }
 
 char	*find_node(t_list **lst, char *data)

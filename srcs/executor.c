@@ -37,17 +37,17 @@ int	commands(c_table *ctable)
 	int ret;
 
 	ret = 0;
-	 if (ft_strcmp(ctable->command, "echo"))
-	 	ret = echo(ctable->args, ctable->flags, ctable->in, ctable->out);
-	/*hypethetical prototyping for the builtins
-	 **if (ft_strcmp(ctable->command, "grep"))
-	 **	ret = grep(ctable->arg, ctable->flags, ctable->in, ctable->out); 
-	 **if (ft_strcmp(ctable->command, "pwd"))
-	 **	ret = pwd(ctable->arg, ctable->flags, ctable->in, ctable->out);
-	 **if (ft_strcmp(ctable->command, "echo"))
-	 **	ret = (ctable->arg, ctable->flags, ctable->in, ctable->out); */
-	//if (ft_strcmp(ctable->command, "env"))
-		//result = env_builtin();
+	printf("command is %s\n", ctable->command);
+	if (ft_strcmp(ctable->command, "echo") == 0)
+		ret = echo(ctable->args, ctable->flags, ctable->in, ctable->out);
+	if (ft_strcmp(ctable->command, "env") == 0)
+		ret = env_builtin();
+	if (ft_strcmp(ctable->command, "unset") == 0)
+		ret = unset_builtin(ctable->args, "void");
+	if (ft_strcmp(ctable->command, "export") == 0)
+		ret = export_builtin(ctable->args);
+	if (ft_strcmp(ctable->command, "pwd") == 0)
+		ret = pwd_builtin();
 	//print_struct(ctable);
 	next_exec(ctable);
 	return (ret);
@@ -59,9 +59,9 @@ void	executor(c_table *ctable)
 		ctable->next->pipein = setpipe(&ctable->out);
 	if (ctable->pipein)
 		ctable->in = ctable->pipein;
-	if (!ft_strcmp(ctable->filein, ""))
+	if (ft_strcmp(ctable->filein, "") != 0)
 		ctable->in = getfd(ctable->filein, ctable->in);
-	if (!ft_strcmp(ctable->fileout, ""))
+	if (ft_strcmp(ctable->fileout, "") != 0)
 		ctable->out = getfd(ctable->fileout, ctable->out);
 	if (ctable->pipeout && !(id = fork()))
 		executor(ctable->next);

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-char	*export_builtin(char *arg)
+int			export_builtin(char *arg)
 {
 	int		i;
 	char	**split_arg;
@@ -11,23 +11,25 @@ char	*export_builtin(char *arg)
 	env_lst = g_env;
 	if (ft_isin('=', arg))
 	{
+		printf("we're in\n");
 		split_arg = ft_split(arg, '=');
 		if (find_node(&env_lst, split_arg[0]) != NULL)
 		{
-			unsetfunc(split_arg[0], "void");
+			unset_builtin(split_arg[0], "void");
 		}
 		ft_free_array(split_arg);
 		while (arg[i] != '=')
 			i++;
 		if (i == 0)
-			return (NULL);
+			return (1);
 		newnode = ft_lstnew(NULL);
 		newnode->content = ft_strdup(arg);
 		ft_lstadd_back(&g_env, newnode);
-		return (NULL);
+		return (0); //0 quand ca a marché
 	}
 	else
 	{
-		return (env_builtin());
+		printf("we're in the other in\n");
+		return (join_sorted_list(env_lst));
 	}
 }
