@@ -9,6 +9,7 @@ static char	*iter_and_join(int nbfalse, char *booltab, t_list *env_lst)
 	char	*declarex_lst;
 	char	*wtfallocthis;
 	
+	declarex_lst = ft_strdup("");
 	while (--nbfalse >= 0)
 	{
 		wtfallocthis = ft_strdup("declare -x "); // a proteger
@@ -30,7 +31,9 @@ static char	*iter_and_join(int nbfalse, char *booltab, t_list *env_lst)
 		}
 		booltab[j] = '0';
 		tmp = ft_strjoin(wtfallocthis, tmp);
+		
 		declarex_lst = ft_strjoin(declarex_lst, tmp);
+		
 		declarex_lst = ft_strjoin(declarex_lst, "\n");
 	}
 	return (declarex_lst);
