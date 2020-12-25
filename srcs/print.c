@@ -2,9 +2,10 @@
 
 int print(char *s, int fd)
 {
+	int ret;
+	
+	ret = 0;
 	if (s)
-	{
-		write(fd, s, ft_strlen(s));
-	}
-	return (0);
+		ret = write(fd, s, ft_strlen(s));
+	return (ret);
 }

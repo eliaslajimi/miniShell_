@@ -67,6 +67,7 @@ void	executor(c_table *ctable)
 		ctable->in = getfd(ctable->filein, ctable->in);
 	if (ft_strcmp(ctable->fileout, "") != 0)
 		ctable->out = getfd(ctable->fileout, ctable->out);
+	print_struct(ctable);
 	if (ctable->pipeout && !(id = fork()))
 		executor(ctable->next);
 	commands(ctable);

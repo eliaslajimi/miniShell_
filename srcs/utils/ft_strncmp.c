@@ -12,30 +12,30 @@
 
 #include "../minishell.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
-{
-	unsigned int i;
-
-	i = 0;
-	while ( i < n && s1[i] && s2[i])
-	{
-		if (s1[i] != s2[i])
-			return (0);
-		i++;
-	}
-	return (i == n);
-}
-
-int ft_strcmp(char *s1, char *s2)
-{
-	int i;
-
-	i = 0;
-	while (s1[i] && s2[i])
-	{
-		if (s1[i] != s2[i])	
-			return (0);
-		i++;
-	}
-	return (1);
-}
+//int	ft_strncmp(const char *s1, const char *s2, size_t n)
+//{
+//	unsigned int i;
+//
+//	i = 0;
+//	while ( i < n && s1[i] && s2[i])
+//	{
+//		if (s1[i] != s2[i])
+//			return (0);
+//		i++;
+//	}
+//	return (i == n);
+//}
+//
+//int ft_strcmp(char *s1, char *s2)
+//{
+//	int i;
+//
+//	i = 0;
+//	while (s1[i] && s2[i])
+//	{
+//		if (s1[i] != s2[i])	
+//			return (0);
+//		i++;
+//	}
+//	return (1);
+//}
