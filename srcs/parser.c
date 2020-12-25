@@ -11,7 +11,7 @@ int	is_command(char *token)
 int	is_redirec(char *token)
 {
 	return (ft_strcmp(token, ">>") == 0 || ft_strcmp(token, ">") == 0 
-	|| ft_strcmp(token, "<"));
+	|| ft_strcmp(token, "<") == 0);
 }
 
 int	is_flag(char *token)
@@ -64,11 +64,22 @@ int	redirection(c_table *ctable, char **token)
 	redirec = *token;
 	file = *(++token);
 	if (ft_strncmp(redirec, ">>", 2) == 0 && (ctable->out |= APPEND))
+	{
+		printf("R 1\n");
 		ctable->fileout = ft_strdup(file);
+	}
 	else if (ft_strcmp(redirec, ">") == 0 && (ctable->out |= TRUNC))
+	{
+		printf("R 2\n");
 		ctable->fileout = ft_strdup(file);
+	}
 	else if (ft_strcmp(redirec, "<") == 0 && (ctable->in |= READ))
+	{
+		printf("R 3\n");
 		ctable->filein = ft_strdup(file);
+	}
+	else
+		printf("R 4\n");
 	return (0);
 }
 
@@ -79,15 +90,15 @@ int	parser(c_table *ctable, char **tokens)
 		if (ft_strcmp(*tokens, "exit") == 0) 
 			exit(0);	
 
-		if(ctable->command_exists == 0)
+		else if(ctable->command_exists == 0)
 		{
 			ctable->command = *tokens;
 			ctable->command_exists = 1;
 		}
-//		if (is_command(*tokens)) // ca ne va pas dans le cas ou c'est une commande non reconnue. Il faudrait un token d'identification de commmande
-//			ctable->command = *tokens;
 		else if (is_flag(*tokens))
+		{
 			ctable->flags = ft_strjoin(ctable->flags, *tokens);
+		}
 		else if ((ctable->separator = separator(*tokens)))
 		{
 			add_struct(&ctable);
@@ -100,17 +111,14 @@ int	parser(c_table *ctable, char **tokens)
 		}
 //		else if (is_subshell(*tokens))//subshell is solely processes at lexer stage.
 //			ctable->args = *tokens; 
-		else if (is_redirec(*tokens))
+		else if (is_redirec(*tokens) != 0)
+		{
 			redirection(ctable, tokens++);
-		else if (((ft_strcmp(ctable->args, "") == 0) ||
-			(ctable->args = ft_strjoin(ctable->args ,  " "))))
-//			&& ctable->command_exists == 1)
+		}
+		else if (ctable->command_exists == 1)
+		{
 			ctable->args = ft_strjoin(ctable->args , *tokens);
-//		else
-//		{
-//			ctable->command = *tokens;
-//			ctable->command_exists = 1;
-//		}
+		}
 		tokens++;
 	}
 	return (0);	
