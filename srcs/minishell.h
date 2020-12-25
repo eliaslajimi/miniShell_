@@ -38,6 +38,7 @@ typedef struct		t_table
 	char			*fileout;
 	struct t_table	*next;
 	t_list			*env;
+	int				command_exists;
 }					c_table;
 
 /*global variable*/
