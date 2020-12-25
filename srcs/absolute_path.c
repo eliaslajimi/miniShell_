@@ -40,8 +40,10 @@ static char *cmdpath(char *path, char *cmd)
         }
         ft_free_array(path_split);
         if (file_exists(bin) == 0)
-            return("command not found\n"); // change this
-        return (bin);
+		{
+            return(cmd);
+        }
+		return (bin);
     }
     else
     {

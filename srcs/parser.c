@@ -79,20 +79,38 @@ int	parser(c_table *ctable, char **tokens)
 		if (ft_strcmp(*tokens, "exit") == 0) 
 			exit(0);	
 
-		if (is_command(*tokens))
+		if(ctable->command_exists == 0)
+		{
 			ctable->command = *tokens;
+			ctable->command_exists = 1;
+		}
+//		if (is_command(*tokens)) // ca ne va pas dans le cas ou c'est une commande non reconnue. Il faudrait un token d'identification de commmande
+//			ctable->command = *tokens;
 		else if (is_flag(*tokens))
 			ctable->flags = ft_strjoin(ctable->flags, *tokens);
 		else if ((ctable->separator = separator(*tokens)))
+		{
 			add_struct(&ctable);
+			ctable->command_exists = 0;
+		}
 		else if (is_pipe(*tokens, ctable))
+		{
 			add_struct(&ctable);
+			ctable->command_exists = 0;
+		}
 //		else if (is_subshell(*tokens))//subshell is solely processes at lexer stage.
 //			ctable->args = *tokens; 
 		else if (is_redirec(*tokens))
 			redirection(ctable, tokens++);
-		else if ( (ft_strcmp(ctable->args, "") == 0) || (ctable->args = ft_strjoin(ctable->args ,  " ")))
-			ctable->args = ft_strjoin(ctable->args , *tokens); 
+		else if (((ft_strcmp(ctable->args, "") == 0) ||
+			(ctable->args = ft_strjoin(ctable->args ,  " "))))
+//			&& ctable->command_exists == 1)
+			ctable->args = ft_strjoin(ctable->args , *tokens);
+//		else
+//		{
+//			ctable->command = *tokens;
+//			ctable->command_exists = 1;
+//		}
 		tokens++;
 	}
 	return (0);	

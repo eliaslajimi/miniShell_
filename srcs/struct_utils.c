@@ -14,6 +14,7 @@ int	init_struct(c_table **ctable)
 	(*ctable)->filein = "";
 	(*ctable)->fileout = "";
 	(*ctable)->next = NULL;
+	(*ctable)->command_exists = 0;
 	return (0);
 }
 
