@@ -37,8 +37,6 @@ int	commands(c_table *ctable)
 	int ret;
 
 	ret = 0;
-//	printf("command is %s\n", ctable->command);
-//	printf("first arg is %s\n", ctable->args);
 	if (ft_strcmp(ctable->command, "echo") == 0)
 		ret = echo(ctable->args, ctable->flags, ctable->in, ctable->out);
 	else if (ft_strcmp(ctable->command, "env") == 0)
