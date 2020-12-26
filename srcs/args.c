@@ -20,7 +20,7 @@ char *getcmd(char **cmd)
 char	*getcmd(char *cmd)
 {
 	char *ret;
-	ret = ft_strtrim(cmd, "\"");
+	ret = ft_strtrim(cmd, "\'");
 //	free(cmd);
 	return (ret);
 }

@@ -65,21 +65,16 @@ int	redirection(c_table *ctable, char **token)
 	file = *(++token);
 	if (ft_strncmp(redirec, ">>", 2) == 0 && (ctable->out |= APPEND))
 	{
-		printf("R 1\n");
 		ctable->fileout = ft_strdup(file);
 	}
 	else if (ft_strcmp(redirec, ">") == 0 && (ctable->out |= TRUNC))
 	{
-		printf("R 2\n");
 		ctable->fileout = ft_strdup(file);
 	}
 	else if (ft_strcmp(redirec, "<") == 0 && (ctable->in |= READ))
 	{
-		printf("R 3\n");
 		ctable->filein = ft_strdup(file);
 	}
-	else
-		printf("R 4\n");
 	return (0);
 }
 

@@ -3,6 +3,8 @@
 int	main(int argc, char **argv, char **envp)
 {
 	g_env = setEnv(envp);
+	add_pwd();
+	add_shlvl();
 	if (argc > 1)
 		args(argv);	
 	minishell();

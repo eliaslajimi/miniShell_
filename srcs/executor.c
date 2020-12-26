@@ -40,7 +40,7 @@ int	commands(c_table *ctable)
 	if (ft_strcmp(ctable->command, "echo") == 0)
 		ret = echo(ctable->args, ctable->flags, ctable->in, ctable->out);
 	else if (ft_strcmp(ctable->command, "env") == 0)
-		ret = env_builtin(ctable->out);
+		ret = env_builtin(ctable->command, ctable->out);
 	else if (ft_strcmp(ctable->command, "unset") == 0)
 		ret = unset_builtin(ctable->args, "void");
 	else if (ft_strcmp(ctable->command, "export") == 0)
@@ -50,6 +50,7 @@ int	commands(c_table *ctable)
 	else
 	{
 		ctable->command = ft_strdup(absolute_path(ctable->command));
+		add_underscore(ctable->command);
 		if (ctable->command[0] != '/')
 		{
 			print("minishell: ", 2);
@@ -58,7 +59,9 @@ int	commands(c_table *ctable)
 			ret = 127;
 		}
 		else
+		{
 			fork_cmd(ctable->command);
+		}
 	}
 	//print_struct(ctable);
 	next_exec(ctable);

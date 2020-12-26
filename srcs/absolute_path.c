@@ -1,15 +1,15 @@
 #include "minishell.h"
 
-static int  file_exists(const char *filename)
+static int	file_exists(const char *path)
 {
-    int     fd;
+	struct stat	stats;
 
-    if ((fd = open(filename, O_RDONLY)) > 0)
-    {
-        close(fd);
-        return (1);
-    }
-    return (0);
+	if (stat(path, &stats) == 0)
+	{
+		if (stats.st_mode && X_OK)
+			return (1);
+	}
+	return (0);
 }
 
 static char *cmdpath(char *path, char *cmd)

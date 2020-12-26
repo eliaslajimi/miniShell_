@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+//static char		*export_parser()
+
 int			export_builtin(char *arg, int out)
 {
 	int		i;
@@ -12,7 +14,7 @@ int			export_builtin(char *arg, int out)
 	if (ft_isin('=', arg))
 	{
 		split_arg = ft_split(arg, '=');
-		if (find_node(&env_lst, split_arg[0]) != NULL)
+		if (find_node(split_arg[0]) != NULL)
 		{
 			unset_builtin(split_arg[0], "void");
 		}
@@ -28,6 +30,7 @@ int			export_builtin(char *arg, int out)
 	}
 	else
 	{
+		add_underscore("export");
 		return (join_sorted_list(env_lst, out));
 	}
 }
