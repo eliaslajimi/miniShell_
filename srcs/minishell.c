@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	wrapper()
+void	wrapper() // -_-
 {
 	minishell();
 }
@@ -11,6 +11,7 @@ void	wrapper()
 	char	**tokens;
 
 	c_table	*init, *ctable;
+	init = getglobal(STRUCT);	
 	init_struct(&init);
 	ctable = init;
 	write(1, ">> ", 3);
@@ -19,6 +20,6 @@ void	wrapper()
 	parser(ctable, tokens);
 	executor(init);	
 	free(tokens);
-	wrapper();	//this function is solely there to mute wall/wextra/werror error.
+ 	wrapper();
 	return (0);
  }

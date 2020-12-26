@@ -18,51 +18,45 @@ int	setpipe(int *fdin)
 
 void	next_exec(c_table *ctable)
 {
-	c_table	*n;
-
-	n = ctable;
 	if (ctable->pipein && !ctable->pipeout)
 	{
-		while (ctable)
-			if ((n = ctable) && (ctable = ctable->next))	
-				free_struct(n);
-		exit(0);
+		exitroutine();
+		exit(*((int*)getglobal(STATUS)));
 	}
 	if ((ctable = ctable->next) && (ctable))
 		executor(ctable);
 }
 
-int	commands(c_table *ctable)
+void	commands(c_table *ctable)
 {
-	int ret;
+	int	*status;
 
-	ret = 0;
+	status = (int*)getglobal(STATUS);
 	if (ft_strcmp(ctable->command, "echo") == 0)
-		ret = echo(ctable->args, ctable->flags, ctable->in, ctable->out);
+		*status = echo(ctable->args, ctable->flags, ctable->in, ctable->out);
 	else if (ft_strcmp(ctable->command, "env") == 0)
-		ret = env_builtin(ctable->out);
+		*status = env_builtin(ctable->out);
 	else if (ft_strcmp(ctable->command, "unset") == 0)
-		ret = unset_builtin(ctable->args, "void");
+		*status = unset_builtin(ctable->args, "void");
 	else if (ft_strcmp(ctable->command, "export") == 0)
-		ret = export_builtin(ctable->args, ctable->out);
+		*status = export_builtin(ctable->args, ctable->out);
 	else if (ft_strcmp(ctable->command, "pwd") == 0)
-		ret = pwd_builtin(ctable->out);
-	else
+		*status = pwd_builtin(ctable->out);
+	else// this should be refactored as a builtin (44->56)
 	{
-		ctable->command = ft_strdup(absolute_path(ctable->command));
+		ctable->command = ft_strdup(absolute_path(ctable->command)); 
 		if (ctable->command[0] != '/')
 		{
 			print("minishell: ", 2);
 			print(ctable->command, 2);
 			print(": command not found\n", 2);
-			ret = 127;
+			*status = 127;
 		}
 		else
 			fork_cmd(ctable->command);
 	}
-	//print_struct(ctable);
+	printf("STATUS CODE: __%d\n", *((int*)getglobal(STATUS)));
 	next_exec(ctable);
-	return (ret);
 }
 
 void	executor(c_table *ctable)

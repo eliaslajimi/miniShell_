@@ -16,5 +16,5 @@ int echo(char *arg, char *flags, int in, int out)
 	if (!flags || !(ft_strncmp(flags, "-n", 2)))
 			result = ft_strjoin(result, "\n");
 	print(result, out);
-	return (0);
+	return (1);
 }

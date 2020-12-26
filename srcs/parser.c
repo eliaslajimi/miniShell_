@@ -88,8 +88,7 @@ int	parser(c_table *ctable, char **tokens)
 	while (*tokens)
 	{
 		if (ft_strcmp(*tokens, "exit") == 0) 
-			exit(0);	
-
+			exitroutine();	
 		else if(ctable->command_exists == 0)
 		{
 			ctable->command = *tokens;
