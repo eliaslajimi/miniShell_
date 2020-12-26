@@ -18,13 +18,17 @@ static char *cmdpath(char *path, char *cmd)
     int     bin_exists;
     char    *bin;
     char    **path_split;
+	char	*tmp;
 
     i = 0;
     bin_exists = 0;
     bin = NULL;
+	tmp = path;
     if (cmd[0] != '/' || ft_strncmp(cmd, "./", 2) != 0)
-    {
-        path_split = ft_split(path, ':');
+	{
+		path = ft_strtrim(path + 5, "\'\"");	
+		ft_strdel(&tmp);
+		path_split = ft_split(path, ':');
         ft_strdel(&path);
         while (path_split[i])
         {
