@@ -82,6 +82,7 @@ void	ft_lstadd_back(t_list **alst, t_list *new);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstnew(void *content);
+char	**expanse_array(char **array, int previous_size, char *new_token);
 
 /*Struct Utils*/
 int	init_struct(c_table **);
