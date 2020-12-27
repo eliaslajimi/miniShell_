@@ -1,5 +1,11 @@
 #include "minishell.h"
 
+void	init_args(c_table **ctable)
+{
+	(*ctable)->args = malloc(sizeof(char*) * 1);
+	(*ctable)->args[0] = NULL; 
+}
+
 int	init_struct(c_table **ctable)
 {
 	*ctable = malloc(sizeof(c_table));
@@ -8,7 +14,7 @@ int	init_struct(c_table **ctable)
 	(*ctable)->pipeout = 0;
 	(*ctable)->command = "";
 	(*ctable)->flags = ft_calloc(1, 1);
-	(*ctable)->args = ft_calloc(1, 1); 
+	init_args(ctable);
 	(*ctable)->args_len = 0;
 	(*ctable)->in = 0;
 	(*ctable)->out = 1;

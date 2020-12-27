@@ -31,12 +31,9 @@ void	commands(c_table *ctable)
 {
 	int	*status;
 
-	printf("command	[%s]\n", ctable->command);
-	printf("args	[%s]\n", ctable->args[0]);
-	printf("flags	[%s]\n", ctable->flags);
 	status = (int*)getglobal(STATUS);
 	if (ft_strcmp(ctable->command, "echo") == 0)
-		*status = echo(ctable->args, ctable->flags, ctable->in, ctable->out);
+		*status = echo(ctable->args[0], ctable->flags, ctable->in, ctable->out);
 	else if (ft_strcmp(ctable->command, "env") == 0)
 		*status = env_builtin(ctable->command, ctable->out);
 	else if (ft_strcmp(ctable->command, "unset") == 0)
