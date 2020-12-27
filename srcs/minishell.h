@@ -122,6 +122,7 @@ int		add_underscore(char *cmd);
 //int	join_sorted_list(t_list *env_lst, int out);
 //=======
 int		export_builtin(char *arg, int out);
+int		export_builtin_loop(char **arg, int out);
 char	*find_node(char *data);
 int		join_sorted_list(t_list *env_lst, int out);
 //>>>>>>> e55579ef6298c3aa732374a42741ddeba7790c77
@@ -131,6 +132,7 @@ int	pwd_builtin(int out);
 
 /*unset*/
 int	unset_builtin(char *arg, char *exportarg);
+int unset_builtin_loop(char **arg, char *exportarg);
 
 /*absolute path*/
 char	*absolute_path(char *cmd);

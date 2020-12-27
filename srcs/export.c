@@ -34,3 +34,14 @@ int			export_builtin(char *arg, int out)
 		return (join_sorted_list(env_lst, out));
 	}
 }
+
+int			export_builtin_loop(char **arg, int out)
+{
+	int		ret;
+	while (*arg)
+	{
+		ret = export_builtin(*arg, out);
+		arg++;
+	}
+	return (ret);
+}

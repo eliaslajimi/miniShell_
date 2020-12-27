@@ -52,7 +52,7 @@ void print_struct(c_table *ctable)
 	printf("ctable: pipeout:	[%d]\n", ctable->pipeout); 
 	printf("ctable: command:	[%s]\n", ctable->command); 
 	printf("ctable: flag:		[%s]\n", ctable->flags); 
-	printf("ctable: args:		[%s]\n", ctable->args); 
+	printf("ctable: args:		[%s]\n", ctable->args[0]); 
 	printf("ctable: in:		[%d]\n", ctable->in); 
 	printf("ctable: out:		[%d]\n", ctable->out); 
 	printf("ctable: file in:	[%s]\n", ctable->filein); 

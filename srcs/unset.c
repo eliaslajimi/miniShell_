@@ -10,7 +10,7 @@ static int	 ft_lstdelnode(t_list **lst, char *data, int datalen)
 	while (current)
 	{
 		if (ft_strncmp(current->content, data, datalen) == 0 &&
-		(ft_strncmp((char*)(current->content) + datalen, "=", 1)) == 0)
+				(ft_strncmp((char*)(current->content) + datalen, "=", 1)) == 0)
 		{
 			if (previous == NULL)
 				*lst = current->next;
@@ -49,4 +49,16 @@ int	unset_builtin(char *arg, char *exportarg)
 		res = ft_lstdelnode(&env_lst, param, arglen);
 	}
 	return (0);
+}
+
+int		unset_builtin_loop(char **arg, char *exportarg)
+{
+	int	ret;
+
+	while (*arg)
+	{
+		ret = unset_builtin(*arg, exportarg);
+		arg++;
+	}
+	return (ret);
 }
