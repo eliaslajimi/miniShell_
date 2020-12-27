@@ -34,7 +34,8 @@ typedef struct		t_table
 	int				pipeout;
 	char			*command;
 	char			*flags;
-	char			*args;
+	char			**args;
+	int				args_len;
 	int				in;
 	int				out;
 	char			*filein;

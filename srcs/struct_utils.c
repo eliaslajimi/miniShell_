@@ -9,6 +9,7 @@ int	init_struct(c_table **ctable)
 	(*ctable)->command = "";
 	(*ctable)->flags = ft_calloc(1, 1);
 	(*ctable)->args = ft_calloc(1, 1); 
+	(*ctable)->args_len = 0;
 	(*ctable)->in = 0;
 	(*ctable)->out = 1;
 	(*ctable)->filein = "";

@@ -1,41 +1,33 @@
 #include "minishell.h"
 
-int	is_command(char *token)
-{
-	return (ft_strcmp(token, "echo") == 0 || ft_strcmp(token, "grep") == 0
-	|| ft_strcmp(token, "cd") == 0|| ft_strcmp(token, "pwd") == 0
-	|| ft_strcmp(token, "export") == 0 || ft_strcmp(token, "unset")
-	|| ft_strcmp(token, "env") == 0 || ft_strcmp(token, "exit") == 0);
-}
-
-int	is_redirec(char *token)
+int			is_redirec(char *token)
 {
 	return (ft_strcmp(token, ">>") == 0 || ft_strcmp(token, ">") == 0 
 	|| ft_strcmp(token, "<") == 0);
 }
 
-int	is_flag(char *token)
+int			is_flag(char *token)
 {
 	return (token[0] == '-');
 }
 
-int	is_pipe(char *token, c_table *ctable)
+int			is_pipe(char *token, c_table *ctable)
 {
 	if (ft_strcmp(token, "|") == 0)
 		return ((ctable->pipeout = 1));
 	return (0);
 }
 
-int	is_quote(char c)
+int			is_quote(char c)
 {
 	if (c == 96 || c == 39 || c == 34)
 		return (c);
 	return (0);
 }
 
-char	*is_subshell(char *token)
+char		*is_subshell(char *token)
 {
-	char *str;
+	char	*str;
 
 	str = malloc(2);
 	if (is_quote(token[0]))
@@ -47,7 +39,7 @@ char	*is_subshell(char *token)
 	return (NULL);
 }
 
-int	separator(char *token)
+int			separator(char *token)
 {
 	if (ft_strcmp(token, ";") == 0)
 		return (COMMA);
@@ -56,10 +48,10 @@ int	separator(char *token)
 	return (0);
 }
 
-int	redirection(c_table *ctable, char **token)
+int			redirection(c_table *ctable, char **token)
 {
-	char *redirec;
-	char *file;
+	char	*redirec;
+	char	*file;
 
 	redirec = *token;
 	file = *(++token);
@@ -78,13 +70,13 @@ int	redirection(c_table *ctable, char **token)
 	return (0);
 }
 
-int	parser(c_table *ctable, char **tokens)
+int			parser(c_table *ctable, char **tokens)
 {
 	while (*tokens)
 	{
 		if (ft_strcmp(*tokens, "exit") == 0) 
 			exit(*((int*)getglobal(STATUS)));	
-		else if(ctable->command_exists == 0)
+		else if (ctable->command_exists == 0)
 		{
 			ctable->command = *tokens;
 			ctable->command_exists = 1;
@@ -109,7 +101,9 @@ int	parser(c_table *ctable, char **tokens)
 		}
 		else if (ctable->command_exists == 1)
 		{
-			ctable->args = ft_strjoin(ctable->args , *tokens);
+			ctable->args = expanse_array(ctable->args, ctable->args_len, *tokens);
+			ctable->args_len++;
+		//	ctable->args = ft_strjoin(ctable->args , *tokens);
 		}
 		tokens++;
 	}

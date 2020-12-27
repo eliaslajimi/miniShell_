@@ -17,14 +17,14 @@ static int	 ft_lstdelnode(t_list **lst, char *data, int datalen)
 			else
 				previous->next = current->next;
 			free(current);
-			return (1);
+			return (0); //deleting successfull
 		}
 		if (current->next == NULL)
 			break;
 		previous = current;
 		current = current->next;
 	}
-	return (0);
+	return (127); //node doesn't exist
 }
 
 int	unset_builtin(char *arg, char *exportarg)
