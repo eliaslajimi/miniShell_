@@ -1,5 +1,45 @@
 #include "minishell.h"
 
+int add_underscore(char *cmd)
+{
+	char	*underscore_env;
+
+	underscore_env = ft_strdup("_=");
+	underscore_env = ft_strjoin(underscore_env, cmd);
+	export_builtin(underscore_env, 0);
+	free(underscore_env);
+	return (0);
+}
+
+int add_shlvl()
+{
+	char	*shlvl;
+
+	shlvl = ft_strdup("SHLVL=");
+	shlvl = ft_strjoin(shlvl, "1");
+	export_builtin(shlvl, 0);
+	free(shlvl);
+	return (0);
+}
+
+int	add_pwd()
+{
+	int		bufsize;
+	char	*buf;
+	char	*currentdir;
+	char	*pwd_env;
+
+	pwd_env = ft_strdup("PWD=");
+	bufsize = 0;
+	buf = NULL;
+	currentdir = getcwd(buf, bufsize);
+	free(buf);
+	pwd_env = ft_strjoin(pwd_env, currentdir);
+	export_builtin(pwd_env, 0);
+	free(pwd_env);
+	return (0);
+}
+
 t_list	*setEnv(char **envp)
 {
 	int		i;
@@ -17,16 +57,18 @@ t_list	*setEnv(char **envp)
 		i++;
 	}
 	ft_lstadd_back(&env_lst, NULL);
+
 	return (env_lst);
 }
 
-int		env_builtin(int out)
+int		env_builtin(char *cmd, int out)
 {
 	char	*result;
 	t_list	*tmp_lst;
 
 	tmp_lst = g_env;
 	result = ft_strdup("");
+	add_underscore(cmd);
 	while (tmp_lst->next)
 	{
 		result = ft_strjoin(result, tmp_lst->content);

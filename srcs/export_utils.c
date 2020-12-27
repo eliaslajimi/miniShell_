@@ -58,14 +58,14 @@ int			join_sorted_list(t_list *env_lst, int out)
 	return (0); //0 quand ca a marché
 }
 
-char	*find_node(t_list **lst, char *data)
+char	*find_node(char *data)
 {
 	t_list	*iter;
 
-	iter = *lst;
-	while (iter)
+	iter = g_env;
+	while (iter && iter->next)
 	{
-		if (ft_strncmp(iter->content, data, ft_strlen(data)) != 0)
+		if (ft_strncmp(iter->content, data, ft_strlen(data)) == 0)
 		{
 			return (iter->content);
 		}

@@ -35,16 +35,17 @@ void	commands(c_table *ctable)
 	if (ft_strcmp(ctable->command, "echo") == 0)
 		*status = echo(ctable->args, ctable->flags, ctable->in, ctable->out);
 	else if (ft_strcmp(ctable->command, "env") == 0)
-		*status = env_builtin(ctable->out);
+		*status = env_builtin(ctable->command, ctable->out);
 	else if (ft_strcmp(ctable->command, "unset") == 0)
 		*status = unset_builtin(ctable->args, "void");
 	else if (ft_strcmp(ctable->command, "export") == 0)
 		*status = export_builtin(ctable->args, ctable->out);
 	else if (ft_strcmp(ctable->command, "pwd") == 0)
 		*status = pwd_builtin(ctable->out);
-	else// this should be refactored as a builtin (44->56)
+	else// this should be refactored into proper functions.(44->68)
 	{
-		ctable->command = ft_strdup(absolute_path(ctable->command)); 
+		ctable->command = ft_strdup(absolute_path(ctable->command));
+		add_underscore(ctable->command);
 		if (ctable->command[0] != '/')
 		{
 			print("minishell: ", 2);
@@ -53,14 +54,16 @@ void	commands(c_table *ctable)
 			*status = 127;
 		}
 		else
+		{
 			fork_cmd(ctable->command);
+		}
 	}
-	printf("STATUS CODE: __%d\n", *((int*)getglobal(STATUS)));
 	next_exec(ctable);
 }
 
 void	executor(c_table *ctable)
 {
+	//print_struct(ctable);
 	if (ctable->pipeout)
 		ctable->next->pipein = setpipe(&ctable->out);
 	if (ctable->pipein)
@@ -69,7 +72,6 @@ void	executor(c_table *ctable)
 		ctable->in = getfd(ctable->filein, ctable->in);
 	if (ft_strcmp(ctable->fileout, "") != 0)
 		ctable->out = getfd(ctable->fileout, ctable->out);
-	print_struct(ctable);
 	if (ctable->pipeout && !(id = fork()))
 		executor(ctable->next);
 	commands(ctable);

@@ -1,15 +1,15 @@
 #include "minishell.h"
 
-static int  file_exists(const char *filename)
+static int	file_exists(const char *path)
 {
-    int     fd;
+	struct stat	stats;
 
-    if ((fd = open(filename, O_RDONLY)) > 0)
-    {
-        close(fd);
-        return (1);
-    }
-    return (0);
+	if (stat(path, &stats) == 0)
+	{
+		if (stats.st_mode && X_OK)
+			return (1);
+	}
+	return (0);
 }
 
 static char *cmdpath(char *path, char *cmd)
@@ -18,13 +18,17 @@ static char *cmdpath(char *path, char *cmd)
     int     bin_exists;
     char    *bin;
     char    **path_split;
+	char	*tmp;
 
     i = 0;
     bin_exists = 0;
     bin = NULL;
+	tmp = path;
     if (cmd[0] != '/' || ft_strncmp(cmd, "./", 2) != 0)
-    {
-        path_split = ft_split(path, ':');
+	{
+		path = ft_strtrim(path + 5, "\'\"");	
+		ft_strdel(&tmp);
+		path_split = ft_split(path, ':');
         ft_strdel(&path);
         while (path_split[i])
         {

@@ -65,21 +65,16 @@ int	redirection(c_table *ctable, char **token)
 	file = *(++token);
 	if (ft_strncmp(redirec, ">>", 2) == 0 && (ctable->out |= APPEND))
 	{
-		printf("R 1\n");
 		ctable->fileout = ft_strdup(file);
 	}
 	else if (ft_strcmp(redirec, ">") == 0 && (ctable->out |= TRUNC))
 	{
-		printf("R 2\n");
 		ctable->fileout = ft_strdup(file);
 	}
 	else if (ft_strcmp(redirec, "<") == 0 && (ctable->in |= READ))
 	{
-		printf("R 3\n");
 		ctable->filein = ft_strdup(file);
 	}
-	else
-		printf("R 4\n");
 	return (0);
 }
 
@@ -88,7 +83,7 @@ int	parser(c_table *ctable, char **tokens)
 	while (*tokens)
 	{
 		if (ft_strcmp(*tokens, "exit") == 0) 
-			exitroutine();	
+			exit(*((int*)getglobal(STATUS)));	
 		else if(ctable->command_exists == 0)
 		{
 			ctable->command = *tokens;
@@ -108,8 +103,6 @@ int	parser(c_table *ctable, char **tokens)
 			add_struct(&ctable);
 			ctable->command_exists = 0;
 		}
-//		else if (is_subshell(*tokens))//subshell is solely processes at lexer stage.
-//			ctable->args = *tokens; 
 		else if (is_redirec(*tokens) != 0)
 		{
 			redirection(ctable, tokens++);

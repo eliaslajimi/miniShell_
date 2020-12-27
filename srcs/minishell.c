@@ -11,14 +11,15 @@ void	wrapper() // -_-
 	char	**tokens;
 
 	c_table	*init, *ctable;
-	init = getglobal(STRUCT);	
+	init = (c_table*)getglobal(STRUCT);	
 	init_struct(&init);
 	ctable = init;
 	write(1, ">> ", 3);
 	get_next_line(1, &inputcmd);
 	tokens = lexer(inputcmd);	
 	parser(ctable, tokens);
-	executor(init);	
+	ctable = init;
+	executor(ctable);
 	free(tokens);
  	wrapper();
 	return (0);

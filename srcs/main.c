@@ -1,26 +1,5 @@
 #include "minishell.h"
 
-//void **getglobal(int mode, void **value)
-//{
-//	static void	**ret;
-//	static void	**ret_status;
-//	static void	**ret_struct;
-//	
-//	if (mode == STRUCT)
-//	{
-//		if (value)
-//			ret_struct = value;
-//		ret = ret_struct;
-//	}
-//	if (mode == STATUS)
-//	{
-//		if (value)
-//			ret_status = value;
-//		ret = ret_status;
-//	}
-//	return (ret);
-//}
-
 void *getglobal(int mode)
 {
 	static c_table *ret_struct;
@@ -37,9 +16,9 @@ void exitroutine()
 {
 	c_table *init;
 
-	init = (c_table*)getglobal(STRUCT);	
-	while (init)
-		next_struct(&init);
+	init = getglobal(STRUCT);	
+	//while (init)
+		//next_struct(&init);
 }
 
 void	sighandler(int num)
@@ -59,6 +38,8 @@ void	sighandler(int num)
 int	main(int argc, char **argv, char **envp)
 {
 	g_env = setEnv(envp);
+	add_pwd();
+	add_shlvl();
 	if (argc > 1)
 		args(argv);	
 	signal(SIGINT, sighandler);

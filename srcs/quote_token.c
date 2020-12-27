@@ -50,21 +50,3 @@ char	*matching_quotes(char *line)
 	}
 	return (line);
 }
-/*
-char	*lexerquote(char *input_line)
-{
-	char *line = matching_quotes(input_line);
-	return (line);
-}
-
-int main(int argc, char **argv)
-{
-	int fd = open(argv[1], O_RDONLY);
-	char *line;
-	get_next_line(fd, &line);
-	printf("%s\n", line);
-	char *str = lexerquote(line);
-	close(fd);
-	printf("[%s]\n", str);
-	return (0);
-}*/

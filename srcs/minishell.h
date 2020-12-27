@@ -7,6 +7,7 @@
 # include <stdlib.h>
 # include <signal.h>
 # include <sys/types.h>
+# include <sys/stat.h>
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 32
 #  define AMPERSAND 1	
@@ -102,13 +103,26 @@ char	*word_token(char *line);
 char	*dollar_token(char *line);
 
 /*env*/
-int	env_builtin(int out);
+//<<<<<<< HEAD
+//int	env_builtin(int out);
+//=======
+int		env_builtin(char *cmd, int out);
+//>>>>>>> e55579ef6298c3aa732374a42741ddeba7790c77
 t_list	*setEnv(char **envp);
+int		add_pwd();
+int		add_shlvl();
+int		add_underscore(char *cmd);
 
-/*export*/
-int	export_builtin(char *arg, int out);
-char	*find_node(t_list **lst, char *data);
-int	join_sorted_list(t_list *env_lst, int out);
+///*export*/
+//<<<<<<< HEAD
+//int	export_builtin(char *arg, int out);
+//char	*find_node(t_list **lst, char *data);
+//int	join_sorted_list(t_list *env_lst, int out);
+//=======
+int		export_builtin(char *arg, int out);
+char	*find_node(char *data);
+int		join_sorted_list(t_list *env_lst, int out);
+//>>>>>>> e55579ef6298c3aa732374a42741ddeba7790c77
 
 /*pwd*/
 int	pwd_builtin(int out);
