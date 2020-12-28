@@ -72,8 +72,19 @@ int			redirection(c_table *ctable, char **token)
 
 int			parser(c_table *ctable, char **tokens)
 {
+	int		*status;
+
+	status = (int*)getglobal(STATUS);
 	while (*tokens)
 	{
+		if (ft_strnstr(*tokens, "$?", 2))
+		{
+			*tokens = interrodollar_swap(ft_itoa(*status), *tokens);	
+		}
+		if (*tokens[0] == '$')
+		{
+			*tokens = dollar_swap(*tokens);
+		}
 		if (ft_strcmp(*tokens, "exit") == 0) 
 			exit(*((int*)getglobal(STATUS)));	
 		else if (ctable->command_exists == 0)

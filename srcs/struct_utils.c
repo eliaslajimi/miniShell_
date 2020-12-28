@@ -46,7 +46,7 @@ void next_struct(c_table **ctable)
 void free_struct(c_table *ctable)
 {
 	free(ctable->flags);
-	free(ctable->args);
+	ft_free_array(ctable->args);
 	free(ctable);
 }
 

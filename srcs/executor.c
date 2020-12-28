@@ -55,7 +55,7 @@ void	commands(c_table *ctable)
 		}
 		else
 		{
-			fork_cmd(ctable->command);
+			*status = fork_cmd(ctable->command);
 		}
 	}
 	next_exec(ctable);

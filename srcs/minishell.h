@@ -83,6 +83,9 @@ void	*ft_memcpy(void *dst, const void *src, size_t n);
 t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstnew(void *content);
 char	**expanse_array(char **array, int previous_size, char *new_token);
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
+void	ft_strcpy(char *dst, char *src, int n);
+char	*ft_itoa(int n);
 
 /*Struct Utils*/
 int	init_struct(c_table **);
@@ -137,5 +140,9 @@ int unset_builtin_loop(char **arg, char *exportarg);
 /*absolute path*/
 char	*absolute_path(char *cmd);
 int	fork_cmd(char *cmd);
+
+/*dollar*/
+char	*dollar_swap(char *tokens);
+char	*interrodollar_swap(char *itoa_id, char *cmd);
 
 #endif

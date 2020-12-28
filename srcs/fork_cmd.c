@@ -1,9 +1,4 @@
 #include "minishell.h"
-/*
-static char **build_new_argv()
-{
-}
-*/
 static char	**build_env_tab()
 {
 	int		i;
@@ -34,7 +29,7 @@ int	fork_cmd(char *cmd)
 
 	new_argv[0] = ft_strdup(cmd);
 	new_argv[1] = NULL;
-	env_tab = build_env_tab(); // pas oublier de le free
+	env_tab = build_env_tab();
 	pid = fork();
 	if (pid < 0)
 	{
@@ -52,5 +47,6 @@ int	fork_cmd(char *cmd)
 		kill(pid, SIGTERM);
 	}
 	ft_strdel(&new_argv[0]);
+	ft_free_array(env_tab);
 	return (0);
 }
