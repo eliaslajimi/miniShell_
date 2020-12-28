@@ -13,7 +13,8 @@ char		*dollar_token(char *line)
 		token = ft_strdup("$");
 	else if (ft_isprint(line[i]) == 1)
 	{
-		while (ft_isprint(line[i]) == 1 && line[i] != ' ')
+		while (ft_isprint(line[i]) == 1 && line[i] != ' '
+			&& line[i] != ';' && line[i] != '&')
 			i++;
 		token = ft_strndup(line, i);
 	}
