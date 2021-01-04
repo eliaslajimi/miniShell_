@@ -24,7 +24,8 @@ char		**expanse_array(char **array, int previous_size, char *new_token)
 	char	**cpy;
 
 	i = 0;
-	cpy = malloc(sizeof(char*) * (previous_size + 1 + 1));
+	if (!(cpy = malloc(sizeof(char*) * (previous_size + 1 + 1))))
+		return (NULL);
 	while (i < previous_size)
 	{
 		cpy[i] = ft_strdup(array[i]);

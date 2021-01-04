@@ -1,5 +1,11 @@
 #include "minishell.h"
 
+void	init_args(c_table **ctable)
+{
+	(*ctable)->args = malloc(sizeof(char*) * 1);
+	(*ctable)->args[0] = NULL; 
+}
+
 int	init_struct(c_table **ctable)
 {
 	*ctable = malloc(sizeof(c_table));
@@ -8,7 +14,8 @@ int	init_struct(c_table **ctable)
 	(*ctable)->pipeout = 0;
 	(*ctable)->command = "";
 	(*ctable)->flags = ft_calloc(1, 1);
-	(*ctable)->args = ft_calloc(1, 1); 
+	init_args(ctable);
+	(*ctable)->args_len = 0;
 	(*ctable)->in = 0;
 	(*ctable)->out = 1;
 	(*ctable)->filein = "";
@@ -39,7 +46,7 @@ void next_struct(c_table **ctable)
 void free_struct(c_table *ctable)
 {
 	free(ctable->flags);
-	free(ctable->args);
+	ft_free_array(ctable->args);
 	free(ctable);
 }
 
@@ -51,7 +58,7 @@ void print_struct(c_table *ctable)
 	printf("ctable: pipeout:	[%d]\n", ctable->pipeout); 
 	printf("ctable: command:	[%s]\n", ctable->command); 
 	printf("ctable: flag:		[%s]\n", ctable->flags); 
-	printf("ctable: args:		[%s]\n", ctable->args); 
+	printf("ctable: args:		[%s]\n", ctable->args[0]); 
 	printf("ctable: in:		[%d]\n", ctable->in); 
 	printf("ctable: out:		[%d]\n", ctable->out); 
 	printf("ctable: file in:	[%s]\n", ctable->filein); 

@@ -34,7 +34,8 @@ typedef struct		t_table
 	int				pipeout;
 	char			*command;
 	char			*flags;
-	char			*args;
+	char			**args;
+	int				args_len;
 	int				in;
 	int				out;
 	char			*filein;
@@ -81,6 +82,10 @@ void	ft_lstadd_back(t_list **alst, t_list *new);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstnew(void *content);
+char	**expanse_array(char **array, int previous_size, char *new_token);
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
+void	ft_strcpy(char *dst, char *src, int n);
+char	*ft_itoa(int n);
 
 /*Struct Utils*/
 int	init_struct(c_table **);
@@ -120,6 +125,7 @@ int		add_underscore(char *cmd);
 //int	join_sorted_list(t_list *env_lst, int out);
 //=======
 int		export_builtin(char *arg, int out);
+int		export_builtin_loop(char **arg, int out);
 char	*find_node(char *data);
 int		join_sorted_list(t_list *env_lst, int out);
 //>>>>>>> e55579ef6298c3aa732374a42741ddeba7790c77
@@ -129,9 +135,14 @@ int	pwd_builtin(int out);
 
 /*unset*/
 int	unset_builtin(char *arg, char *exportarg);
+int unset_builtin_loop(char **arg, char *exportarg);
 
 /*absolute path*/
 char	*absolute_path(char *cmd);
 int	fork_cmd(char *cmd);
+
+/*dollar*/
+char	*dollar_swap(char *tokens);
+char	*interrodollar_swap(char *itoa_id, char *cmd);
 
 #endif

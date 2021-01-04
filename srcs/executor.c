@@ -33,13 +33,13 @@ void	commands(c_table *ctable)
 
 	status = (int*)getglobal(STATUS);
 	if (ft_strcmp(ctable->command, "echo") == 0)
-		*status = echo(ctable->args, ctable->flags, ctable->in, ctable->out);
+		*status = echo(ctable->args[0], ctable->flags, ctable->in, ctable->out);
 	else if (ft_strcmp(ctable->command, "env") == 0)
 		*status = env_builtin(ctable->command, ctable->out);
 	else if (ft_strcmp(ctable->command, "unset") == 0)
-		*status = unset_builtin(ctable->args, "void");
+		*status = unset_builtin_loop(ctable->args, "void");
 	else if (ft_strcmp(ctable->command, "export") == 0)
-		*status = export_builtin(ctable->args, ctable->out);
+		*status = export_builtin_loop(ctable->args, ctable->out);
 	else if (ft_strcmp(ctable->command, "pwd") == 0)
 		*status = pwd_builtin(ctable->out);
 	else// this should be refactored into proper functions.(44->68)
@@ -55,7 +55,7 @@ void	commands(c_table *ctable)
 		}
 		else
 		{
-			fork_cmd(ctable->command);
+			*status = fork_cmd(ctable->command);
 		}
 	}
 	next_exec(ctable);
