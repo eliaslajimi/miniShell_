@@ -64,6 +64,7 @@ void	commands(c_table *ctable)
 void	executor(c_table *ctable)
 {
 	//print_struct(ctable);
+	print_struct(ctable);
 	if (ctable->pipeout)
 		ctable->next->pipein = setpipe(&ctable->out);
 	if (ctable->pipein)
