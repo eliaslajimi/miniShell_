@@ -27,6 +27,27 @@ void	next_exec(c_table *ctable)
 		executor(ctable);
 }
 
+//*status = echo(ctable->args[0], ctable->flags, ctable->in, ctable->out); <-- PROTOTYPE FOR BUILTIN || 
+//should refactor builtin with proper prototype
+int	other_command(c_table *ctable)
+{
+		int status;
+		ctable->command = ft_strdup(absolute_path(ctable->command));
+		add_underscore(ctable->command);
+		if (ctable->command[0] != '/')
+		{
+			print("minishell: ", 2);
+			print(ctable->command, 2);
+			print(": command not found\n", 2);
+			status = 127;
+		}
+		else
+		{
+			status = fork_cmd(ctable->command);
+		}
+	return (status);
+}
+
 void	commands(c_table *ctable)
 {
 	int	*status;
@@ -42,22 +63,8 @@ void	commands(c_table *ctable)
 		*status = export_builtin_loop(ctable->args, ctable->out);
 	else if (ft_strcmp(ctable->command, "pwd") == 0)
 		*status = pwd_builtin(ctable->out);
-	else// this should be refactored into proper functions.(44->68)
-	{
-		ctable->command = ft_strdup(absolute_path(ctable->command));
-		add_underscore(ctable->command);
-		if (ctable->command[0] != '/')
-		{
-			print("minishell: ", 2);
-			print(ctable->command, 2);
-			print(": command not found\n", 2);
-			*status = 127;
-		}
-		else
-		{
-			*status = fork_cmd(ctable->command);
-		}
-	}
+	else
+		*status = other_command(ctable);
 	next_exec(ctable);
 }
 
