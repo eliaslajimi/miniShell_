@@ -70,6 +70,28 @@ int			redirection(c_table *ctable, char **token)
 	return (0);
 }
 
+void			token_to_command(c_table *ctable, char **tokens, int **status)
+{
+		if (ft_strnstr(*tokens, "$?", 2))
+			*tokens = interrodollar_swap(ft_itoa(**status), *tokens);	
+		if (*tokens[0] == '$')
+			*tokens = dollar_swap(*tokens);
+		if (ft_strcmp(*tokens, "exit") == 0) 
+			exit(*((int*)getglobal(STATUS)));	
+		else if (ctable->command_exists == 0 && (ctable->command = *tokens))
+			ctable->command_exists = 1;
+		else if (is_flag(*tokens))
+			ctable->flags = ft_strjoin(ctable->flags, *tokens);
+		else if ((ctable->separator = separator(*tokens)) && (ctable->command_exists = 0))
+			add_struct(&ctable);
+		else if (is_pipe(*tokens, ctable) && (ctable->command_exists = 0)) 
+			add_struct(&ctable);
+		else if (is_redirec(*tokens) != 0)
+			redirection(ctable, tokens++);
+		else if ((ctable->command_exists == 1) && (ctable->args = expanse_array(ctable->args, ctable->args_len, *tokens)))
+			ctable->args_len++;
+}
+
 int			parser(c_table *ctable, char **tokens)
 {
 	int		*status;
@@ -77,46 +99,10 @@ int			parser(c_table *ctable, char **tokens)
 	status = (int*)getglobal(STATUS);
 	while (*tokens)
 	{
-		if (ft_strnstr(*tokens, "$?", 2))
-		{
-			*tokens = interrodollar_swap(ft_itoa(*status), *tokens);	
-		}
-		if (*tokens[0] == '$')
-		{
-			*tokens = dollar_swap(*tokens);
-		}
-		if (ft_strcmp(*tokens, "exit") == 0) 
-			exit(*((int*)getglobal(STATUS)));	
-		else if (ctable->command_exists == 0)
-		{
-			ctable->command = *tokens;
-			ctable->command_exists = 1;
-		}
-		else if (is_flag(*tokens))
-		{
-			ctable->flags = ft_strjoin(ctable->flags, *tokens);
-		}
-		else if ((ctable->separator = separator(*tokens)))
-		{
-			add_struct(&ctable);
-			ctable->command_exists = 0;
-		}
-		else if (is_pipe(*tokens, ctable))
-		{
-			add_struct(&ctable);
-			ctable->command_exists = 0;
-		}
-		else if (is_redirec(*tokens) != 0)
-		{
-			redirection(ctable, tokens++);
-		}
-		else if (ctable->command_exists == 1)
-		{
-			ctable->args = expanse_array(ctable->args, ctable->args_len, *tokens);
-			ctable->args_len++;
-		//	ctable->args = ft_strjoin(ctable->args , *tokens);
-		}
+		token_to_command(ctable, tokens, &status);
 		tokens++;
 	}
 	return (0);	
 }
+
+
