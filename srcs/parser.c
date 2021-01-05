@@ -78,9 +78,9 @@ void			token_to_command(c_table *ctable, char **tokens, int **status)
 			*tokens = handle_simple_quote(*tokens);
 		if (*tokens[0] == '\"')
 			*tokens = handle_double_quote(*tokens);
-		else if (*tokens[0] == '$')
+		if (*tokens[0] == '$')
 			*tokens = dollar_swap(*tokens);
-		else if (ctable->command_exists == 0 && (ctable->command = *tokens))
+		if (ctable->command_exists == 0 && (ctable->command = *tokens))
 			ctable->command_exists = 1;
 		else if (is_flag(*tokens))
 			ctable->flags = ft_strjoin(ctable->flags, *tokens);
@@ -105,6 +105,7 @@ int			parser(c_table *ctable, char **tokens)
 	while (*tokens)
 	{
 		token_to_command(ctable, tokens, &status);
+		printf("token to command is %s\n", *tokens);
 		tokens++;
 	}
 	return (0);	
