@@ -105,7 +105,6 @@ int			parser(c_table *ctable, char **tokens)
 	while (*tokens)
 	{
 		token_to_command(ctable, tokens, &status);
-		printf("token to command is %s\n", *tokens);
 		tokens++;
 	}
 	return (0);	

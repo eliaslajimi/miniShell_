@@ -54,7 +54,6 @@ static char	**lex_line(char **isolated_tokens, char *input_line)
 		if (input_line[i] != '\0')
 		{
 			token = check_token(input_line + i);
-			printf("new token is %s\n", token);
 			i += ft_strlen(token);
 			isolated_tokens = expanse_array(isolated_tokens, array_size, token);
 			array_size++;
