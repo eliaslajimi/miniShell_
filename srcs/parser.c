@@ -76,7 +76,7 @@ void			token_to_command(c_table *ctable, char **tokens, int **status)
 			*tokens = interrodollar_swap(ft_itoa(**status), *tokens);		
 		if (*tokens[0] == '\'')
 			*tokens = handle_simple_quote(*tokens);
-		if (*tokens[0] == '\"')
+		else if (*tokens[0] == '\"')
 			*tokens = handle_double_quote(*tokens);
 		if (*tokens[0] == '$')
 			*tokens = dollar_swap(*tokens);
@@ -91,10 +91,7 @@ void			token_to_command(c_table *ctable, char **tokens, int **status)
 		else if (is_redirec(*tokens) != 0)
 			redirection(ctable, tokens++);
 		else if ((ctable->command_exists == 1) && (ctable->args = expanse_array(ctable->args, ctable->args_len, *tokens)))
-		{
 			ctable->args_len++;
-		}
-			
 }
 
 int			parser(c_table *ctable, char **tokens)
