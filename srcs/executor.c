@@ -53,7 +53,9 @@ void	commands(c_table *ctable)
 	int	*status;
 
 	status = (int*)getglobal(STATUS);
-	if (ft_strcmp(ctable->command, "echo") == 0)
+	if (ft_strcmp(ctable->command, "exit") == 0)
+		exit(*((int*)getglobal(STATUS)));
+	else if (ft_strcmp(ctable->command, "echo") == 0)
 		*status = echo(ctable->args[0], ctable->flags, ctable->in, ctable->out);
 	else if (ft_strcmp(ctable->command, "env") == 0)
 		*status = env_builtin(ctable->command, ctable->out);

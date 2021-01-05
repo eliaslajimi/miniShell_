@@ -73,11 +73,13 @@ int			redirection(c_table *ctable, char **token)
 void			token_to_command(c_table *ctable, char **tokens, int **status)
 {
 		if (ft_strnstr(*tokens, "$?", 2))
-			*tokens = interrodollar_swap(ft_itoa(**status), *tokens);	
-		if (*tokens[0] == '$')
+			*tokens = interrodollar_swap(ft_itoa(**status), *tokens);		
+		if (*tokens[0] == '\'')
+			*tokens = handle_simple_quote(*tokens);
+		if (*tokens[0] == '\"')
+			*tokens = handle_double_quote(*tokens);
+		else if (*tokens[0] == '$')
 			*tokens = dollar_swap(*tokens);
-		if (ft_strcmp(*tokens, "exit") == 0) 
-			exit(*((int*)getglobal(STATUS)));	
 		else if (ctable->command_exists == 0 && (ctable->command = *tokens))
 			ctable->command_exists = 1;
 		else if (is_flag(*tokens))
@@ -89,7 +91,10 @@ void			token_to_command(c_table *ctable, char **tokens, int **status)
 		else if (is_redirec(*tokens) != 0)
 			redirection(ctable, tokens++);
 		else if ((ctable->command_exists == 1) && (ctable->args = expanse_array(ctable->args, ctable->args_len, *tokens)))
+		{
 			ctable->args_len++;
+		}
+			
 }
 
 int			parser(c_table *ctable, char **tokens)

@@ -86,6 +86,9 @@ char	**expanse_array(char **array, int previous_size, char *new_token);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 void	ft_strcpy(char *dst, char *src, int n);
 char	*ft_itoa(int n);
+char	*ft_strchr(const char *s, int c);
+char	*remove_char(char *str, char c);
+char	*remove_all_char(char *str, char c);
 
 /*Struct Utils*/
 int	init_struct(c_table **);
@@ -107,6 +110,9 @@ char	*pipe_token(char *line);
 char	*word_token(char *line);
 char	*dollar_token(char *line);
 
+/*parser utils*/
+char	*handle_double_quote(char *token);
+char	*handle_simple_quote(char *token);
 /*env*/
 //<<<<<<< HEAD
 //int	env_builtin(int out);

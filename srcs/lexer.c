@@ -2,7 +2,9 @@
 
 static char *check_token(char *line)
 {
-	if (*line == '$')
+	if (*line == 34 || *line == 39)
+		return (quote_token(line));
+	else if (*line == '$')
 		return (dollar_token(line));
 	else if (*line == '|')
 		return (pipe_token(line));
@@ -10,8 +12,6 @@ static char *check_token(char *line)
 		return (semic_token(line));
 	else if (*line == '>' || *line == '<')
 		return (redirec_token(line));
-	else if (*line == 34 || *line == 39)
-		return (quote_token(line));
 	else if (ft_isprint(*line) == 1)
 		return (word_token(line));
 	else
@@ -54,6 +54,7 @@ static char	**lex_line(char **isolated_tokens, char *input_line)
 		if (input_line[i] != '\0')
 		{
 			token = check_token(input_line + i);
+			printf("new token is %s\n", token);
 			i += ft_strlen(token);
 			isolated_tokens = expanse_array(isolated_tokens, array_size, token);
 			array_size++;

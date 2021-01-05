@@ -11,10 +11,9 @@ char		*dollar_token(char *line)
 		token = ft_strdup("$?");
 	else if (line[1] == ' ')
 		token = ft_strdup("$");
-	else if (ft_isprint(line[i]) == 1)
+	else if (ft_isprint(line[i]) == 1 && !(ft_isin(line[i]," &;|><$\'\"")))
 	{
-		while (ft_isprint(line[i]) == 1 && line[i] != ' '
-			&& line[i] != ';' && line[i] != '&')
+		while (ft_isprint(line[i]) == 1 && !(ft_isin(line[i]," &;|><$\'\"")))
 			i++;
 		token = ft_strndup(line, i);
 	}
@@ -27,7 +26,7 @@ char		*word_token(char *line)
 	char	*token;
 
 	i = 0;
-	while (ft_isprint(line[i]) == 1 && !(ft_isin(line[i]," ;|><$")))
+	while (ft_isprint(line[i]) == 1 && !(ft_isin(line[i]," &;|><$\'\"")))
 		i++;
 	token = ft_strndup(line, i);
 	return (token);
