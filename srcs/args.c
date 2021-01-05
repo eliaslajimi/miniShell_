@@ -24,6 +24,7 @@ char	*getcmd(char *cmd)
 //	free(cmd);
 	return (ret);
 }
+
 void args(char **argv)
 {
 	char	*input;
@@ -41,4 +42,5 @@ void args(char **argv)
 		free(tokens);
 	}
 	exitroutine();
+	exit(1);
 }
