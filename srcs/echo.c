@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int echo(char *arg, char *flags, int in, int out)
+int echo(char **arg, char *flags, int in, int out)
 {
 	char *result;
 	char *buf;
@@ -11,10 +11,10 @@ int echo(char *arg, char *flags, int in, int out)
 	if (in)
 		while ((ret  = read(in, buf, 10)) && ret > 0)
 			result = ft_strjoin(result, buf);	
-	if (arg)	
-		result = arg;
-	if (!flags || !(ft_strncmp(flags, "-n", 2)))
-			result = ft_strjoin(result, "\n");
-	print(result, out);
+	while (*arg)	
+		if ((print(*arg++, out)) && *arg)
+			print(" ", out);
+	if (!flags || (ft_strncmp(flags, "-n", 2)))
+			print("\n", out);	
 	return (1);
 }
