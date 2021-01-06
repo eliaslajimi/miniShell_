@@ -20,58 +20,94 @@ char		*dollar_token(char *line)
 	return (token);
 }
 
-char		*handling_word_quotes(char *word)
+char		*handling_word_quotes_dollar(char *word)
 {
 	int		i;
 	int		len;
 	char	*result;
+	int		*status;
+	char	*str_status;
 
 	i = 0;
-	result = ft_strdup(word);
-	while (result[i])
+	result = ft_strdup("");
+	while (word[i])
 	{
-//		printf("entering here, word i = [%c], i = [%d]\n", word[i], i);
-
-		if (result[i] == '\'')
+		if (word[i] == '\'')
 		{
-			result = remove_char_pos(result, i);
-			while (result[i] && result[i] != '\'')
-				i++;
-			result = remove_char_pos(result, i);
+			i++;
+			while (word[i] && word[i] != '\'')
+				result = ft_strjoin_char(result, word[i++]);
+			i++;
 		}
-		else if (result[i] == '\"')
+		else if (word[i] == '\"')
 		{
-			result = remove_char_pos(result, i);
-			while (result[i] && result[i] != '\"')
+			i++;
+			while (word[i] && word[i] != '\"')
 			{
-				if (result[i] != '$')
-					i++;
-				else if (result[i] == '$')
+				if (word[i] != '$')
+					result = ft_strjoin_char(result, word[i++]);
+				else if (word[i] == '$')
 				{
-					len = 0;
-					while (result[i] != '$' && result[i] != '\"' && result[i] != '\'')
+					if (word[i + 1] == '?')
 					{
-						len++;
-						i++;
+						i += 2;
+						status = (int*)getglobal(STATUS);
+						str_status = ft_itoa(*status);
+						result = ft_strjoin(result, str_status);
 					}
-					if (swap_dollar(result, i - len, len) != NULL)
-						result = ft_strjoin(result, swap_dollar(result, i - len, len));
 					else
-						result = ft_strjoin(result, "");
-				i += len;
+					{
+						i++;
+						len = 0;
+						while (word[i] != '$' && word[i] != '\"' && word[i] != '\'')
+						{
+							len++;
+							i++;
+						}
+						if (swap_dollar(word, i - len, len) != NULL)
+						{
+							result = ft_strjoin(result, swap_dollar(word, i - len, len));
+						}
+						else
+							result = ft_strjoin(result, "");
+					}
 				}
-
 			}
-			result = remove_char_pos(result,i);
+			i++;
+		}
+		else if (word[i] == '$')
+		{
+			if (word[i + 1] == '?')
+			{
+				i += 2;
+				status = (int*)getglobal(STATUS);
+				str_status = ft_itoa(*status);
+				result = ft_strjoin(result, str_status);
+			}
+			else
+			{
+				i++;
+				len = 0;
+				while (word[i] && word[i] != '$' && word[i] != '\"' && word[i] != '\'')
+				{
+					len++;
+					i++;
+				}
+				if (swap_dollar(word, i - len, len) != NULL)
+				{
+					result = ft_strjoin(result, swap_dollar(word, i - len, len));
+				}
+				else
+				{
+					result = ft_strjoin(result, "");
+				}
+			}
 		}
 		else
 		{
-			i++;
+			result = ft_strjoin_char(result, word[i++]);
 		}
-//		printf("		on reboucle avec i = %d\n", i);
 	}
-//	printf("RESULT IS %s\n", result);
-//	sleep(1);
 	return (result);
 }
 
@@ -81,8 +117,7 @@ int			word_token_len(char *line)
 	char	quote_type;
 
 	i = 0;
-//	printf("testing the line [%s]\n", line);
-	while (ft_isprint(line[i]) == 1 && !(ft_isin(line[i]," &;|><$")))
+	while (ft_isprint(line[i]) == 1 && !(ft_isin(line[i]," &;|><")))
 	{
 		if (line[i] == '\'' || line[i] == '\"')
 		{
@@ -102,7 +137,7 @@ char		*word_token(char *line)
 	char	*token;
 
 	i = 0;
-	while (ft_isprint(line[i]) == 1 && !(ft_isin(line[i]," &;|><$")))
+	while (ft_isprint(line[i]) == 1 && !(ft_isin(line[i]," &;|><")))
 	{
 		if (line[i] == '\'' || line[i] == '\"')
 		{
@@ -113,7 +148,7 @@ char		*word_token(char *line)
 		i++;
 	}
 	token = ft_strndup(line, i);
-	token = handling_word_quotes(token);
+	token = handling_word_quotes_dollar(token);
 	return (token);
 }
 
@@ -136,7 +171,7 @@ char	*semic_token()
 char	*redirec_token(char *line)
 {
 	char *token;
-	
+
 	token = "";
 	if (line[0] == '>')
 	{

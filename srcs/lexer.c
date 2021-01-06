@@ -2,9 +2,10 @@
 
 static char *check_token(char *line)
 {
-	if (*line == '$')
+	/*if (*line == '$')
 		return (dollar_token(line));
-	else if (*line == '|')
+	else */
+	if (*line == '|')
 		return (pipe_token(line));
 	else if (*line == ';')
 		return (semic_token(line));
@@ -53,9 +54,8 @@ static char	**lex_line(char **isolated_tokens, char *input_line)
 		if (input_line[i] != '\0')
 		{
 			i_word = 0;
-			if (ft_isprint(input_line[i]) == 1 && !(ft_isin(input_line[i], "$|;<>")))
+			if (ft_isprint(input_line[i]) == 1 && !(ft_isin(input_line[i], "|;<>")))
 				i_word = word_token_len(input_line + i);
-//			printf("iword = %d\n", i_word);
 			token = check_token(input_line + i);
 			if (i_word == 0)
 				i += ft_strlen(token);
@@ -78,8 +78,8 @@ char		**lexer(char *input_line)
 		return (NULL);
 	isolated_tokens[0] = NULL;
 	isolated_tokens = lex_line(isolated_tokens, input_line);
-	int i = 0;
+/*	int i = 0;
 	while (isolated_tokens[i])
-		printf("token : %s\n", isolated_tokens[i++]);
-	return (isolated_tokens);
+		printf("token: %s\n", isolated_tokens[i++]);
+*/	return (isolated_tokens);
 }

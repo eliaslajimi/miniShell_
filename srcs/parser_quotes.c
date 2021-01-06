@@ -6,8 +6,6 @@ char	*swap_dollar(char *s, int i, int len)
 	char	*result;
 
 	tofind = ft_strndup(s + i, len);
-	printf("we need to find %s\n", tofind);
-	sleep(1);
 	if (find_node(tofind) != NULL)
 	{
 		result = ft_strdup(find_node(tofind) + ft_strlen(tofind) + 1);

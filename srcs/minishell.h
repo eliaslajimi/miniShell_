@@ -74,6 +74,7 @@ char	*ft_strtrim(char const *, char const *);
 char	*ft_substr(char *, int , int );
 char	*ft_strndup(const char *s1, int n);
 char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strjoin_char(char *s1, char c);
 char	*ft_strdup(char *s1);
 void	*ft_calloc(int count, int size);
 void	ft_free_array(char **tab);
@@ -114,6 +115,7 @@ int		word_token_len(char *line);
 char	*dollar_token(char *line);
 
 /*parser utils*/
+char		*hdoublequotes(char *word);
 char	*handle_double_quote(char *token);
 char	*handle_simple_quote(char *token);
 char	*swap_dollar(char *s, int i, int len);

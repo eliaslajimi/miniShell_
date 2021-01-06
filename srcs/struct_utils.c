@@ -51,7 +51,10 @@ void free_struct(c_table *ctable)
 }
 
 void print_struct(c_table *ctable)
-{	
+{
+	if (ctable->separator == 0)
+		return ;
+	/*	
 	printf("\n============================================\n");
 	printf("ctable: separator:	[%d]\n", ctable->separator); 
 	printf("ctable: pipein:		[%d]\n", ctable->pipein); 
@@ -64,4 +67,4 @@ void print_struct(c_table *ctable)
 	printf("ctable: file in:	[%s]\n", ctable->filein); 
 	printf("ctable: file out:	[%s]\n", ctable->fileout); 
 	printf("============================================\n");
-}
+*/}

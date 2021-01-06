@@ -16,7 +16,7 @@ void	wrapper() // -_-
 	ctable = init;
 	write(1, ">> ", 3);
 	get_next_line(1, &inputcmd);
-	tokens = lexer(inputcmd);	
+	tokens = lexer(inputcmd);
 	parser(ctable, tokens);
 	ctable = init;
 	executor(ctable);
