@@ -88,6 +88,7 @@ void	ft_strcpy(char *dst, char *src, int n);
 char	*ft_itoa(int n);
 char	*ft_strchr(const char *s, int c);
 char	*remove_char(char *str, char c);
+char	*remove_char_pos(char *str, int c);
 char	*remove_all_char(char *str, char c);
 
 /*Struct Utils*/
@@ -103,16 +104,19 @@ int	skip_spaces(char *line);
 int	ft_isprint(int c);
 void	ft_strdel(char **s);
 char	*matching_quotes(char *);
+int		skip_quote(char *line, char quote, int i);
 char	*quote_token(char *line);
 char	*redirec_token(char *line);
 char	*semic_token(char *line);
 char	*pipe_token(char *line);
 char	*word_token(char *line);
+int		word_token_len(char *line);
 char	*dollar_token(char *line);
 
 /*parser utils*/
 char	*handle_double_quote(char *token);
 char	*handle_simple_quote(char *token);
+char	*swap_dollar(char *s, int i, int len);
 /*env*/
 //<<<<<<< HEAD
 //int	env_builtin(int out);

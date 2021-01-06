@@ -12,7 +12,7 @@ static char	*inputline_join(char *line)
 	return (join);
 }
 
-static int		skip_quote(char *line, char quote)
+static int		skip_quote_lexer(char *line, char quote)
 {
 	int skip;
 
@@ -31,7 +31,7 @@ char	*matching_quotes(char *line)
 			i++;
 		if (line[i] == 34)
 		{
-			i += skip_quote(line + i, 34);
+			i += skip_quote_lexer(line + i, 34);
 			if (i == ft_strlen(line) + 1)
 			{
 				line = inputline_join(line);
@@ -40,7 +40,7 @@ char	*matching_quotes(char *line)
 		}
 		else if (line[i] == 39)
 		{
-			i += skip_quote(line + i, 39);
+			i += skip_quote_lexer(line + i, 39);
 			if (i == ft_strlen(line) + 1)
 			{
 				line = inputline_join(line);

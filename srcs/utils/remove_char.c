@@ -1,8 +1,33 @@
 #include "../minishell.h"
 
 /*
- ** Removes the first occurence of a char in a string
+ ** Removes the char at a specific position in a string
  */
+
+char		*remove_char_pos(char *str, int pos) 
+{
+	int		i;
+	int		j;
+	char	*clean_str;
+
+	i = 0;
+	j = 0;
+	if (!(clean_str = malloc(sizeof(char) * (ft_strlen(str) - 1 + 1))))
+		return (NULL);
+	while(str[i] && i < ft_strlen(str))
+	{
+		if (i != pos)
+			clean_str[j++] = str[i];
+		i++;
+	}
+	clean_str[j] = '\0';
+	ft_strdel(&str);
+	return (clean_str);
+}
+
+/*
+** Removes first occurence of a char in a string
+*/
 
 char		*remove_char(char *str, char c)
 {
