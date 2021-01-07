@@ -40,6 +40,7 @@ int			export_builtin_loop(char **arg, int out)
 	ret = 0;
 	if (arg && *arg)
 	{
+		arg++;
 		while (*arg)
 		{
 			ret = export_builtin(*arg, out);

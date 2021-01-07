@@ -33,6 +33,7 @@ int	other_command(c_table *ctable)
 {
 		int status;
 		ctable->command = ft_strdup(absolute_path(ctable->command));
+	
 		add_underscore(ctable->command);
 		if (ctable->command[0] != '/')
 		{
@@ -43,7 +44,7 @@ int	other_command(c_table *ctable)
 		}
 		else
 		{
-			status = fork_cmd(ctable->command);
+			status = fork_cmd(ctable->command, ctable->args);
 		}
 	return (status);
 }
@@ -53,10 +54,17 @@ void	commands(c_table *ctable)
 	int	*status;
 
 	status = (int*)getglobal(STATUS);
-	if (ft_strcmp(ctable->command, "exit") == 0)
-		exit(*((int*)getglobal(STATUS)));
+/*	int i = 0;
+	while (ctable->args[i])
+	{
+		printf("args[%d][%s]\n",i,ctable->args[i]);
+		i++;
+	}
+*/	if (ft_strcmp(ctable->command, "exit") == 0)
+		exit_builtin(ctable->args);
+//		exit(*((int*)getglobal(STATUS)));
 	else if (ft_strcmp(ctable->command, "echo") == 0)
-		*status = echo(ctable->args, ctable->flags, ctable->in, ctable->out);
+		*status = echo(ctable->args, ctable->in, ctable->out);
 	else if (ft_strcmp(ctable->command, "env") == 0)
 		*status = env_builtin(ctable->command, ctable->out);
 	else if (ft_strcmp(ctable->command, "unset") == 0)
@@ -72,8 +80,7 @@ void	commands(c_table *ctable)
 
 void	executor(c_table *ctable)
 {
-	//print_struct(ctable);
-	print_struct(ctable);
+//	print_struct(ctable);
 	if (ctable->pipeout)
 		ctable->next->pipein = setpipe(&ctable->out);
 	if (ctable->pipein)

@@ -53,7 +53,8 @@ static char	**lex_line(char **isolated_tokens, char *input_line)
 			i_word = 0;
 			if (ft_isprint(input_line[i]) == 1 && !(ft_isin(input_line[i], "|;<>")))
 				i_word = word_token_len(input_line + i);
-			token = check_token(input_line + i);
+			if ((token = check_token(input_line + i)) == NULL)
+				return (NULL);
 			if (i_word == 0)
 				i += ft_strlen(token);
 			else
@@ -74,6 +75,10 @@ char		**lexer(char *input_line)
 	if (!(isolated_tokens = malloc(sizeof(char *) * (1))))
 		return (NULL);
 	isolated_tokens[0] = NULL;
-	isolated_tokens = lex_line(isolated_tokens, input_line);
-	return (isolated_tokens);
+	if ((isolated_tokens = lex_line(isolated_tokens, input_line)) == NULL)
+		return (NULL); // we have to exit because non printable characters (ex with dir. arrows keys.)
+/*	int i = 0;
+	while (isolated_tokens[i])
+		printf("token : [%s]\n", isolated_tokens[i++]);
+*/	return (isolated_tokens);
 }

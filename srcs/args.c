@@ -42,5 +42,5 @@ void args(char **argv)
 		free(tokens);
 	}
 	exitroutine();
-	exit(1);
+	exit(*(int*)getglobal(STATUS));
 }

@@ -62,7 +62,7 @@ int	parser(c_table *, char **);
 void	executor(c_table *);
 void	args(char **argv);
 int	print(char *s, int fd);
-int	echo(char **arg, char *flags, int in, int out);
+int	echo(char **arg, int in, int out);
 
 /*utils*/
 int	get_next_line(int fd, char **line);
@@ -87,6 +87,7 @@ char	**expanse_array(char **array, int previous_size, char *new_token);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 void	ft_strcpy(char *dst, char *src, int n);
 char	*ft_itoa(int n);
+int		ft_atoi(const char *s);
 char	*ft_strchr(const char *s, int c);
 char	*remove_char(char *str, char c);
 char	*remove_char_pos(char *str, int c);
@@ -149,9 +150,12 @@ int	pwd_builtin(int out);
 int	unset_builtin(char *arg, char *exportarg);
 int unset_builtin_loop(char **arg, char *exportarg);
 
+/*exit*/
+void	exit_builtin(char **args);
+
 /*absolute path*/
 char	*absolute_path(char *cmd);
-int	fork_cmd(char *cmd);
+int	fork_cmd(char *cmd, char **args);
 
 /*dollar*/
 char	*dollar_swap(char *tokens);

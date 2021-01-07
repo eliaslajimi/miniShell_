@@ -21,32 +21,27 @@ static char	**build_env_tab()
 	return (env_tab);
 }
 
-int	fork_cmd(char *cmd)
+int	fork_cmd(char *cmd, char **args)
 {
 	pid_t	pid;
-	char	*new_argv[2]; //!!! new_argv doit être le ctable->args sous forme de char **
 	char	**env_tab;
 
-	new_argv[0] = ft_strdup(cmd);
-	new_argv[1] = NULL;
 	env_tab = build_env_tab();
 	pid = fork();
 	if (pid < 0)
 	{
 		print("fork failed", 2);
-		ft_strdel(&new_argv[0]);
 		return (0);
 	}
 	else if (pid == 0)
 	{
-		execve(cmd, new_argv, env_tab);
+		execve(cmd, args, env_tab);
 	}
 	else
 	{
 		waitpid(pid, 0, 0);
 		kill(pid, SIGTERM);
 	}
-	ft_strdel(&new_argv[0]);
 	ft_free_array(env_tab);
 	return (0);
 }

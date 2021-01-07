@@ -7,5 +7,5 @@ int print(char *s, int fd)
 	ret = 0;
 	if (s)
 		ret = write(fd, s, ft_strlen(s));
-	return (ret);
+	return (1);
 }

@@ -55,6 +55,7 @@ int		unset_builtin_loop(char **arg, char *exportarg)
 {
 	int	ret;
 
+	arg++;
 	while (*arg)
 	{
 		ret = unset_builtin(*arg, exportarg);
