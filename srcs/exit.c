@@ -7,9 +7,7 @@ void	exit_builtin(char **args)
 	arg_status = 0;
 	if (args[1] != NULL)
 	{
-		printf("yoyow\n");
 		arg_status = ft_atoi(args[1]) % 256;
-		printf("les culs !\n");
 		if (arg_status == 0
 			&& ft_strcmp(args[1], "0") != 0
 			&& ft_strcmp(args[1], "-0") != 0
