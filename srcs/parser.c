@@ -73,17 +73,30 @@ int			redirection(c_table *ctable, char **token)
 void			token_to_command(c_table *ctable, char **tokens)
 {
 	if (ctable->command_exists == 0 && (ctable->command = *tokens))
+	{
 		ctable->command_exists = 1;
+	}
 	else if (is_flag(*tokens))
+	{
 		ctable->flags = ft_strjoin(ctable->flags, *tokens);
-	else if ((ctable->separator = separator(*tokens)) && (ctable->command_exists = 0))
+	}
+	else if ((ctable->separator = separator(*tokens)))// && (ctable->command_exists = 0))
+	{
+		ctable->command_exists = 0;
 		add_struct(&ctable);
+	}
 	else if (is_pipe(*tokens, ctable) && (ctable->command_exists = 0)) 
+	{
 		add_struct(&ctable);
+	}
 	else if (is_redirec(*tokens) != 0)
+	{
 		redirection(ctable, tokens++);
+	}
 	else if ((ctable->command_exists == 1) && (ctable->args = expanse_array(ctable->args, ctable->args_len, *tokens)))
+	{	
 		ctable->args_len++;
+	}
 }
 
 int			parser(c_table *ctable, char **tokens)
@@ -98,5 +111,3 @@ int			parser(c_table *ctable, char **tokens)
 	}
 	return (0);	
 }
-
-

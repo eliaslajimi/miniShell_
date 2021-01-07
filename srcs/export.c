@@ -1,7 +1,5 @@
 #include "minishell.h"
 
-//static char		*export_parser()
-
 int			export_builtin(char *arg, int out)
 {
 	int		i;
@@ -26,7 +24,7 @@ int			export_builtin(char *arg, int out)
 		newnode = ft_lstnew(NULL);
 		newnode->content = ft_strdup(arg);
 		ft_lstadd_back(&g_env, newnode);
-		return (0); //0 quand ca a marché
+		return (0);
 	}
 	else
 	{

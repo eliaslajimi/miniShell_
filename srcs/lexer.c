@@ -2,9 +2,6 @@
 
 static char *check_token(char *line)
 {
-	/*if (*line == '$')
-		return (dollar_token(line));
-	else */
 	if (*line == '|')
 		return (pipe_token(line));
 	else if (*line == ';')
@@ -78,8 +75,5 @@ char		**lexer(char *input_line)
 		return (NULL);
 	isolated_tokens[0] = NULL;
 	isolated_tokens = lex_line(isolated_tokens, input_line);
-/*	int i = 0;
-	while (isolated_tokens[i])
-		printf("token: %s\n", isolated_tokens[i++]);
-*/	return (isolated_tokens);
+	return (isolated_tokens);
 }
