@@ -73,6 +73,8 @@ void	commands(c_table *ctable)
 		*status = export_builtin_loop(ctable->args, ctable->out);
 	else if (ft_strcmp(ctable->command, "pwd") == 0)
 		*status = pwd_builtin(ctable->out);
+	else if (ft_strcmp(ctable->command, "cd") == 0)
+		*status = cd(ctable->args, ctable->in, ctable->out);
 	else
 		*status = other_command(ctable);
 	next_exec(ctable);

@@ -28,6 +28,15 @@ int add_shlvl()
 	return (0);
 }
 
+int add_oldpwd()
+{
+	char *oldpwd;
+	oldpwd = cleannode(find_node("PWD"));
+	oldpwd = ft_strjoin(ft_strdup("OLDPWD="), oldpwd);
+	export_builtin(oldpwd, 0);
+	return (0);
+}
+
 int	add_pwd()
 {
 	int		bufsize;
@@ -35,14 +44,14 @@ int	add_pwd()
 	char	*currentdir;
 	char	*pwd_env;
 
-	pwd_env = ft_strdup("PWD=");
 	bufsize = 0;
 	buf = NULL;
+	add_oldpwd();
 	currentdir = getcwd(buf, bufsize);
-	free(buf);
-	pwd_env = ft_strjoin(pwd_env, currentdir);
+	pwd_env = ft_strjoin(ft_strdup("PWD="), currentdir);
 	export_builtin(pwd_env, 0);
 	free(pwd_env);
+	free(buf);
 	return (0);
 }
 

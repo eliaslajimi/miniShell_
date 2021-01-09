@@ -63,6 +63,7 @@ void	executor(c_table *);
 void	args(char **argv);
 int	print(char *s, int fd);
 int	echo(char **arg, int in, int out);
+int cd(char **arg, int in, int out);
 
 /*utils*/
 int	get_next_line(int fd, char **line);
@@ -140,6 +141,7 @@ int		add_underscore(char *cmd);
 int		export_builtin(char *arg, int out);
 int		export_builtin_loop(char **arg, int out);
 char	*find_node(char *data);
+char *cleannode(char *node);
 int		join_sorted_list(t_list *env_lst, int out);
 //>>>>>>> e55579ef6298c3aa732374a42741ddeba7790c77
 

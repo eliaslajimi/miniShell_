@@ -1,5 +1,13 @@
 #include "minishell.h"
 
+char *cleannode(char *node)
+{
+	
+	while(*node != '=')
+		++node;
+	return (++node);
+}
+
 char	*find_node(char *data)
 {
 	t_list	*iter;
