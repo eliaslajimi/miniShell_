@@ -72,12 +72,8 @@ int			redirection(c_table *ctable, char **token)
 
 void			token_to_command(c_table *ctable, char **tokens)
 {
-	if ((ctable->separator = separator(*tokens)))
-	{
-		ctable->command_exists = 0;
-		add_struct(&ctable);
-	}
-	else if (is_pipe(*tokens, ctable))
+	(void)ctable;
+	if (is_pipe(*tokens, ctable))
 	{
 		ctable->command_exists = 0;
 		add_struct(&ctable);
@@ -86,9 +82,12 @@ void			token_to_command(c_table *ctable, char **tokens)
 	{
 		redirection(ctable, tokens++);
 	}
-	else 
+	else
 	{
 		ctable->args = expanse_array(ctable->args, ctable->args_len, *tokens);	
+		if (ctable->command_exists == 0)
+			ctable->command = ft_strdup(ctable->args[0]);
+		ctable->command_exists = 1;
 		ctable->args_len++;
 	}
 }
@@ -100,9 +99,14 @@ int			parser(c_table *ctable, char **tokens)
 	status = (int*)getglobal(STATUS);
 	while (*tokens)
 	{
-		token_to_command(ctable, tokens);
+		if ((ctable->separator = separator(*tokens)) != 0)
+		{
+			ctable->command_exists = 0;
+			add_struct(&ctable);
+		}
+		else 
+			token_to_command(ctable, tokens);
 		tokens++;
 	}
-	ctable->command = ft_strdup(ctable->args[0]);
 	return (0);	
 }

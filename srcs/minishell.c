@@ -19,6 +19,7 @@ void	wrapper(c_table *ctable)
 {
 	//c_table *ctable = (c_table*)getglobal(STRUCT);
 	(void)ctable;
+	init->command_exists = 0;
 	exitroutine();
 	minishell();
 }
@@ -35,7 +36,6 @@ void	wrapper(c_table *ctable)
 	if (!(tokens = lexer(inputcmd)))
 		wrapper(init);
 	parser(ctable, tokens);
-	print_struct(init);
 	executor(init);
 	free(tokens);
  	wrapper(ctable);
