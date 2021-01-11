@@ -35,12 +35,13 @@ void args(char **argv)
 	ctable = init;
 	if (ft_strcmp(argv[1], "-c") == 0)
 	{
-		//input = getcmd(argv[2]);
 		input = ft_strdup(argv[2]);
-		tokens = lexer(input);
-		parser(ctable, tokens);
-		executor(init);	
-		free(tokens);
+		if ((tokens = lexer(input)) != NULL)
+		{
+			parser(ctable, tokens);
+			executor(init);	
+			free(tokens);
+		}
 	}
 	exitroutine(init);
 	exit(*(int*)getglobal(STATUS));
