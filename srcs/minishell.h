@@ -45,6 +45,7 @@ typedef struct		t_table
 	int				command_exists;
 }					c_table;
 
+c_table *init, *ctable;
 /*global variable*/
 
 t_list	*g_env;
@@ -56,6 +57,7 @@ int	id;
 
 /*minishell modules*/
 int	minishell();
+void	wrapper(c_table *ctable);
 char	**lexer(char *input_line);
 int	subshell(char *);
 int	parser(c_table *, char **);
@@ -95,7 +97,7 @@ char	*remove_char_pos(char *str, int c);
 char	*remove_all_char(char *str, char c);
 
 /*Struct Utils*/
-int	init_struct(c_table **);
+c_table *init_struct();
 void	add_struct(c_table **ctable);
 void	next_struct(c_table **ctable);
 void	print_struct(c_table *ctable);

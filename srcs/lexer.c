@@ -71,6 +71,8 @@ char		**lexer(char *input_line)
 {
 	char	**isolated_tokens;
 
+	if (!ft_strlen(input_line))
+		return (NULL);
 	input_line = matching_quotes(input_line);
 	if (!(isolated_tokens = malloc(sizeof(char *) * (1))))
 		return (NULL);

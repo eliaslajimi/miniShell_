@@ -1,7 +1,25 @@
 #include "minishell.h"
 
-void	wrapper() // -_-
+void exitroutine()
 {
+	while (ctable)
+		next_struct(&ctable);
+}
+
+void *getglobal(int mode)
+{
+	static int *ret_status;
+	
+	if (mode == STATUS)
+		return ((void*)&ret_status);
+	return (NULL);
+}
+
+void	wrapper(c_table *ctable)
+{
+	//c_table *ctable = (c_table*)getglobal(STRUCT);
+	(void)ctable;
+	exitroutine();
 	minishell();
 }
 
@@ -10,17 +28,16 @@ void	wrapper() // -_-
 	char	*inputcmd;
 	char	**tokens;
 
-	c_table	*init, *ctable;
-	init = (c_table*)getglobal(STRUCT);	
-	init_struct(&init);
-	ctable = init;
+	init = init_struct();
 	write(1, ">> ", 3);
-	get_next_line(1, &inputcmd);
-	tokens = lexer(inputcmd);
-	parser(ctable, tokens);
 	ctable = init;
-	executor(ctable);
+	get_next_line(1, &inputcmd);
+	if (!(tokens = lexer(inputcmd)))
+		wrapper(init);
+	parser(ctable, tokens);
+	print_struct(init);
+	executor(init);
 	free(tokens);
- 	wrapper();
+ 	wrapper(ctable);
 	return (0);
  }

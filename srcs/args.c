@@ -17,13 +17,13 @@ char *getcmd(char **cmd)
 }
 */
 
-char	*getcmd(char *cmd)
-{
-	char *ret;
-	ret = ft_strtrim(cmd, "\'");
-//	free(cmd);
-	return (ret);
-}
+//char	*getcmd(char *cmd)
+//{
+//	char *ret;
+//	//ret = ft_strtrim(cmd, "\'");
+////	free(cmd);
+//	return (ret);
+//}
 
 void args(char **argv)
 {
@@ -31,16 +31,17 @@ void args(char **argv)
 	char	**tokens;
 	c_table	*init, *ctable;
 
+	init_struct(&init);
 	if (ft_strcmp(argv[1], "-c") == 0)
 	{
-		input = getcmd(argv[2]);
-		init_struct(&init);
+		//input = getcmd(argv[2]);
+		input = ft_strdup(argv[2]);
 		ctable = init;
 		tokens = lexer(input);
 		parser(ctable, tokens);
 		executor(init);	
 		free(tokens);
 	}
-	exitroutine();
+	exitroutine(init);
 	exit(*(int*)getglobal(STATUS));
 }

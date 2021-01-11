@@ -77,8 +77,9 @@ void			token_to_command(c_table *ctable, char **tokens)
 		ctable->command_exists = 0;
 		add_struct(&ctable);
 	}
-	else if (is_pipe(*tokens, ctable) && (ctable->command_exists = 0)) 
+	else if (is_pipe(*tokens, ctable))
 	{
+		ctable->command_exists = 0;
 		add_struct(&ctable);
 	}
 	else if (is_redirec(*tokens) != 0)

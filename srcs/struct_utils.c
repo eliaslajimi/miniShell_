@@ -1,34 +1,37 @@
 #include "minishell.h"
 
+//void	init_args(c_table **ctable)
 void	init_args(c_table **ctable)
 {
 	(*ctable)->args = malloc(sizeof(char*) * 1);
-	(*ctable)->args[0] = NULL; 
+	(*ctable)->args[0] = 0; 
 }
 
-int	init_struct(c_table **ctable)
+c_table *init_struct()
 {
-	*ctable = malloc(sizeof(c_table));
-	(*ctable)->separator = 0;
-	(*ctable)->pipein = 0;
-	(*ctable)->pipeout = 0;
-	(*ctable)->command = "";
-	(*ctable)->flags = ft_calloc(1, 1);
-	init_args(ctable);
-	(*ctable)->args_len = 0;
-	(*ctable)->in = 0;
-	(*ctable)->out = 1;
-	(*ctable)->filein = "";
-	(*ctable)->fileout = "";
-	(*ctable)->next = NULL;
-	(*ctable)->command_exists = 0;
-	return (0);
+	c_table *init;
+
+	init = (c_table*)malloc(sizeof(c_table));
+	init->separator = 0;
+	init->pipein = 0;
+	init->pipeout = 0;
+	init->command = "";
+	init->flags = ft_calloc(1, 1);
+	init_args(&init);
+	init->args_len = 0;
+	init->in = 0;
+	init->out = 1;
+	init->filein = "";
+	init->fileout = "";
+	init->next = 0;
+	init->command_exists = 0;
+	return (init);
 }
 
 void add_struct(c_table **ctable)
 {
 	c_table *next;
-	init_struct(&next);
+	next = init_struct();
 	(*ctable)->next = next;
 	(*ctable) = (*ctable)->next;
 	(*ctable)->next = NULL;
