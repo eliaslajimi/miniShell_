@@ -38,9 +38,9 @@ int			export_builtin_loop(char **arg, int out)
 	int		ret;
 
 	ret = 0;
+	arg++;
 	if (arg && *arg)
 	{
-		arg++;
 		while (*arg)
 		{
 			ret = export_builtin(*arg, out);

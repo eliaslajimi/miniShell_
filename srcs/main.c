@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-
 void	sighandler(int num)
 {
 	if (num == SIGQUIT)

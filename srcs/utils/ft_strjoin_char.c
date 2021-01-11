@@ -24,9 +24,9 @@ char		*ft_strjoin_char(char *s1, char c)
 	if (s1 == NULL)
 		return (NULL);
 	i = ft_strlen(s1);
-	if (!(result = (char*)malloc((i + 1) * sizeof(char))))
-		return (0);
+	if (!(result = (char*)malloc((i + 2) * sizeof(char))))
+		return (NULL);
 	result = ft_strfiller(result, s1, c);
-	free(s1);
+	ft_strdel(&s1);
 	return (result);
 }

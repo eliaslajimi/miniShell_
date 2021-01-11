@@ -33,7 +33,7 @@ static char *cmdpath(char *path, char *cmd)
         while (path_split[i])
         {
             if (!(bin = ft_calloc(sizeof(char), ft_strlen(path_split[i] + 1 +
-            ft_strlen(cmd) + 1))))
+            ft_strlen(cmd) + 2))))
                 return (0);
             bin = ft_strjoin(bin, path_split[i]);
             bin = ft_strjoin(bin, "/");
