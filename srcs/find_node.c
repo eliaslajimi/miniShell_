@@ -2,7 +2,6 @@
 
 char *cleannode(char *node)
 {
-	
 	while(*node != '=')
 		++node;
 	return (++node);

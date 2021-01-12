@@ -66,13 +66,13 @@ void	commands(c_table *ctable)
 	else if (ft_strcmp(ctable->command, "echo") == 0)
 		*status = echo(ctable->args, ctable->in, ctable->out);
 	else if (ft_strcmp(ctable->command, "env") == 0)
-		*status = env_builtin(ctable->command, ctable->out);
+		*status = env_builtin(ctable->args, ctable->out);
 	else if (ft_strcmp(ctable->command, "unset") == 0)
 		*status = unset_builtin_loop(ctable->args, "void");
 	else if (ft_strcmp(ctable->command, "export") == 0)
 		*status = export_builtin_loop(ctable->args, ctable->out);
 	else if (ft_strcmp(ctable->command, "pwd") == 0)
-		*status = pwd_builtin(ctable->out);
+		*status = pwd_builtin(ctable->args, ctable->out);
 	else if (ft_strcmp(ctable->command, "cd") == 0)
 		*status = cd(ctable->args, ctable->in, ctable->out);
 	else

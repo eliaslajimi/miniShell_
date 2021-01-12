@@ -127,7 +127,7 @@ char	*swap_dollar(char *s, int i, int len);
 //<<<<<<< HEAD
 //int	env_builtin(int out);
 //=======
-int		env_builtin(char *cmd, int out);
+int		env_builtin(char **args, int out);
 //>>>>>>> e55579ef6298c3aa732374a42741ddeba7790c77
 t_list	*setEnv(char **envp);
 int		add_pwd();
@@ -148,7 +148,7 @@ int		join_sorted_list(t_list *env_lst, int out);
 //>>>>>>> e55579ef6298c3aa732374a42741ddeba7790c77
 
 /*pwd*/
-int	pwd_builtin(int out);
+int	pwd_builtin(char **args, int out);
 
 /*unset*/
 int	unset_builtin(char *arg, char *exportarg);

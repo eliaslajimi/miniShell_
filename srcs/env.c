@@ -28,12 +28,18 @@ int add_shlvl()
 	return (0);
 }
 
-int add_oldpwd()
+int			add_oldpwd()
 {
-	char *oldpwd;
-	oldpwd = cleannode(find_node("PWD"));
-	oldpwd = ft_strjoin(ft_strdup("OLDPWD="), oldpwd);
-	export_builtin(oldpwd, 0);
+	char	*oldpwd;
+	char	*oldpwd_env;
+
+	if ((oldpwd = find_node("PWD")) != NULL)
+	{
+		oldpwd_env = ft_strdup("OLDPWD=");
+		oldpwd = cleannode(oldpwd);
+		oldpwd = ft_strjoin(oldpwd_env, oldpwd);
+		export_builtin(oldpwd, 0);
+	}
 	return (0);
 }
 
@@ -46,9 +52,10 @@ int	add_pwd()
 
 	bufsize = 0;
 	buf = NULL;
+	pwd_env = ft_strdup("PWD=");
 	add_oldpwd();
 	currentdir = getcwd(buf, bufsize);
-	pwd_env = ft_strjoin(ft_strdup("PWD="), currentdir);
+	pwd_env = ft_strjoin(pwd_env, currentdir);
 	export_builtin(pwd_env, 0);
 	free(pwd_env);
 	free(buf);
@@ -75,12 +82,19 @@ t_list	*setEnv(char **envp)
 	return (env_lst);
 }
 
-int		env_builtin(char *cmd, int out)
+int		env_builtin(char **args, int out)
 {
+	char	*cmd;
 	char	*result;
 	t_list	*tmp_lst;
 
+	if (args[1] != NULL)
+	{
+		print("minishell: env: too many arguments\n", 2);
+		return(1);
+	}
 	tmp_lst = g_env;
+	cmd = ft_strdup(args[0]);
 	result = ft_strdup("");
 	add_underscore(cmd);
 	while (tmp_lst->next)
@@ -91,5 +105,7 @@ int		env_builtin(char *cmd, int out)
 	}
 	result = ft_strjoin(result, tmp_lst->content);
 	print(result, out);
+	ft_strdel(&cmd);
+	ft_strdel(&result);
 	return (0);
 }
