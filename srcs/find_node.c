@@ -2,7 +2,9 @@
 
 char *cleannode(char *node)
 {
-	while(*node != '=')
+	if (!node)
+		return (NULL);
+	while(*node && *node != '=')
 		++node;
 	return (++node);
 }

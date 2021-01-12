@@ -14,6 +14,8 @@ char *formatpath(char *path)
 		path++;
 		path = ft_strjoin(ft_strjoin(ft_strdup(cleannode(find_node("HOME"))), "/"), path + 1);
 	 }
+	if (!ft_strncmp(path, "./", 2))
+		path= ft_strtrim(path, "./");
 	return (path);
 }
 
@@ -27,7 +29,15 @@ int applycmd(char *cmd)
 	if (cmd[0] == '~' || cmd[0] == '/')
 		status = chdir(cmd);
 	else
-		status = chdir(ft_strjoin(ft_strjoin(ft_strdup(cleannode(find_node("PWD"))), "/"), cmd));
+	{
+		cmd = ft_strtrim(cmd, "/");
+		cmd = ft_strjoin(cmd, "/");
+		if (!ft_strcmp(cleannode(find_node("PWD")), "/"))
+			cmd = ft_strjoin(ft_strdup(cleannode(find_node("PWD"))), cmd);
+		else
+			cmd = ft_strjoin(ft_strjoin(ft_strdup(cleannode(find_node("PWD"))), "/"), cmd);
+		status = chdir(cmd);
+	}
 	if (!status)
 		add_pwd();
 	return (status);
@@ -54,6 +64,8 @@ int cd(char **args, int in, int out)
 {
 	int status;
 
+	if (!find_node("PWD"))
+		add_pwd();
 	status = 0;
 	(void)in;
 	(void)out;
