@@ -90,11 +90,12 @@ char	**expanse_array(char **array, int previous_size, char *new_token);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 void	ft_strcpy(char *dst, char *src, int n);
 char	*ft_itoa(int n);
-int		ft_atoi(const char *s);
+int		ft_atoi_minishell(const char *s);
 char	*ft_strchr(const char *s, int c);
 char	*remove_char(char *str, char c);
 char	*remove_char_pos(char *str, int c);
 char	*remove_all_char(char *str, char c);
+int		ft_isdigit(int c);
 
 /*Struct Utils*/
 c_table *init_struct();

@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-int						ft_atoi(const char *str)
+int						ft_atoi_minishell(const char *str)
 {
 	int					i;
 	int					sign;
@@ -19,8 +19,6 @@ int						ft_atoi(const char *str)
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		result = 10 * result + str[i] - '0';
-		if (result > LONG_MAX)
-			return ((sign == -1) ? 0 : -1);
 		i++;
 	}
 	result = result * sign;

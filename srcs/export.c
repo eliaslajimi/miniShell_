@@ -28,7 +28,7 @@ int			export_builtin(char *arg, int out)
 	}
 	else
 	{
-		add_underscore("export");
+//		add_underscore("export");
 		return (join_sorted_list(env_lst, out));
 	}
 }
