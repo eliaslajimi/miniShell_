@@ -6,7 +6,7 @@
 /*   By: cmcgahan <cmcgahan@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 10:00:56 by cmcgahan          #+#    #+#             */
-/*   Updated: 2021/01/12 10:02:38 by cmcgahan         ###   ########.fr       */
+/*   Updated: 2021/01/14 16:50:22 by cmcgahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,18 @@ static char	*iter_and_join(int nbfalse, char *booltab, t_list *env_lst)
 			iter = iter->next;
 		}
 		booltab[j] = '0';
-		tmp = ft_strjoin(declarex_str, tmp);
-		declarex_lst = ft_strjoin(declarex_lst, tmp);	
+		
+		int n = 0;
+		char *other;
+		while (tmp[n] != '=')
+			n++;
+		n++;
+		other = ft_strndup(tmp, n);
+		other = ft_strjoin(other, "\"");
+		other = ft_strjoin(other, tmp + n);
+		other = ft_strjoin(other, "\"");
+		other = ft_strjoin(declarex_str, other); 
+		declarex_lst = ft_strjoin(declarex_lst, other);	
 		declarex_lst = ft_strjoin(declarex_lst, "\n");
 	}
 	free(booltab);

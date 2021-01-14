@@ -103,11 +103,13 @@ char		*handling_word_quotes_dollar(char *word)
 			dollar(v, word);
         else if (word[v->i] == '\\')
         {
-            if (word[v->i + 1] == '\'' || word[v->i + 1] == '\"')
-            {
-                v->i++;
+   //         if (word[v->i + 1] == '\'' || word[v->i + 1] == '\"')
+     //       {
+              v->i++;
                 v->result = ft_strjoin_char(v->result, word[v->i++]);
-            }
+  //          }
+//			else
+//				v->result = ft_strjoin_char(v->result, word[v->i++]);
         }
 		else
 			v->result = ft_strjoin_char(v->result, word[v->i++]);
