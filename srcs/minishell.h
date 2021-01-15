@@ -21,6 +21,15 @@
 
 /*command table*/
 
+typedef struct	s_hwqd
+{
+		int		i;
+		int		len;
+		char	*result;
+		int		*status;
+		char	*str_status;
+}				t_hwqd;
+
 typedef struct		s_list
 {
 	void			*content;
@@ -122,35 +131,27 @@ char	*pipe_token(char *line);
 char	*word_token(char *line);
 int		word_token_len(char *line);
 char	*dollar_token(char *line);
+char	*handling_word_quotes_dollar(char *word);
 
 /*parser utils*/
 char		*hdoublequotes(char *word);
 char	*handle_double_quote(char *token);
 char	*handle_simple_quote(char *token);
 char	*swap_dollar(char *s, int i, int len);
+
 /*env*/
-//<<<<<<< HEAD
-//int	env_builtin(int out);
-//=======
 int		env_builtin(char **args, int out);
-//>>>>>>> e55579ef6298c3aa732374a42741ddeba7790c77
 t_list	*setEnv(char **envp);
 int		add_pwd();
 int		add_shlvl();
 int		add_underscore(char *cmd);
 
 ///*export*/
-//<<<<<<< HEAD
-//int	export_builtin(char *arg, int out);
-//char	*find_node(t_list **lst, char *data);
-//int	join_sorted_list(t_list *env_lst, int out);
-//=======
 int		export_builtin(char *arg, int out);
 int		export_builtin_loop(char **arg, int out);
 char	*find_node(char *data);
 char *cleannode(char *node);
 int		join_sorted_list(t_list *env_lst, int out);
-//>>>>>>> e55579ef6298c3aa732374a42741ddeba7790c77
 
 /*pwd*/
 int	pwd_builtin(char **args, int out);

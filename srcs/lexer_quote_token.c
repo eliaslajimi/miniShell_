@@ -18,7 +18,15 @@ static int		skip_quote_lexer(char *line, char quote)
 
 	skip = 1;
 	while (line[skip] && line[skip] != quote)
-		skip++;
+	{
+		if (quote == '\"' && line[skip] == '\\')
+		{
+//			if (line[skip + 1] == quote)
+				skip += 2;
+		}
+		else
+			skip++;
+	}
 	return (skip + 1);
 }
 
@@ -27,25 +35,32 @@ char	*matching_quotes(char *line)
 	int	i = 0;
 	while (line[i])
 	{
-		while (line[i] && line[i] != 34 && line[i] != 39)
+		while (line[i] && line[i] != '\"' && line[i] != '\'' && line[i] != '\\')
 			i++;
-		if (line[i] == 34)
+		if (line[i] == '\"')
 		{
-			i += skip_quote_lexer(line + i, 34);
+			i += skip_quote_lexer(line + i, '\"');
 			if (i == ft_strlen(line) + 1)
 			{
 				line = inputline_join(line);
 				return (matching_quotes(line));
 			}
 		}
-		else if (line[i] == 39)
+		else if (line[i] == '\'')
 		{
-			i += skip_quote_lexer(line + i, 39);
+			i += skip_quote_lexer(line + i, '\'');
 			if (i == ft_strlen(line) + 1)
 			{
 				line = inputline_join(line);
 				return (matching_quotes(line));
 			}
+		}
+		else if (line[i] == '\\')
+		{
+//			if (line[i + 1] == '\'' || line[i + 1] == '\"')
+				i += 2;
+//			else
+//				i++;
 		}
 	}
 	return (line);
