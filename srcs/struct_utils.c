@@ -13,6 +13,7 @@ c_table *init_struct()
 
 	init = (c_table*)malloc(sizeof(c_table));
 	init->separator = 0;
+	init->id = -1;
 	init->pipein = 0;
 	init->pipeout = 0;
 	init->command = "";
@@ -55,11 +56,17 @@ void free_struct(c_table *ctable)
 
 void print_struct(c_table *ctable)
 {
+	if (!ctable)
+	{
+	printf("ctable is NULL\n");
+	return ;
+}
 	printf("\n============================================\n");
 	printf("ctable: separator:	[%d]\n", ctable->separator); 
 	printf("ctable: pipein:		[%d]\n", ctable->pipein); 
 	printf("ctable: pipeout:	[%d]\n", ctable->pipeout); 
 	printf("ctable: command:	[%s]\n", ctable->command); 
+	printf("ctable: proc.id:	[%d]\n", ctable->id); 
 	printf("ctable: flag:		[%s]\n", ctable->flags); 
 	int i = 0;
 	while (ctable->args[i])

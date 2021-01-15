@@ -1,4 +1,5 @@
 #include "minishell.h"
+
 static char	**build_env_tab()
 {
 	int		i;
@@ -21,27 +22,38 @@ static char	**build_env_tab()
 	return (env_tab);
 }
 
-int	fork_cmd(char *cmd, char **args)
+int fork_cmd(char *cmd, char **args, int in,  int out)
 {
 	pid_t	pid;
 	char	**env_tab;
+	int	*status;
 
+	status = (int*)getglobal(STATUS);
 	env_tab = build_env_tab();
-	pid = fork();
-	if (pid < 0)
+	if (!(pid = fork()))//CHILD
 	{
-		print("fork failed", 2);
-		return (0);
+		if (in > 0)
+		{
+			dup2(in, 0);
+			close(in);
+		}
+
+		if (out != 1)
+		{
+			dup2(out, 1);
+			close(out);
+		}
+		*status = execve(cmd, args, env_tab);
+		exit(*status);
 	}
-	else if (pid == 0)
+	else if (pid < 0)
 	{
-		execve(cmd, args, env_tab);
+		return (-1);
 	}
-	else
-	{
-		waitpid(pid, 0, 0);
-		kill(pid, SIGTERM);
-	}
+	if (out != 1)
+		close(out);
+	waitpid(pid, 0, 0);
+	kill(pid, SIGTERM);
 	ft_free_array(env_tab);
-	return (0);
+	return (pid);
 }

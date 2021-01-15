@@ -32,9 +32,10 @@ typedef struct		t_table
 	int				separator;
 	int				pipein;
 	int				pipeout;
-	char			*command;
-	char			*flags;
-	char			**args;
+	pid_t				id;
+	char				*command;
+	char				*flags;
+	char				**args;
 	int				args_len;
 	int				in;
 	int				out;
@@ -45,12 +46,12 @@ typedef struct		t_table
 	int				command_exists;
 }					c_table;
 
-c_table *init, *ctable;
+//c_table *init, *ctable;
 /*global variable*/
 
 t_list	*g_env;
 void	*getglobal(int mode);
-void	exitroutine();
+void	exitroutine(c_table *ctable);
 
 /*PROCESS*/
 int	id;
@@ -65,8 +66,8 @@ void	executor(c_table *);
 void	args(char **argv);
 int	print(char *s, int fd);
 int	echo(char **arg, int in, int out);
-int cd(char **arg, int in, int out);
-
+int	cd(char **arg, int in, int out);
+ 
 /*utils*/
 int	get_next_line(int fd, char **line);
 int	ft_strcmp(const char *, const char *);
@@ -77,6 +78,8 @@ char	*ft_strtrim(char const *, char const *);
 char	*ft_substr(char *, int , int );
 char	*ft_strndup(const char *s1, int n);
 char	*ft_strjoin(char *s1, char *s2);
+char	**ft_strjoin2(char **s1, char **s2);
+char	**appendtoptr(char **s1, char *s2);
 char	*ft_strjoin_char(char *s1, char c);
 char	*ft_strdup(char *s1);
 void	*ft_calloc(int count, int size);
@@ -90,19 +93,20 @@ char	**expanse_array(char **array, int previous_size, char *new_token);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 void	ft_strcpy(char *dst, char *src, int n);
 char	*ft_itoa(int n);
-int		ft_atoi_minishell(const char *s);
+int	ft_atoi_minishell(const char *s);
 char	*ft_strchr(const char *s, int c);
 char	*remove_char(char *str, char c);
 char	*remove_char_pos(char *str, int c);
 char	*remove_all_char(char *str, char c);
-int		ft_isdigit(int c);
+int	ft_isdigit(int c);
 
 /*Struct Utils*/
-c_table *init_struct();
 void	add_struct(c_table **ctable);
 void	next_struct(c_table **ctable);
 void	print_struct(c_table *ctable);
 void	free_struct(c_table *ctable);
+c_table *init_struct();
+c_table **getstruct();
 
 /*lexer_utils*/
 int	ft_isin(int c, char *set);
@@ -160,7 +164,8 @@ void	exit_builtin(char **args);
 
 /*absolute path*/
 char	*absolute_path(char *cmd);
-int	fork_cmd(char *cmd, char **args);
+int	fork_cmd(char *cmd, char **args, int in,  int out);
+
 
 /*dollar*/
 char	*dollar_swap(char *tokens);

@@ -4,15 +4,15 @@ void	sighandler(int num)
 {
 	c_table *ctable;
 	
-	ctable = (c_table*)getstruct();
+	ctable = getstruct();
 	if (num == SIGQUIT)
 	{
-		exitroutine(ctable);	
+		exitroutine();	
 		exit(*((int*)getglobal(STATUS)));
 	}
 	if (num == SIGINT)
 	{
-		exitroutine(ctable);	
+		exitroutine();	
 		minishell();
 	}
 }

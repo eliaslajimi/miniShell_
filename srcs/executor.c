@@ -1,3 +1,4 @@
+
 #include "minishell.h"
 
 int	getfd(char *file, int mode)
@@ -16,19 +17,12 @@ int	setpipe(int *fdin)
 	return (fd[0]);
 }
 
-void	next_exec(c_table *ctable)
+void	next_exec(c_table **ctable)
 {
-	if (ctable->pipein && !ctable->pipeout)
-	{
-		exitroutine();
-		exit(*((int*)getglobal(STATUS)));
-	}
-	if ((ctable = ctable->next) && (ctable))
-		executor(ctable);
+	if (!(*ctable)->id)
+		exit(*(int*)getglobal(STATUS));
 }
 
-//*status = echo(ctable->args[0], ctable->flags, ctable->in, ctable->out); <-- PROTOTYPE FOR BUILTIN || 
-//should refactor builtin with proper prototype
 int	other_command(c_table *ctable)
 {
 		int status;
@@ -44,7 +38,7 @@ int	other_command(c_table *ctable)
 		}
 		else
 		{
-			status = fork_cmd(ctable->command, ctable->args);
+			status = fork_cmd(ctable->command, ctable->args, ctable->in, ctable->out);
 		}
 	return (status);
 }
@@ -54,15 +48,8 @@ void	commands(c_table *ctable)
 	int	*status;
 
 	status = (int*)getglobal(STATUS);
-/*	int i = 0;
-	while (ctable->args[i])
-	{
-		printf("args[%d][%s]\n",i,ctable->args[i]);
-		i++;
-	}
-*/	if (ft_strcmp(ctable->command, "exit") == 0)
+	if (ft_strcmp(ctable->command, "exit") == 0)
 		exit_builtin(ctable->args);
-//		exit(*((int*)getglobal(STATUS)));
 	else if (ft_strcmp(ctable->command, "echo") == 0)
 		*status = echo(ctable->args, ctable->in, ctable->out);
 	else if (ft_strcmp(ctable->command, "env") == 0)
@@ -77,22 +64,42 @@ void	commands(c_table *ctable)
 		*status = cd(ctable->args, ctable->in, ctable->out);
 	else
 		*status = other_command(ctable);
-	next_exec(ctable);
+}
+
+int	pipehandler(c_table *ctable)
+{
+	if (ctable->pipeout)
+		ctable->next->in = setpipe(&ctable->out);
+	return (0);
+}
+
+
+int	piperoutine(c_table *ctable)
+{
+	pipehandler(ctable);
+	if (!(ctable->id = fork()))//CHILD
+		return (0);
+	else if (ctable->id)//PARENT
+	{
+		ctable->next->id = ctable->id;
+		ctable = ctable->next;
+		wait(NULL);
+		executor(ctable);
+	}
+	fflush(stdout);
+	return (0);
 }
 
 void	executor(c_table *ctable)
 {
-	//print_struct(ctable);
-	if (ctable->pipeout)
-		ctable->next->pipein = setpipe(&ctable->out);
-	if (ctable->pipein)
-		ctable->in = ctable->pipein;
-	if (ft_strcmp(ctable->filein, "") != 0)
-		ctable->in = getfd(ctable->filein, ctable->in);
+	if (ctable == NULL)
+		return ;
 	if (ft_strcmp(ctable->fileout, "") != 0)
 		ctable->out = getfd(ctable->fileout, ctable->out);
-	if (ctable->pipeout && !(id = fork()))
-		executor(ctable->next);
+	if (ctable->pipeout)	
+		piperoutine(ctable);
 	commands(ctable);
+	ctable = ctable->next;
+	executor(ctable);
 }
 

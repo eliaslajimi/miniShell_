@@ -73,12 +73,7 @@ int			redirection(c_table *ctable, char **token)
 void			token_to_command(c_table *ctable, char **tokens)
 {
 	(void)ctable;
-	if (is_pipe(*tokens, ctable))
-	{
-		ctable->command_exists = 0;
-		add_struct(&ctable);
-	}
-	else if (is_redirec(*tokens) != 0)
+	if (is_redirec(*tokens) != 0)
 	{
 		redirection(ctable, tokens++);
 	}
@@ -100,6 +95,11 @@ int			parser(c_table *ctable, char **tokens)
 	while (*tokens)
 	{
 		if ((ctable->separator = separator(*tokens)) != 0)
+		{
+			ctable->command_exists = 0;
+			add_struct(&ctable);
+		}
+		if (is_pipe(*tokens, ctable))
 		{
 			ctable->command_exists = 0;
 			add_struct(&ctable);
