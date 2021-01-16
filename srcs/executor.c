@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 int	getfd(char *file, int mode)
@@ -64,6 +63,7 @@ void	commands(c_table *ctable)
 		*status = cd(ctable->args, ctable->in, ctable->out);
 	else
 		*status = other_command(ctable);
+	next_exec(&ctable);
 }
 
 int	pipehandler(c_table *ctable)
@@ -83,7 +83,6 @@ int	piperoutine(c_table *ctable)
 	{
 		ctable->next->id = ctable->id;
 		ctable = ctable->next;
-		wait(NULL);
 		executor(ctable);
 	}
 	fflush(stdout);

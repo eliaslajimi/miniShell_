@@ -30,7 +30,8 @@ int fork_cmd(char *cmd, char **args, int in,  int out)
 
 	status = (int*)getglobal(STATUS);
 	env_tab = build_env_tab();
-	if (!(pid = fork()))//CHILD
+	pid = fork();	
+	if (pid == 0)//CHILD
 	{
 		if (in > 0)
 		{
@@ -52,8 +53,16 @@ int fork_cmd(char *cmd, char **args, int in,  int out)
 	}
 	if (out != 1)
 		close(out);
-	waitpid(pid, 0, 0);
-	kill(pid, SIGTERM);
+
+	int childstatus;
+	pid_t tpid;
+	tpid = wait(&childstatus);
+	while (tpid != pid)
+	{
+		if (tpid != pid)
+			kill(tpid, SIGTERM);
+		tpid = wait(&childstatus);
+	}
 	ft_free_array(env_tab);
-	return (pid);
+	return (0);
 }

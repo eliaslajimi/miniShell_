@@ -13,13 +13,8 @@ int			echo(char **arg, int in, int out)
 	result = ft_calloc(1,1);
 	if (in)
 	{
-		//printf("in is: %d\n", 
-			printf("in is: %d", in);
-			fflush(stdout);
 		if ((ret = read(in, buf, 9)) > 0)
 			result = ft_strjoin(result, buf);
-				printf("result is: [%s]", result);
-				fflush(stdout);
 	}
 	arg++;
 	while (*arg && (ft_strncmp(*arg, "-n", 2) == 0))
