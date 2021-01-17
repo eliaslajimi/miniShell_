@@ -38,30 +38,29 @@ int fork_cmd(char *cmd, char **args, c_table *ctable)
 	sstdin = dup(0);
 	sstdout = dup(1);
 	print_struct(ctable);
-	pid = fork();	
+	args[0] = ft_strdup(cmd);
+	pid = 0;
+	(void)cmd;
+	
+	pid = fork();
+
 	if (pid == 0)//CHILD
 	{
 		if (ctable->out > 2)
-		{
-			dup2(out, 1);
-			if (in>2)
-			close(ctable->in);
-		}
+			dup2(ctable->out, 1);
 		if (ctable->in > 2)
-		{
-			dup2(in, 0);
-			if (out > 2)
-			close(ctable->out);
-		}
-		*status = execve(cmd, args, env_tab);
+			dup2(ctable->in, 0);
+		*status = execve(args[0], &args[0], env_tab);
 		exit(*status);
 	}
 	else if (pid < 0)
 	{
 		return (-1);
 	}
-	close(out);
-	close(in);
+	waitpid(pid, status, 0);
+
+//	printfk("YOU SHOULD NOT SEE THIS MESSAGE\n");
+	//close(ctable->in);
 	dup2(sstdin, 0);
 	dup2(sstdout, 1);
 	ft_free_array(env_tab);

@@ -49,7 +49,7 @@ void	commands(c_table *ctable)
 	int	*status;
 
 	status = (int*)getglobal(STATUS);
-	wait(0);
+	waitpid(ctable->id, status, 0);
 	if (ft_strcmp(ctable->command, "exit") == 0)
 		exit_builtin(ctable->args);
 	else if (ft_strcmp(ctable->command, "echo") == 0)
@@ -83,13 +83,15 @@ int	piperoutine(c_table **ctable)
 	int pid;
 
 	pipe(fd);
-	pid = fork();	
+	pid = fork();
 	if (!pid)//CHILD
 	{
+		close(fd[0]);
 		(*ctable)->id = pid;
 		(*ctable)->out = fd[1];	
 		return (0);
 	}
+	close(fd[1]);
 	(*ctable)->id = pid;
 	(*ctable)->next->id = (*ctable)->id;
 	next_struct(ctable);
