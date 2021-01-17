@@ -71,7 +71,7 @@ void	wrapper(c_table *ctable);
 char	**lexer(char *input_line);
 int	subshell(char *);
 int	parser(c_table *, char **);
-void	executor(c_table *);
+void	executor(c_table **);
 void	args(char **argv);
 int	print(char *s, int fd);
 int	echo(char **arg, int in, int out);
@@ -165,7 +165,7 @@ void	exit_builtin(char **args);
 
 /*absolute path*/
 char	*absolute_path(char *cmd);
-int	fork_cmd(char *cmd, char **args, int in,  int out);
+int	fork_cmd(char *cmd, char **args, c_table *ctable);
 
 
 /*dollar*/

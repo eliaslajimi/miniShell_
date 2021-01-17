@@ -22,27 +22,36 @@ static char	**build_env_tab()
 	return (env_tab);
 }
 
-int fork_cmd(char *cmd, char **args, int in,  int out)
+int fork_cmd(char *cmd, char **args, c_table *ctable)
 {
 	pid_t	pid;
 	char	**env_tab;
 	int	*status;
+	int in, out;
 
 	status = (int*)getglobal(STATUS);
 	env_tab = build_env_tab();
+
+	in = ctable->in;
+	out = ctable->out;
+	int sstdin, sstdout;
+	sstdin = dup(0);
+	sstdout = dup(1);
+	print_struct(ctable);
 	pid = fork();	
 	if (pid == 0)//CHILD
 	{
-		if (in > 0)
-		{
-			dup2(in, 0);
-			close(in);
-		}
-
-		if (out != 1)
+		if (ctable->out > 2)
 		{
 			dup2(out, 1);
-			close(out);
+			if (in>2)
+			close(ctable->in);
+		}
+		if (ctable->in > 2)
+		{
+			dup2(in, 0);
+			if (out > 2)
+			close(ctable->out);
 		}
 		*status = execve(cmd, args, env_tab);
 		exit(*status);
@@ -51,18 +60,10 @@ int fork_cmd(char *cmd, char **args, int in,  int out)
 	{
 		return (-1);
 	}
-	if (out != 1)
-		close(out);
-
-	int childstatus;
-	pid_t tpid;
-	tpid = wait(&childstatus);
-	while (tpid != pid)
-	{
-		if (tpid != pid)
-			kill(tpid, SIGTERM);
-		tpid = wait(&childstatus);
-	}
+	close(out);
+	close(in);
+	dup2(sstdin, 0);
+	dup2(sstdout, 1);
 	ft_free_array(env_tab);
 	return (0);
 }

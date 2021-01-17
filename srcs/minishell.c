@@ -24,7 +24,7 @@ c_table **getstruct()
 void	wrapper(c_table *ctable)
 {
 	//c_table *ctable = (c_table*)getglobal(STRUCT);
-	ctable->command_exists = 0;
+	//ctable->command_exists = 0;
 	exitroutine(ctable);
 	while (ctable)
 		next_struct(&ctable);
@@ -45,7 +45,7 @@ void	wrapper(c_table *ctable)
 	if (!(tokens = lexer(inputcmd)))
 		wrapper(*init);
 	parser(ctable, tokens);
-	executor(*init);
+	executor(init);
 	free(tokens);
  	wrapper(*init);
 	return (0);

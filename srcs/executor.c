@@ -19,7 +19,9 @@ int	setpipe(int *fdin)
 void	next_exec(c_table **ctable)
 {
 	if (!(*ctable)->id)
+	{
 		exit(*(int*)getglobal(STATUS));
+	}
 }
 
 int	other_command(c_table *ctable)
@@ -37,7 +39,7 @@ int	other_command(c_table *ctable)
 		}
 		else
 		{
-			status = fork_cmd(ctable->command, ctable->args, ctable->in, ctable->out);
+			status = fork_cmd(ctable->command, ctable->args, ctable);
 		}
 	return (status);
 }
@@ -47,6 +49,7 @@ void	commands(c_table *ctable)
 	int	*status;
 
 	status = (int*)getglobal(STATUS);
+	wait(0);
 	if (ft_strcmp(ctable->command, "exit") == 0)
 		exit_builtin(ctable->args);
 	else if (ft_strcmp(ctable->command, "echo") == 0)
@@ -74,31 +77,40 @@ int	pipehandler(c_table *ctable)
 }
 
 
-int	piperoutine(c_table *ctable)
+int	piperoutine(c_table **ctable)
 {
-	pipehandler(ctable);
-	if (!(ctable->id = fork()))//CHILD
-		return (0);
-	else if (ctable->id)//PARENT
+	int fd[2];
+	int pid;
+
+	pipe(fd);
+	pid = fork();	
+	if (!pid)//CHILD
 	{
-		ctable->next->id = ctable->id;
-		ctable = ctable->next;
-		executor(ctable);
+		(*ctable)->id = pid;
+		(*ctable)->out = fd[1];	
+		return (0);
 	}
-	fflush(stdout);
-	return (0);
+	(*ctable)->id = pid;
+	(*ctable)->next->id = (*ctable)->id;
+	next_struct(ctable);
+	(*ctable)->in = fd[0];
+	return (1);
 }
 
-void	executor(c_table *ctable)
+void	executor(c_table **ctable)
 {
-	if (ctable == NULL)
+	if (*ctable == NULL)
 		return ;
-	if (ft_strcmp(ctable->fileout, "") != 0)
-		ctable->out = getfd(ctable->fileout, ctable->out);
-	if (ctable->pipeout)	
-		piperoutine(ctable);
-	commands(ctable);
-	ctable = ctable->next;
+	if (ft_strcmp((*ctable)->fileout, "") != 0)
+		(*ctable)->out = getfd((*ctable)->fileout, (*ctable)->out);
+	if ((*ctable)->pipeout)	
+		if (piperoutine(ctable))
+		{
+			executor(ctable);
+			return ;
+		}
+	commands(*ctable);
+	next_struct(ctable);
 	executor(ctable);
 }
 

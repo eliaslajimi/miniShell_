@@ -39,7 +39,7 @@ void args(char **argv)
 		if ((tokens = lexer(input)) != NULL)
 		{
 			parser(ctable, tokens);
-			executor(init);	
+			executor(&init);	
 			free(tokens);
 		}
 	}
