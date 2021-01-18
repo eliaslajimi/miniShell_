@@ -49,7 +49,7 @@ void	commands(c_table *ctable)
 	int	*status;
 
 	status = (int*)getglobal(STATUS);
-	waitpid(ctable->id, status, 0);
+	//waitpid(ctable->id, status, 0);
 	if (ft_strcmp(ctable->command, "exit") == 0)
 		exit_builtin(ctable->args);
 	else if (ft_strcmp(ctable->command, "echo") == 0)
@@ -66,6 +66,8 @@ void	commands(c_table *ctable)
 		*status = cd(ctable->args, ctable->in, ctable->out);
 	else
 		*status = other_command(ctable);
+	if (ctable->id > 0)
+		kill(ctable->id, 0);
 	next_exec(&ctable);
 }
 

@@ -37,7 +37,7 @@ int fork_cmd(char *cmd, char **args, c_table *ctable)
 	int sstdin, sstdout;
 	sstdin = dup(0);
 	sstdout = dup(1);
-	print_struct(ctable);
+	//print_struct(ctable);
 	args[0] = ft_strdup(cmd);
 	pid = 0;
 	(void)cmd;
