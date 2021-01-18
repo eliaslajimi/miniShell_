@@ -74,6 +74,7 @@ void print_struct(c_table *ctable)
 		printf("ctable: args[%d]:		[%s]\n",i, ctable->args[i]); 
 		i++;
 	}
+	printf("ctable: args_len:	[%d]\n", ctable->args_len);
 	printf("ctable: in:		[%d]\n", ctable->in); 
 	printf("ctable: out:		[%d]\n", ctable->out); 
 	printf("ctable: file in:	[%s]\n", ctable->filein); 

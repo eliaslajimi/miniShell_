@@ -1,25 +1,5 @@
 #include "minishell.h"
-/*
-char		*dollar_token(char *line)
-{
-	int		i;
-	char	*token;
 
-	i = 1;
-	token = "";
-	if (line[i] == '?')
-		token = ft_strdup("$?");
-	else if (line[1] == ' ')
-		token = ft_strdup("$");
-	else if (ft_isprint(line[i]) == 1 && !(ft_isin(line[i]," &;|><$\'\"")))
-	{
-		while (ft_isprint(line[i]) == 1 && !(ft_isin(line[i]," &;|><$\'\"")))
-			i++;
-		token = ft_strndup(line, i);
-	}
-	return (token);
-}
-*/
 int			word_token_len(char *line)
 {
 	int		i;	
@@ -89,9 +69,9 @@ char		*word_token(char *line)
 		i++;
 	}
 	token = ft_strndup(line, i);
-//	printf("1 token is [%s]\n", token);
+	//printf("1 token is [%s]\n", token);
 	token = handling_word_quotes_dollar(token);
-//	printf("2 token is [%s]\n", token);
+	//printf("2 token is [%s]\n", token);
 	return (token);
 }
 

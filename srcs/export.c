@@ -13,7 +13,7 @@ int			export_builtin(char *arg, int out)
 	int k = 0;
 	while (arg[k])
 	{
-		if (ft_isin(arg[k], "\'\"\\$@!|;&"))
+		if (ft_isin(arg[k], "\'\"\\$@!|;& "))
 		{
 			print("minishell: export: `", 2);
 			print(arg, 2);
@@ -45,7 +45,6 @@ int			export_builtin(char *arg, int out)
 			}
 			j++;
 		}
-
 		if (find_node(split_arg[0]) != NULL)
 		{
 			unset_builtin(split_arg[0], "void");
@@ -57,7 +56,7 @@ int			export_builtin(char *arg, int out)
 			return (1);
 		newnode = ft_lstnew(NULL);
 		newnode->content = ft_strdup(arg);
-		ft_lstadd_back(&g_env, newnode);
+		ft_lstadd_back(&env_lst, newnode);
 		return (0);
 	}
 	else if (ft_strcmp(arg, "null") == 0)

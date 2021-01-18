@@ -1,12 +1,14 @@
 #include "minishell.h"
 
-int			echo(char **arg, int in, int out)
+int			echo(char **arg, int args_len, int in, int out)
 {
+	int		i;
 	char	*result;
 	char	*buf;
-	int	ret;
-	int	nflag;
+	int		ret;
+	int		nflag;
 
+	i = 1;
 	ret = 0;
 	nflag = 0;
 	buf = malloc(10);
@@ -17,15 +19,22 @@ int			echo(char **arg, int in, int out)
 			result = ft_strjoin(result, buf);
 	}
 	arg++;
-	while (*arg && (ft_strncmp(*arg, "-n", 2) == 0))
+	while (i < args_len && (ft_strncmp(*arg, "-n", 2) == 0))
 	{
 		nflag = 1;
 		arg++;
+		i++;
 	}
-	while (arg && *arg)
+	while (i < args_len)
 	{
-		if ((print(*arg, out)) && ++arg)
-			print(" ", out);
+		if (*arg)
+		{
+			print(*arg, out);
+			arg++;
+			if (*arg)
+				print(" ", out);
+		}
+		i++;
 	}
 	if (nflag == 0)
 		print("\n", out);

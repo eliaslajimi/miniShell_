@@ -74,7 +74,7 @@ int	parser(c_table *, char **);
 void	executor(c_table **);
 void	args(char **argv);
 int	print(char *s, int fd);
-int	echo(char **arg, int in, int out);
+int	echo(char **arg, int args_len, int in, int out);
 int	cd(char **arg, int in, int out);
  
 /*utils*/
@@ -108,6 +108,7 @@ char	*remove_char(char *str, char c);
 char	*remove_char_pos(char *str, int c);
 char	*remove_all_char(char *str, char c);
 int	ft_isdigit(int c);
+int		find_semic(char *line, int start);
 
 /*Struct Utils*/
 void	add_struct(c_table **ctable);

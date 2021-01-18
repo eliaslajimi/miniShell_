@@ -1,48 +1,37 @@
 #include "minishell.h"
-/*
-char *getcmd(char **cmd)
-{
-	int i;
-	char *ret;
-
-	i = 0;
-	ret = ft_calloc(1,1);
-	while(cmd[i])	
-	{
-		ret = ft_strjoin(ret, cmd[i]);	
-		ret = ft_strjoin(ret, " ");
-		i++;
-	}
-	return (ret);
-}
-*/
-
-//char	*getcmd(char *cmd)
-//{
-//	char *ret;
-//	//ret = ft_strtrim(cmd, "\'");
-////	free(cmd);
-//	return (ret);
-//}
 
 void args(char **argv)
 {
-	char	*input;
+	int		start = 0;
+	int		end;
+	char	*inputcmd;
+	char	*cmd;
 	char	**tokens;
-	c_table	*init, *ctable;
+	c_table	**init, *ctable;
 
-	init = init_struct();
-	ctable = init;
-	if (ft_strcmp(argv[1], "-c") == 0)
-	{
-		input = ft_strdup(argv[2]);
-		if ((tokens = lexer(input)) != NULL)
+//	ctable = init;
+		inputcmd = ft_strdup(argv[2]);
+		while (start < ft_strlen(inputcmd))
+		{
+			init = getstruct();
+			*init = init_struct();
+			ctable = *init;
+			end = find_semic(inputcmd, start);
+			cmd = ft_substr(inputcmd, start, end - start);
+			start = end + 1;
+			if (!(tokens = lexer(cmd)))
+				wrapper(*init);
+			parser(ctable, tokens);
+			executor(init);
+			free(tokens);
+		}
+/*		if ((tokens = lexer(input)) != NULL)
 		{
 			parser(ctable, tokens);
 			executor(&init);	
 			free(tokens);
 		}
-	}
-	exitroutine(init);
+*/
+	exitroutine(*init);
 	exit(*(int*)getglobal(STATUS));
 }

@@ -48,12 +48,13 @@ void	commands(c_table *ctable)
 {
 	int	*status;
 
+	//print_struct(ctable);
 	status = (int*)getglobal(STATUS);
 	//waitpid(ctable->id, status, 0);
 	if (ft_strcmp(ctable->command, "exit") == 0)
 		exit_builtin(ctable->args);
 	else if (ft_strcmp(ctable->command, "echo") == 0)
-		*status = echo(ctable->args, ctable->in, ctable->out);
+		*status = echo(ctable->args, ctable->args_len, ctable->in, ctable->out);
 	else if (ft_strcmp(ctable->command, "env") == 0)
 		*status = env_builtin(ctable->args, ctable->out);
 	else if (ft_strcmp(ctable->command, "unset") == 0)

@@ -100,7 +100,10 @@ char		*handling_word_quotes_dollar(char *word)
 		else if (word[v->i] == '\"')
 		    double_quote(v, word);
 		else if (word[v->i] == '$')
+		{
 			dollar(v, word);
+		}
+			
         else if (word[v->i] == '\\')
         {
    //         if (word[v->i + 1] == '\'' || word[v->i + 1] == '\"')

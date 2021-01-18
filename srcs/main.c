@@ -22,7 +22,7 @@ int	main(int argc, char **argv, char **envp)
 	g_env = setEnv(envp);
 	add_pwd();
 	add_shlvl();
-	if (argc > 1)
+	if (argc == 3 && ft_strcmp(argv[1], "-c") == 0)
 		args(argv);	
 	signal(SIGINT, sighandler);
 	signal(SIGQUIT, sighandler);

@@ -10,7 +10,7 @@ void exitroutine(c_table *ctable)
 void *getglobal(int mode)
 {
 	static int *ret_status;
-	
+
 	if (mode == STATUS)
 		return ((void*)&ret_status);
 	return (NULL);
@@ -31,22 +31,32 @@ void	wrapper(c_table *ctable)
 	minishell();
 }
 
- int     minishell()
- {
+int			minishell()
+{
+	int		start = 0;
+	int		end;
+	char	*cmd;
 	char	*inputcmd;
 	char	**tokens;
 
 	c_table **init, *ctable;
-	init = getstruct();
-	*init = init_struct();
 	write(1, ">> ", 3);
-	ctable = *init;
+
 	get_next_line(1, &inputcmd);
-	if (!(tokens = lexer(inputcmd)))
-		wrapper(*init);
-	parser(ctable, tokens);
-	executor(init);
-	free(tokens);
- 	wrapper(*init);
+	while (start < ft_strlen(inputcmd))
+	{
+		init = getstruct();
+		*init = init_struct();
+		ctable = *init;
+		end = find_semic(inputcmd, start);
+		cmd = ft_substr(inputcmd, start, end - start);
+		start = end + 1;
+		if (!(tokens = lexer(cmd)))
+			wrapper(*init);
+		parser(ctable, tokens);
+		executor(init);
+		free(tokens);
+	}
+	wrapper(*init);
 	return (0);
- }
+}
