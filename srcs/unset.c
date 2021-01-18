@@ -29,6 +29,7 @@ static int	 ft_lstdelnode(t_list **lst, char *data, int datalen)
 
 int	unset_builtin(char *arg, char *exportarg)
 {
+	int		k;
 	int		ret;
 	int		arglen;
 	char	*param;
@@ -36,6 +37,23 @@ int	unset_builtin(char *arg, char *exportarg)
 
 	ret = 0;
 	env_lst = g_env;
+	if (arg[0] == '\0')
+	{
+		print("minishell: unset: `': not a valid identifier\n", 2);
+		return (1);
+	}
+	k = 0;
+	while (arg[k])
+	{
+		if (ft_isin(arg[k], "\'\"\\$@!|;&= "))
+		{
+			print("minishell: unset: `", 2);
+			print(arg, 2);
+			print("': not a valid identifier\n", 2);
+			return (1);
+		}
+		k++;
+	}
 	if (ft_strcmp(arg, "") != 0)
 	{
 		if (ft_strcmp(exportarg, "void") == 0)
@@ -54,13 +72,17 @@ int	unset_builtin(char *arg, char *exportarg)
 
 int		unset_builtin_loop(char **arg, char *exportarg)
 {
+	int	final_ret;
 	int	ret;
 
 	arg++;
+	final_ret = 0;
 	while (*arg)
 	{
 		ret = unset_builtin(*arg, exportarg);
+		if (ret != 0)
+			final_ret = ret;
 		arg++;
 	}
-	return (ret);
+	return (final_ret);
 }
