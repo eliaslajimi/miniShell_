@@ -47,34 +47,51 @@ int argtocmd(char *arg)
 {
 	int *status;
 
+	if (!arg)
+		return (0);
 	status = (int*)getglobal(STATUS);
 	arg = formatpath(arg);
 	*status = applycmd(arg);
 	if (*status != 0)
 	{
-		print("cd: no such file or directory: ", 1);
+		print("minishell: ", 1);
+		print("cd: ", 1);
 		print(arg, 1);
+		print(": No such file or directory", 1);
 		print("\n", 1);
 	 }
 
 	return (0);
 }
 
+char **removeidentical(char **cmd)
+{
+	while (cmd && *cmd && *(cmd+1))
+	{
+		if (ft_strcmp(*cmd, *(cmd + 1)))
+			return (cmd);
+		cmd++;
+	}
+	return (cmd);
+}
 int cd(char **args, int in, int out)
 {
 	int status;
 
-	if (!find_node("PWD"))
-		add_pwd();
+	//if (!find_node("PWD"))
+	//	add_pwd();
 	status = 0;
 	(void)in;
 	(void)out;
 	args++;
-	if (*args == NULL)
+	if (!ptr_len((void*)args))
 		argtocmd("");
 	while (*args)
 	{
-	    argtocmd(*args);
+		if (!ft_strlen(*args))
+			*args = ft_strjoin(*args, cleannode(find_node("PWD")));
+		args = removeidentical(args);	
+	    	argtocmd(*args);
 		args++;
 	}
 	return (status);
