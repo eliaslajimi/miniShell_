@@ -149,7 +149,7 @@ int		add_underscore(char *cmd);
 
 ///*export*/
 int		export_builtin(char *arg, int out);
-int		export_builtin_loop(char **arg, int out);
+int		export_builtin_loop(char **arg, int args_len, int out);
 char	*find_node(char *data);
 char *cleannode(char *node);
 int		join_sorted_list(t_list *env_lst, int out);

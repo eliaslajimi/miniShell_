@@ -7,6 +7,7 @@ int add_underscore(char *cmd)
 	char	*underscore_env;
 
 	env_lst = g_env;
+	cmd = absolute_path(cmd);
 	unset_builtin("_", "void");
 	underscore_env = ft_strdup("_=");
 	underscore_env = ft_strjoin(underscore_env, cmd);

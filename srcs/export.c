@@ -10,24 +10,18 @@ int			export_builtin(char *arg, int out)
 	i = 0;
 	env_lst = g_env;
 
-	int k = 0;
-	while (arg[k])
+	int k ;
+	if (arg[0] == '\0')
 	{
-		if (ft_isin(arg[k], "\'\"\\$@!|;& "))
-		{
-			print("minishell: export: `", 2);
-			print(arg, 2);
-			print("': not a valid identifier\n", 2);
-			exit(1);
-		}
-		k++;
+		print("minishell: export: `': not a valid identifier\n", 2);
+		return (1);
 	}
-	if (ft_isin(arg[0], "0123456789="))
+	else if (ft_isin(arg[0], "0123456789="))
 	{
 		print("minishell: export: `", 2);
 		print(arg, 2);
 		print("': not a valid identifier\n", 2);
-		exit(1);
+		return (1);
 	}
 	else if (ft_isin('=', arg))
 	{
@@ -36,12 +30,12 @@ int			export_builtin(char *arg, int out)
 		int j = 0;
 		while (split_arg[0][j])
 		{
-			if (ft_isin(split_arg[0][j], "\'\"\\$@!|;&"))
+			if (ft_isin(split_arg[0][j], "\'\"\\$@!|;& "))
 			{
 				print("minishell: export: `", 2);
 				print(arg, 2);
 				print("': not a valid identifier\n", 2);
-				exit(1);
+				return(1);
 			}
 			j++;
 		}
@@ -64,25 +58,39 @@ int			export_builtin(char *arg, int out)
 //		add_underscore("export");
 		return (join_sorted_list(env_lst, out));
 	}
+	else
+	{
+		k = 0;
+		while (arg[k])
+		{
+			if (ft_isin(arg[k], "\'\"\\$@!|;& "))
+			{
+				print("minishell: export: `", 2);
+				print(arg, 2);
+				print("': not a valid identifier\n", 2);
+				return (1);
+			}
+			k++;
+		}
+	}
 	return (0);
 }
 
-int			export_builtin_loop(char **arg, int out)
+int			export_builtin_loop(char **arg, int args_len, int out)
 {
+	int		i;
 	int		ret;
 
 	ret = 0;
-
+	i = 1;
 	arg++;
-	if (arg && *arg)
+	while (i < args_len)
 	{
-		while (*arg)
-		{
-			ret = export_builtin(*arg, out);
-			arg++;
-		}
+		ret = export_builtin(*arg, out);
+		arg++;
+		i++;
 	}
-	else
+	if (args_len == 1)
 		export_builtin("null", out);
 	return (ret);
 }
