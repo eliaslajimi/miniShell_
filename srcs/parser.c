@@ -55,6 +55,11 @@ int			redirection(c_table *ctable, char **token)
 
 	redirec = *token;
 	file = *(++token);
+	if (!ft_strlen(file) || ft_isin(file[0], "|><"))
+	{
+		print("wrong file", 1);
+		return (-1);
+	}
 	if (ft_strncmp(redirec, ">>", 2) == 0 && (ctable->out |= APPEND))
 	{
 		ctable->fileout = ft_strdup(file);
@@ -70,12 +75,14 @@ int			redirection(c_table *ctable, char **token)
 	return (0);
 }
 
-void			token_to_command(c_table *ctable, char **tokens)
+int	token_to_command(c_table *ctable, char **tokens)
 {
 	(void)ctable;
 	if (is_redirec(*tokens) != 0)
 	{
-		redirection(ctable, tokens++);
+		if (redirection(ctable, tokens++) < 0)
+			return (-1);
+		return (1);
 	}
 	else
 	{
@@ -85,12 +92,15 @@ void			token_to_command(c_table *ctable, char **tokens)
 		ctable->command_exists = 1;
 		ctable->args_len++;
 	}
+	return (0);
 }
 
 int			parser(c_table *ctable, char **tokens)
 {
-	int		*status;
+	int	*status;
+	int	result;
 
+	result = 0;
 	status = (int*)getglobal(STATUS);
 	while (*tokens)
 	{
@@ -105,7 +115,12 @@ int			parser(c_table *ctable, char **tokens)
 			add_struct(&ctable);
 		}
 		else 
-			token_to_command(ctable, tokens);
+		{
+			if ((result = token_to_command(ctable, tokens)) < 0)
+				return (-1);
+			else if (result == 1)
+				tokens++;
+		}
 		tokens++;
 	}
 	return (0);	

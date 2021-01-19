@@ -3,7 +3,7 @@
 int	getfd(char *file, int mode)
 {
 	int	fd;
-	fd = open(file, mode);
+	fd = open(file, mode, 777);
 	return (fd);
 }
 

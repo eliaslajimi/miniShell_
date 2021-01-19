@@ -53,7 +53,8 @@ int			minishell()
 		start = end + 1;
 		if (!(tokens = lexer(cmd)))
 			wrapper(*init);
-		parser(ctable, tokens);
+		if (parser(ctable, tokens) < 0)
+			wrapper(*init);
 		executor(init);
 		free(tokens);
 	}
