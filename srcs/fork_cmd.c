@@ -50,7 +50,17 @@ int fork_cmd(char *cmd, char **args, c_table *ctable)
 			dup2(ctable->out, 1);
 		if (ctable->in > 2)
 			dup2(ctable->in, 0);
+		errno = 0;
 		*status = execve(args[0], &args[0], env_tab);
+		if (errno != 0)
+		{
+			print("minishell: ", 2);
+			print(args[0], 2);
+			print(": ", 2);
+			print(strerror(errno), 2);
+			print("\n", 2);
+			return (126);
+		}
 		exit(*status);
 	}
 	else if (pid < 0)
@@ -64,5 +74,5 @@ int fork_cmd(char *cmd, char **args, c_table *ctable)
 	dup2(sstdin, 0);
 	dup2(sstdout, 1);
 	ft_free_array(env_tab);
-	return (0);
+	return (*status);
 }

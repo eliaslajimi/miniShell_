@@ -30,7 +30,7 @@ int	other_command(c_table *ctable)
 		ctable->command = ft_strdup(absolute_path(ctable->command));
 	
 		add_underscore(ctable->command);
-		if (ctable->command[0] != '/')
+		if (ctable->command[0] != '/' && ctable->command[0] != '.')
 		{
 			print("minishell: ", 2);
 			print(ctable->command, 2);
@@ -39,7 +39,7 @@ int	other_command(c_table *ctable)
 		}
 		else
 		{
-			status = fork_cmd(ctable->command, ctable->args, ctable);
+		status = fork_cmd(ctable->command, ctable->args, ctable);
 		}
 	return (status);
 }
