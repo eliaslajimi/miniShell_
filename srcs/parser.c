@@ -60,7 +60,7 @@ int			redirection(c_table *ctable, char **token)
 		print("wrong file", 1);
 		return (-1);
 	}
-	if (ft_strncmp(redirec, ">>", 2) == 0 && (ctable->out |= APPEND))
+	if (ft_strncmp(redirec, ">>", 2) == 0 && (ctable->out |= O_APPEND))
 	{
 		ctable->fileout = ft_strdup(file);
 	}
