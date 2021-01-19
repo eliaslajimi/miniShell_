@@ -79,8 +79,8 @@ char		**lexer(char *input_line)
 	isolated_tokens[0] = NULL;
 	if ((isolated_tokens = lex_line(isolated_tokens, input_line)) == NULL)
 		return (NULL); // we have to exit because non printable characters (ex with dir. arrows keys.)
-/*	int i = 0;
+	/*int i = 0;
 	while (isolated_tokens[i])
 		printf("token : [%s]\n", isolated_tokens[i++]);
-*/	return (isolated_tokens);
+	*/return (isolated_tokens);
 }
