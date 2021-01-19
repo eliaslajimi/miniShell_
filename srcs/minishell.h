@@ -112,6 +112,7 @@ char	*remove_all_char(char *str, char c);
 int	ft_isdigit(int c);
 int		find_semic(char *line, int start);
 int	ptr_len(void **ptr);
+int		ft_isalpha(int c);
 
 /*Struct Utils*/
 void	add_struct(c_table **ctable);

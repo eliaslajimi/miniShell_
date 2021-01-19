@@ -59,20 +59,26 @@ static void double_quote2(t_hwqd *v, char *word)
 static void double_quote(t_hwqd *v, char *word)
 {
     v->i++;
-		while (word[v->i] && word[v->i] != '\"')
-		{
-		if (word[v->i] != '$')
+	while (word[v->i] && word[v->i] != '\"')
+	{
+		if (word[v->i] == '\\')
+       	{
+           	if (word[v->i + 1] == '\'' || word[v->i + 1] == '\"' || word[v->i + 1] == '\\'
+			   || word[v->i + 1] == '$')
+           	{
+               	v->i++;
+               	v->result = ft_strjoin_char(v->result, word[v->i++]);
+           	}
+			else if (ft_isalpha(word[v->i + 1]) == 1)
+			{
+				v->result = ft_strjoin_char(v->result, word[v->i++]);
+				v->result = ft_strjoin_char(v->result, word[v->i++]);
+			}
+       	}
+		else if (word[v->i] != '$')
 			v->result = ft_strjoin_char(v->result, word[v->i++]);
-		else if (word[v->i] == '$')
-		    double_quote2(v, word);
-        else if (word[v->i] == '\\')
-        {
-            if (word[v->i + 1] == '\'' || word[v->i + 1] == '\"')
-            {
-                v->i++;
-                v->result = ft_strjoin_char(v->result, word[v->i++]);
-            }
-        }
+		else // if its a dollar
+	   		double_quote2(v, word);
 	}
 	v->i++;
 }
@@ -98,7 +104,9 @@ char		*handling_word_quotes_dollar(char *word)
 		if (word[v->i] == '\'')
 			single_quote(v, word);
 		else if (word[v->i] == '\"')
+		{
 		    double_quote(v, word);
+		}
 		else if (word[v->i] == '$')
 		{
 			dollar(v, word);
