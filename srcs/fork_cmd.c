@@ -52,7 +52,7 @@ int fork_cmd(char *cmd, char **args, c_table *ctable)
 			dup2(ctable->in, 0);
 		errno = 0;
 		*status = execve(args[0], &args[0], env_tab);
-		if (errno != 0)
+		if (errno != 0 && ft_strncmp(args[0], "./", 2))
 		{
 			print("minishell: ", 2);
 			print(args[0], 2);

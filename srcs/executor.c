@@ -30,12 +30,25 @@ int	other_command(c_table *ctable)
 		ctable->command = ft_strdup(absolute_path(ctable->command));
 	
 		add_underscore(ctable->command);
+		//int ret = 0;
+		status= 0;
+//		if (ctable->command[0] != '/' && ctable->command[0] != '.')
+//		{
+//			if ((ret = open(ctable->command, O_RDONLY)))
+//			{
+//				return (126);
+//			}
+//			(void)ret;
+//		}
 		if (ctable->command[0] != '/' && ctable->command[0] != '.')
 		{
-			print("minishell: ", 2);
-			print(ctable->command, 2);
-			print(": command not found\n", 2);
-			status = 127;
+			if (open(ctable->command, O_RDONLY))
+			{
+				print("minishell: ", 2);
+				print(ctable->command, 2);
+				print(": command not found\n", 2);
+				status = 127;
+			}
 		}
 		else
 		{
