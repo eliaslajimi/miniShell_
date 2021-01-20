@@ -12,24 +12,6 @@ static char	*inputline_join(char *line)
 	return (join);
 }
 
-static int		skip_quote_lexer(char *line, char quote)
-{
-	int skip;
-
-	skip = 1;
-	while (line[skip] && line[skip] != quote)
-	{
-		if (quote == '\"' && line[skip] == '\\')
-		{
-//			if (line[skip + 1] == quote)
-				skip += 2;
-		}
-		else
-			skip++;
-	}
-	return (skip + 1);
-}
-
 char	*matching_quotes(char *line)
 {
 	int	i = 0;
@@ -56,12 +38,7 @@ char	*matching_quotes(char *line)
 			}
 		}
 		else if (line[i] == '\\')
-		{
-//			if (line[i + 1] == '\'' || line[i + 1] == '\"')
 				i += 2;
-//			else
-//				i++;
-		}
 	}
 	return (line);
 }

@@ -23,13 +23,23 @@
 
 /*command table*/
 
+typedef struct	s_arg
+{
+	int			start;
+	int			end;
+	char		*inputcmd;
+	char		*cmd;
+	char		**tokens;	
+}				t_arg;
+
+
 typedef struct	s_hwqd
 {
-		int		i;
-		int		len;
-		char	*result;
-		int		*status;
-		char	*str_status;
+	int			i;
+	int			len;
+	char		*result;
+	int			*status;
+	char		*str_status;
 }				t_hwqd;
 
 typedef struct		s_list
@@ -78,6 +88,14 @@ void	args(char **argv);
 int	print(char *s, int fd);
 int	echo(char **arg, int args_len, int in, int out);
 int	cd(char **arg, int in, int out);
+
+/*args*/
+int		checking_pipes(char *inputcmd);
+int		checking_semic(char *inputcmd);
+int		skip_quote_lexer(char *line, char quote);
+int		matching_quotes_args(char *line);
+int		check_r_single(char **tokens, int i);
+int		args_checker(char *inputcmd);
  
 /*utils*/
 int	get_next_line(int fd, char **line);
@@ -137,6 +155,9 @@ char	*word_token(char *line);
 int		word_token_len(char *line);
 char	*dollar_token(char *line);
 char	*handling_word_quotes_dollar(char *word);
+int		lexer_check(char *inputline);
+int		lexer_special(char *input_line);
+char	*check_token(char *line);
 
 /*parser utils*/
 char		*hdoublequotes(char *word);

@@ -13,7 +13,8 @@ static void dollar(t_hwqd *v, char *word)
 	{
 		v->i++;
 		v->len = 0;
-		while (word[v->i] && word[v->i] != '$' && word[v->i] != '\"' && word[v->i] != '\'')
+		while (word[v->i] && word[v->i] != '$' && word[v->i] != '\"' && word[v->i] != '\''
+		&& word[v->i] != ',' && word[v->i] != '[' && word[v->i] != ']')
 		{
 			v->len++;
 			v->i++;
@@ -42,7 +43,8 @@ static void double_quote2(t_hwqd *v, char *word)
 	{
 		v->i++;
 		v->len = 0;
-		while (word[v->i] != '$' && word[v->i] != '\"' && word[v->i] != '\'')
+		while (word[v->i] != '$' && word[v->i] != '\"' && word[v->i] != '\'' && word[v->i] != '|'
+		&& word[v->i] != ',')
 		{
 			v->len++;
 			v->i++;
@@ -99,6 +101,7 @@ char		*handling_word_quotes_dollar(char *word)
         return (NULL);
 	v->i = 0;
 	v->result = ft_strdup("");
+	//printf("word: %s\n", word);
 	while (word[v->i])
 	{
 		if (word[v->i] == '\'')
@@ -114,13 +117,8 @@ char		*handling_word_quotes_dollar(char *word)
 			
         else if (word[v->i] == '\\')
         {
-   //         if (word[v->i + 1] == '\'' || word[v->i + 1] == '\"')
-     //       {
               v->i++;
                 v->result = ft_strjoin_char(v->result, word[v->i++]);
-  //          }
-//			else
-//				v->result = ft_strjoin_char(v->result, word[v->i++]);
         }
 		else
 			v->result = ft_strjoin_char(v->result, word[v->i++]);
