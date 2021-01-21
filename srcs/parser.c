@@ -60,14 +60,31 @@ int			redirection(c_table *ctable, char **token)
 		print("wrong file", 1);
 		return (-1);
 	}
-	if (ft_strncmp(redirec, ">>", 2) == 0 && (ctable->out |= O_APPEND))
+	if (ft_strncmp(redirec, ">>", 2) == 0 )
+        {
+                ctable->fileout = ft_strdup(file);
+                if (ft_strcmp(ctable->fileout, "") != 0)
+                {
+                        ctable->out  = open(ctable->fileout, O_CREAT | O_RDWR | O_APPEND, 777);
+                }
+        }
+        else if (ft_strcmp(redirec, ">") == 0 )
+        {
+                ctable->fileout = ft_strdup(file);
+                if (ft_strcmp(ctable->fileout, "") != 0)
+                {
+
+                        ctable->out  = open(ctable->fileout, O_CREAT | O_RDWR | O_TRUNC , 777);
+                }
+        }
+	/*if (ft_strncmp(redirec, ">>", 2) == 0 && (ctable->out |= O_APPEND))
 	{
 		ctable->fileout = ft_strdup(file);
 	}
 	else if (ft_strcmp(redirec, ">") == 0 && (ctable->out |= TRUNC))
 	{
 		ctable->fileout = ft_strdup(file);
-	}
+	}*/
 	else if (ft_strcmp(redirec, "<") == 0 && (ctable->in |= READ))
 	{
 		ctable->filein = ft_strdup(file);

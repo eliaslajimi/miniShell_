@@ -113,7 +113,7 @@ char	*ft_strjoin_char(char *s1, char c);
 char	*ft_strdup(char *s1);
 void	*ft_calloc(int count, int size);
 void	ft_free_array(char **tab);
-int	ft_lstsize(t_list *lst);
+int		ft_lstsize(t_list *lst);
 void	ft_lstadd_back(t_list **alst, t_list *new);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 t_list	*ft_lstlast(t_list *lst);
@@ -122,15 +122,16 @@ char	**expanse_array(char **array, int previous_size, char *new_token);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 void	ft_strcpy(char *dst, char *src, int n);
 char	*ft_itoa(int n);
-int	ft_atoi_minishell(const char *s);
+int		ft_atoi_minishell(const char *s);
 char	*ft_strchr(const char *s, int c);
 char	*remove_char(char *str, char c);
 char	*remove_char_pos(char *str, int c);
 char	*remove_all_char(char *str, char c);
-int	ft_isdigit(int c);
+int		ft_isdigit(int c);
 int		find_semic(char *line, int start);
-int	ptr_len(void **ptr);
+int		ptr_len(void **ptr);
 int		ft_isalpha(int c);
+long long 	ft_atoi(const char *str);
 
 /*Struct Utils*/
 void	add_struct(c_table **ctable);

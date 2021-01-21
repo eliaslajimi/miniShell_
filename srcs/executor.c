@@ -119,8 +119,8 @@ void	executor(c_table **ctable)
 {
 	if (*ctable == NULL)
 		return ;
-	if (ft_strcmp((*ctable)->fileout, "") != 0)
-		(*ctable)->out = getfd((*ctable)->fileout, (*ctable)->out);
+//	if (ft_strcmp((*ctable)->fileout, "") != 0)
+//		(*ctable)->out = getfd((*ctable)->fileout, (*ctable)->out);
 	if ((*ctable)->pipeout)	
 		if (piperoutine(ctable))
 		{
