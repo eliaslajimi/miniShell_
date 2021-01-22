@@ -42,8 +42,12 @@ int fork_cmd(char *cmd, char **args, c_table *ctable)
 	pid = 0;
 	(void)cmd;
 	
+	if (!ft_strlen(cmd))
+	{
+		*status = 2;
+		return (*status);	
+	}
 	pid = fork();
-
 	if (pid == 0)//CHILD
 	{
 		if (ctable->out > 2)

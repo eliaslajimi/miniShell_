@@ -33,6 +33,9 @@ int	main(int argc, char **argv, char **envp)
 	}
 	signal(SIGINT, sighandler);
 	signal(SIGQUIT, sighandler);
-	minishell();
+	
+	int ret = 1;
+	while(ret)
+		ret = minishell();
 	return (0);
 }

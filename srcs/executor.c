@@ -53,9 +53,12 @@ void	commands(c_table *ctable)
 {
 	int	*status;
 
-	//print_struct(ctable);
 	status = (int*)getglobal(STATUS);
-	//waitpid(ctable->id, status, 0);
+	if (!ft_strlen(ctable->command))
+	{
+		*status = 0;
+		return ;
+	}
 	if (ft_strcmp(ctable->command, "exit") == 0)
 		exit_builtin(ctable->args);
 	else if (ft_strcmp(ctable->command, "echo") == 0)

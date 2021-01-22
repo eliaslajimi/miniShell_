@@ -49,9 +49,11 @@ void next_struct(c_table **ctable)
 
 void free_struct(c_table *ctable)
 {
-	free(ctable->flags);
-	ft_free_array(ctable->args);
-	free(ctable);
+	(void)ctable;
+	//free(ctable->flags);
+	//if (ctable->args)
+	//	ft_free_array(ctable->args);
+	//free(ctable);
 }
 
 void print_struct(c_table *ctable)

@@ -28,7 +28,7 @@ void	wrapper(c_table *ctable)
 	exitroutine(ctable);
 	while (ctable)
 		next_struct(&ctable);
-	minishell();
+	//minishell();
 }
 
 int			minishell()
@@ -60,5 +60,5 @@ int			minishell()
 		free(tokens);
 	}
 	wrapper(*init);
-	return (0);
+	return (1);
 }
