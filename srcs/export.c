@@ -1,26 +1,39 @@
 #include "minishell.h"
-char		*export_shlvl(char *nb)
-{
-	long long		atoi_res;
-	char	*toexport;
 
-//	printf("nb is %s\n", nb);
-	atoi_res = ft_atoi(nb);
-//	printf("atoi_res is %llu\n", atoi_res);
-	if (atoi_res > LONG_MAX)
+static void		shlvl_err_msg(int shlvl)
+{
+	write(1, "minishell: warning: shell level (",
+		ft_strlen("minishell: warning: shell level ("));
+	ft_putnbr_fd(shlvl, STDERR_FILENO);
+	ft_putstr_fd(") too high, resetting to 1\n", STDERR_FILENO);
+}
+
+int					export_shlvl(char *nb)
+{
+	t_list	*env_lst;
+	t_list	*newnode;
+	int		shlvl;
+	char	*toexport;
+	
+	env_lst = g_env;
+	shlvl = (int)ft_atoi_shlvl(nb);
+	shlvl++;
+	(shlvl < 0) ? shlvl = 0 : shlvl;
+	if (shlvl > 1000)
 	{
-		print("minishell: warning: shell level (", 2);
-		print(nb, 2);
-		print(") too high, resetting to 1\n", 2);
-		export_builtin("SHLVL=1", 0);
+		if (shlvl < INT_MAX)
+			shlvl_err_msg(shlvl);
+		shlvl = 1;
 	}
-	else if (atoi_res > INT_MAX || atoi_res < 0)
-		atoi_res = 0;
-	else
-		atoi_res = atoi_res + 1;
 	toexport = ft_strdup("SHLVL=");
-	toexport = ft_strjoin(toexport, ft_itoa(atoi_res));
-	return (toexport);
+	toexport = ft_strjoin(toexport, ft_itoa(shlvl));
+	if (find_node("SHLVL") != NULL)
+		unset_builtin("SHLVL", "void");
+	newnode = ft_lstnew(NULL);
+	newnode->content = ft_strdup(toexport);
+	ft_lstadd_back(&env_lst, newnode);
+	free(toexport);
+	return (0);
 }
 
 int			export_builtin(char *arg, int out)
@@ -34,6 +47,7 @@ int			export_builtin(char *arg, int out)
 	env_lst = g_env;
 
 	int k ;
+	//printf("arg is [%s]\n", arg);
 	if (arg[0] == '\0')
 	{
 		print("minishell: export: `': not a valid identifier\n", 2);
@@ -48,18 +62,24 @@ int			export_builtin(char *arg, int out)
 	}
 	else if (ft_isin('=', arg))
 	{
-//		printf("arg is %s\n",arg);
+	//	printf("arg is %s\n",arg);
 
 		split_arg = ft_split(arg, '=');
 		
 		int j = 0;
 
-/*		if (ft_strcmp(split_arg[0], "SHLVL") == 0)
+		if (ft_strcmp(split_arg[0], "SHLVL") == 0)
 		{
-//			printf("split_arg[1] is %s\n",split_arg[1]);
-			arg = export_shlvl(split_arg[1]);
+	//		printf("split_arg[1] is %s\n",split_arg[1]);
+			if (split_arg[1])
+				export_shlvl(split_arg[1]);
+			else
+				export_shlvl("1");
+			ft_free_array(split_arg);
+			return (0);
 		}
-*/
+		split_arg = ft_split(arg, '=');
+
 		while (split_arg[0][j])
 		{
 			if (ft_isin(split_arg[0][j], "\'\"\\$@!|;& "))

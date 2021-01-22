@@ -21,11 +21,23 @@ int add_underscore(char *cmd)
 int add_shlvl()
 {
 	char	*shlvl;
+	t_list	*env_lst;
+	t_list	*newnode;
 
-	shlvl = ft_strdup("SHLVL=");
-	shlvl = ft_strjoin(shlvl, "1");
-	export_builtin(shlvl, 0);
-	ft_strdel(&shlvl);
+	env_lst = g_env;
+	if (find_node("SHLVL") == NULL)
+	{
+		shlvl = ft_strdup("SHLVL=");
+		shlvl = ft_strjoin(shlvl, "1");
+		newnode = ft_lstnew(NULL);
+		newnode->content = ft_strdup(shlvl);
+		ft_lstadd_back(&env_lst, newnode);
+		ft_strdel(&shlvl);
+	}
+	else
+	{
+		export_shlvl(cleannode(find_node("SHLVL")));
+	}
 	return (0);
 }
 

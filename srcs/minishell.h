@@ -131,7 +131,11 @@ int		ft_isdigit(int c);
 int		find_semic(char *line, int start);
 int		ptr_len(void **ptr);
 int		ft_isalpha(int c);
-long long 	ft_atoi(const char *str);
+int 	ft_atoi_shlvl(const char *str);
+void	ft_putstr_fd(char *s, int fd);
+void				ft_putnbr_fd(int n, int fd);
+void	ft_putchar_fd(char c, int fd);
+
 
 /*Struct Utils*/
 void	add_struct(c_table **ctable);
@@ -179,6 +183,7 @@ int		export_builtin_loop(char **arg, int args_len, int out);
 char	*find_node(char *data);
 char *cleannode(char *node);
 int		join_sorted_list(t_list *env_lst, int out);
+int					export_shlvl(char *nb);
 
 /*pwd*/
 int	pwd_builtin(char **args, int out);
