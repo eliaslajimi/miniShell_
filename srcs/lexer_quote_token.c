@@ -15,6 +15,8 @@ static char	*inputline_join(char *line)
 char	*matching_quotes(char *line)
 {
 	int	i = 0;
+	if (ft_strlen(line) == 0)
+		return (NULL);
 	while (line[i])
 	{
 		while (line[i] && line[i] != '\"' && line[i] != '\'' && line[i] != '\\')

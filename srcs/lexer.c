@@ -9,7 +9,9 @@ char *check_token(char *line)
 	else if (*line == '>' || *line == '<')
 		return (redirec_token(line));
 	else if (ft_isprint(*line) == 1)
+	{
 		return (word_token(line));
+	}
 	else
 		return (NULL);
 }
@@ -75,7 +77,7 @@ char		**lexer(char *input_line)
 {
 	char	**isolated_tokens;
 
-	//printf("inputline %s\n", input_line);
+	//printf("inputline [%s]\n", input_line);
 	if (!ft_strlen(input_line))
 		return (NULL);
 	input_line = matching_quotes(input_line);

@@ -59,7 +59,7 @@ char		*word_token(char *line)
 	char	*token;
 
 	i = 0;
-	//printf("word token line %s\n", line);
+	//printf("word token line [%s]\n", line);
 	while (line[i] == '\\')
 	{
 		if (line[i + 1] == 'r' || line[i + 1] == 't' || line[i + 1] == 'v' || line[i + 1] == 'f')
@@ -68,7 +68,7 @@ char		*word_token(char *line)
 			break;
 		i++;
 	}
-	//printf("line + i = %s\n", line+ i);
+	//printf("line + i = [%s]\n", line+ i);
 	start = i;
 	while (ft_isprint(line[i]) == 1)
 	{	

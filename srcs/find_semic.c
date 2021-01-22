@@ -5,32 +5,48 @@ int		find_semic(char *line, int start)
 {
 	int i = start;
 	
-	while (line [i] && line[i] != ';')
+		//printf("line find semic [%s]\n", line);
+
+	while (line[i] && line[i] != ';')
 	{
+		//printf("line[i] is [%c]\n", line[i]);
 		if (line[i] == '\\')
+		{
 			i += 2;
+		}
 		else if (line[i] == '\"')
 		{
 			i++;
 			if (line[i] == '\\')
+			{
 				i += 2;
+			}
 			while (line[i] != '\"')
 			{
 				if (line[i] == '\\')
 					i += 2;
-				i++;
+				if (line[i])
+					i++;
+				else
+					break;
 			}
-			i++;
+			if (line[i])
+				i++;
 		}
 		else if (line[i] == '\'')
 		{
+			//printf("sq on line +i [%s]", line + i);	
 			i++;
 			while (line[i] != '\'')
 				i++;
 			i++;
 		}
 		else
+		{
+		//printf("we just increment [%s]\n", line + i);
 			i++;
+
+		}
 	}
 	return (i);
 }

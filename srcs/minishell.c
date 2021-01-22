@@ -43,7 +43,8 @@ int			minishell()
 	write(1, ">> ", 3);
 
 	get_next_line(1, &inputcmd);
-	inputcmd = matching_quotes(inputcmd);
+	if ((inputcmd = matching_quotes(inputcmd)) == NULL)
+		minishell();
 	while (start < ft_strlen(inputcmd))
 	{
 		init = getstruct();

@@ -80,9 +80,14 @@ static char	**lex_line_special(char **isolated_tokens, char *input_line)
 		{
 			i_word = 0;
 			if (ft_isprint(input_line[i]) == 1 && !(ft_isin(input_line[i], "|;<>")))
+			{
 				i_word = word_token_len(input_line + i);
+			}
+
 			if ((token = check_token(input_line + i)) == NULL)
+			{
 				return (NULL);
+			}
 			if (i_word == 0)
 				i += ft_strlen(token);
 			else
