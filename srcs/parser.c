@@ -85,9 +85,14 @@ int			redirection(c_table *ctable, char **token)
 	{
 		ctable->fileout = ft_strdup(file);
 	}*/
-	else if (ft_strcmp(redirec, "<") == 0 && (ctable->in |= READ))
+	else if (ft_strcmp(redirec, "<") == 0 )
 	{
 		ctable->filein = ft_strdup(file);
+		//write(1, "it should go in", 15);
+		if (ft_strcmp(ctable->filein, ""))
+		{
+			ctable->in = open(ctable->filein, O_RDONLY);
+		}
 	}
 	return (0);
 }

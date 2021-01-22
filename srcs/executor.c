@@ -32,14 +32,6 @@ int	other_command(c_table *ctable)
 		add_underscore(ctable->command);
 		//int ret = 0;
 		status= 0;
-//		if (ctable->command[0] != '/' && ctable->command[0] != '.')
-//		{
-//			if ((ret = open(ctable->command, O_RDONLY)))
-//			{
-//				return (126);
-//			}
-//			(void)ret;
-//		}
 		if (ctable->command[0] != '/' && ctable->command[0] != '.')
 		{
 			if (open(ctable->command, O_RDONLY))
@@ -117,10 +109,9 @@ int	piperoutine(c_table **ctable)
 
 void	executor(c_table **ctable)
 {
+	//print_struct(*ctable);
 	if (*ctable == NULL)
 		return ;
-//	if (ft_strcmp((*ctable)->fileout, "") != 0)
-//		(*ctable)->out = getfd((*ctable)->fileout, (*ctable)->out);
 	if ((*ctable)->pipeout)	
 		if (piperoutine(ctable))
 		{
