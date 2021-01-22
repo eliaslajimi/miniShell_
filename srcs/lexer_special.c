@@ -1,42 +1,47 @@
 #include "minishell.h"
 
-static int		check_next_token(char **tokens, int i)
+static int	check_next_token(char **tokens, int i)
 {
-	if (ft_strcmp(tokens[i + 1], ">") == 0)
+	if (!tokens[i + 1] && ft_strcmp(tokens[i], ";") == 0)
+		return (0);
+	if (((tokens[i + 1] == NULL) || (ft_strcmp(tokens[i + 1], ">") == 0)))
+	{
+		if (tokens[i + 1] == NULL)
+			return (7);
 		return (1);
+	}
 	else if (ft_strcmp(tokens[i + 1], "<") == 0)
 		return(2);
 	else if (ft_strcmp(tokens[i + 1], ";") == 0)
 		return(3);
 	else if (ft_strcmp(tokens[i + 1], "|") == 0)
 		return(4);
+	else if (ft_strcmp(tokens[i + 1], ">>") == 0)
+		return(5);
+	if (!tokens[i + 1])
+		return (0);
 	return (0);
 }
 
 static int	print_prob(int prob)
 {
 	if (prob == 1)
-	{
 		print("minishell: syntax error near unexpected token `>'\n", 2);
-		return(2);
-	}
 	else if (prob == 2)
-	{
 		print("minishell: syntax error near unexpected token `<'\n", 2);
-		return(2);
-	}
 	else if (prob == 3)
-	{
 		print("minishell: syntax error near unexpected token `;'\n", 2);
-		return(2);
-	}
 	else if (prob == 4)
-	{
 		print("minishell: syntax error near unexpected token `|'\n", 2);
+	else if (prob == 5)
+		print("minishell: syntax error near unexpected token `>>'\n", 2);
+	else if (prob == 7)
+		print("minishell: syntax error near unexpected token `newline'\n", 2);
+	if (prob != 0)
 		return(2);
-	}
 	return (0);
 }
+
 static int	lexer_check_symbols(char **tokens)
 {
 	int 	i;
@@ -58,7 +63,7 @@ static int	lexer_check_symbols(char **tokens)
 			prob = check_next_token(tokens, i);
 		i++;
 	}
-	
+
 	if (prob != 0)
 		return(print_prob(prob));
 	return (0);
@@ -83,7 +88,6 @@ static char	**lex_line_special(char **isolated_tokens, char *input_line)
 			{
 				i_word = word_token_len(input_line + i);
 			}
-
 			if ((token = check_token(input_line + i)) == NULL)
 			{
 				return (NULL);
@@ -112,7 +116,7 @@ int			lexer_special(char *input_line)
 		return (-1);
 	isolated_tokens[0] = NULL;
 	if ((isolated_tokens = lex_line_special(isolated_tokens, input_line)) == NULL)
-		return (-1); // we have to exit because non printable characters (ex with dir. arrows keys.)
+		return (-1);
 	lexer_check_status = lexer_check_symbols(isolated_tokens);
 	return (lexer_check_status);
 }

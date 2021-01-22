@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static int	file_exists(const char *path)
+int	file_exists(const char *path)
 {
 	struct stat	stats;
 

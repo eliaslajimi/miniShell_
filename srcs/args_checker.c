@@ -13,6 +13,8 @@ int		checking_pipes(char *inputcmd)
 	while (inputcmd[i])
 	{
 		i += skip_spaces(inputcmd + i);
+		if (!(inputcmd[i]))
+			break;
 		if (inputcmd[i] == '|' && flag == 0)
 			flag = 1;
 		else if (inputcmd[i] == '|' && flag == 1)
@@ -21,6 +23,8 @@ int		checking_pipes(char *inputcmd)
 			flag = 0;
 		i++;
 	}
+	if (flag == 1)
+		return (-1);
 	return (0);
 }
 
@@ -118,5 +122,6 @@ int		args_checker(char *inputcmd)
 	lexer_check_status = lexer_special(inputcmd);
 	if (lexer_check_status != 0)
 		exit(lexer_check_status);
+
 	return (0);
 }

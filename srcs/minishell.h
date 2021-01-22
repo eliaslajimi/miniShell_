@@ -137,6 +137,7 @@ void				ft_putnbr_fd(int n, int fd);
 void	ft_putchar_fd(char c, int fd);
 
 
+
 /*Struct Utils*/
 void	add_struct(c_table **ctable);
 void	next_struct(c_table **ctable);
@@ -198,7 +199,7 @@ void	exit_builtin(char **args);
 /*absolute path*/
 char	*absolute_path(char *cmd);
 int	fork_cmd(char *cmd, char **args, c_table *ctable);
-
+int	file_exists(const char *path);
 
 /*dollar*/
 char	*dollar_swap(char *tokens);
