@@ -24,28 +24,88 @@ void	next_exec(c_table **ctable)
 	}
 }
 
+int	isDir(char *path)
+{
+	struct stat buf;
+	stat(path, &buf);
+	return S_ISDIR(buf.st_mode);
+}
+
+int	isFileEmpty(char *path)
+{
+	struct stat buf;
+	stat(path, &buf);
+	return (buf.st_size <= 1);
+}
 int	other_command(c_table *ctable)
 {
-		int status;
-		ctable->command = ft_strdup(absolute_path(ctable->command));
-	
-		add_underscore(ctable->command);
-		//int ret = 0;
-		status= 0;
-		if (ctable->command[0] != '/' && ctable->command[0] != '.')
+	int status;
+	struct stat buf;
+	int rett;
+
+	status= 0;
+	rett = 0;
+
+//This should be refactored as 'checkfileformat(char *command)'
+//==============================
+	rett = stat(ctable->command, &buf);
+
+	if (ctable->command && (ctable->command[0] == '/' || ctable->command[0] == '.'))
+	{
+		mode_t bits = buf.st_mode;	
+		if (rett < 0)
+			return (2);
+		if (rett < 0)
 		{
-			if (open(ctable->command, O_RDONLY))
-			{
-				print("minishell: ", 2);
-				print(ctable->command, 2);
-				print(": command not found\n", 2);
-				status = 127;
-			}
+			print("minishell: ",1);	//could be refactored as print_error(char *command, int error);
+			print(ctable->command, 1);
+			print(": No such file or directory\n", 1);
+			return (127);
 		}
-		else
+		if (isDir(ctable->command))
 		{
+			print("minishell: ", 1);
+			print(ctable->command, 1);
+			print(": is a directory\n", 1);
+			return (126);
+		}
+		if (!(bits & S_IXUSR) && !(bits & S_IXGRP) && !(bits & S_IXOTH))
+		{
+			print("minishell: ", 1);
+			print(ctable->command, 1);
+			print(": Permission denied\n", 1);
+			return (126);
+		}
+	}
+	if (ctable->command[ft_strlen(ctable->command) - 1] == '/' && isDir(ctable->command))
+	{
+		print("minishell: ", 1);
+		print(ctable->command, 1);
+		print(": is a directory\n", 1);
+		return (126);
+	}
+	if (!ft_strlen(ctable->command))
+	{
+		status = 0;
+		return (status);
+	}
+//==============================
+	ctable->command = ft_strdup(absolute_path(ctable->command));
+	add_underscore(ctable->command);
+	if (ctable->command[0] != '/' && ctable->command[0] != '.')
+	{
+		if (open(ctable->command, O_RDONLY))
+		{
+			print("minishell: ", 2);
+			print(ctable->command, 2);
+			print(": command not found\n", 2);
+			status = 127;
+		}
+	}
+	else
+	{
 		status = fork_cmd(ctable->command, ctable->args, ctable);
-		}
+	}
 	return (status);
 }
 
@@ -56,7 +116,7 @@ void	commands(c_table *ctable)
 	status = (int*)getglobal(STATUS);
 	if (!ft_strlen(ctable->command))
 	{
-		*status = 0;
+		*status = other_command(ctable);
 		return ;
 	}
 	if (ft_strcmp(ctable->command, "exit") == 0)
