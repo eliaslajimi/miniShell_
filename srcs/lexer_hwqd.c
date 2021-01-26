@@ -9,7 +9,7 @@ static void dollar(t_hwqd *v, char *word)
 		v->str_status = ft_itoa(*(v->status));
 		v->result = ft_strjoin(v->result, v->str_status);
 	}
-	else if (word[v->i  + 1] == '_')
+	else if (word[v->i + 1] == '_' && ft_isalpha(word[v->i + 2]) == 0 && word[v->i + 2] != '_')
 	{
 	//	printf("HERE WE ARE\n");
 		v->i += 2;
