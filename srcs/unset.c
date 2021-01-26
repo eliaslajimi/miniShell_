@@ -65,7 +65,7 @@ int	unset_builtin(char *arg, char *exportarg)
 			param = exportarg;
 		}
 		arglen = ft_strlen(param);
-		//printf("we unset [%s]\n", param);
+		//printf("\nwe unset [%s]\n", param);
 		ret = ft_lstdelnode(&env_lst, param, arglen);
 	}
 	return (ret);
@@ -85,5 +85,7 @@ int		unset_builtin_loop(char **arg, char *exportarg)
 			final_ret = ret;
 		arg++;
 	}
+	arg--;
+	add_underscore(*arg);
 	return (final_ret);
 }

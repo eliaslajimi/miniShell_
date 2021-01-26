@@ -58,7 +58,7 @@ static void double_quote2(t_hwqd *v, char *word)
 		v->i++;
 		v->len = 0;
 		while (word[v->i] != '$' && word[v->i] != '\"' && word[v->i] != '\'' && word[v->i] != '|'
-		&& word[v->i] != ',' && word[v->i] != ']' && word[v->i] != '[')
+		&& word[v->i] != ',' && word[v->i] != ']' && word[v->i] != '[' && word[v->i] != '@')
 		{
 			v->len++;
 			v->i++;

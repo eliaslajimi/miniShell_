@@ -42,6 +42,8 @@ int fork_cmd(char *cmd, char **args, c_table *ctable)
 	pid = 0;
 	(void)cmd;
 	
+	add_underscore(args[ctable->args_len-1]);
+
 	if (!ft_strlen(cmd))
 	{
 		*status = 2;

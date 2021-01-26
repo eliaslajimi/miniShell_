@@ -107,6 +107,8 @@ int		env_builtin(char **args, int out)
 		print("minishell: env: too many arguments\n", 2);
 		return(1);
 	}
+	unset_builtin("_", "void");
+	add_underscore("env");
 	tmp_lst = g_env;
 	cmd = ft_strdup(args[0]);
 	result = ft_strdup("");
@@ -118,7 +120,7 @@ int		env_builtin(char **args, int out)
 	}
 	result = ft_strjoin(result, tmp_lst->content);
 	print(result, out);
-	add_underscore(ft_strjoin(cmd,"\n"));
+	print("\n",out);
 	ft_strdel(&cmd);
 	ft_strdel(&result);
 	return (0);

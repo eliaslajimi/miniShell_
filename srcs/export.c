@@ -133,6 +133,7 @@ int			export_builtin_loop(char **arg, int args_len, int out)
 {
 	int		i;
 	int		ret;
+	char	*underscore;
 
 	ret = 0;
 	i = 1;
@@ -143,6 +144,12 @@ int			export_builtin_loop(char **arg, int args_len, int out)
 		arg++;
 		i++;
 	}
+	arg--;
+	i=0;
+	while((*arg)[i] && (*arg)[i] != '=')
+		i++;
+	underscore = ft_strndup(*arg, i);
+	add_underscore(underscore);
 	if (args_len == 1)
 		export_builtin("null", out);
 	return (ret);
