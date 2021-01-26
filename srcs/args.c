@@ -17,7 +17,9 @@ void args(char **argv)
 	t_arg	t;
 	c_table	**init;
 	c_table	*ctable;
+	int	*status;
 
+	status = (int*)getglobal(STATUS);
 	t = init_targ(argv);
 	while (t.start < ft_strlen(t.inputcmd))
 	{
@@ -29,8 +31,10 @@ void args(char **argv)
 		t.start = t.end + 1;
 		if (!(t.tokens = lexer(t.cmd)))
 			wrapper(*init);
-		parser(ctable, t.tokens);
-		executor(init);
+		if (parser(ctable, t.tokens) < 0)
+			*status = 1;
+		else
+			executor(init);
 		free(t.tokens);
 	}
 	exitroutine(*init);

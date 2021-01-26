@@ -65,6 +65,7 @@ int	unset_builtin(char *arg, char *exportarg)
 			param = exportarg;
 		}
 		arglen = ft_strlen(param);
+		//printf("we unset [%s]\n", param);
 		ret = ft_lstdelnode(&env_lst, param, arglen);
 	}
 	return (ret);

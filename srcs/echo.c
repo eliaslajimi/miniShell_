@@ -36,6 +36,7 @@ int			echo(char **arg, int args_len, int in, int out)
 		}
 		i++;
 	}
+	//add_underscore(*(--arg));
 	if (nflag == 0)
 		print("\n", out);
 	if (out > 2)

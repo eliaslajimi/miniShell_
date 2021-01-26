@@ -32,7 +32,6 @@ typedef struct	s_arg
 	char		**tokens;	
 }				t_arg;
 
-
 typedef struct	s_hwqd
 {
 	int			i;

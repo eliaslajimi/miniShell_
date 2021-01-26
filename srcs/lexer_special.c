@@ -18,6 +18,8 @@ static int	check_next_token(char **tokens, int i)
 		return(4);
 	else if (ft_strcmp(tokens[i + 1], ">>") == 0)
 		return(5);
+	else if (ft_strcmp(tokens[i + 1], "<<") == 0)
+		return(6);
 	if (!tokens[i + 1])
 		return (0);
 	return (0);
@@ -35,6 +37,8 @@ static int	print_prob(int prob)
 		print("minishell: syntax error near unexpected token `|'\n", 2);
 	else if (prob == 5)
 		print("minishell: syntax error near unexpected token `>>'\n", 2);
+	else if (prob == 6)
+		print("minishell: syntax error near unexpected token `<<'\n", 2);
 	else if (prob == 7)
 		print("minishell: syntax error near unexpected token `newline'\n", 2);
 	if (prob != 0)
@@ -60,6 +64,8 @@ static int	lexer_check_symbols(char **tokens)
 		else if (ft_strcmp(tokens[i], "|") == 0)
 			prob = check_next_token(tokens, i);
 		else if (ft_strcmp(tokens[i], ">>") == 0)
+			prob = check_next_token(tokens, i);
+		else if (ft_strcmp(tokens[i], "<<") == 0)
 			prob = check_next_token(tokens, i);
 		i++;
 	}
@@ -118,5 +124,8 @@ int			lexer_special(char *input_line)
 	if ((isolated_tokens = lex_line_special(isolated_tokens, input_line)) == NULL)
 		return (-1);
 	lexer_check_status = lexer_check_symbols(isolated_tokens);
-	return (lexer_check_status);
+/*	int i = 0;
+	while(isolated_tokens[i])
+		printf("special token: [%s]\n", isolated_tokens[i++]);
+*/	return (lexer_check_status);
 }

@@ -9,6 +9,14 @@ static void dollar(t_hwqd *v, char *word)
 		v->str_status = ft_itoa(*(v->status));
 		v->result = ft_strjoin(v->result, v->str_status);
 	}
+	else if (word[v->i  + 1] == '_')
+	{
+	//	printf("HERE WE ARE\n");
+		v->i += 2;
+	//	printf("find node [%s]\n", find_node("_"));
+		v->result = ft_strjoin(v->result, cleannode(find_node("_")));
+	//	printf("GOING OUT\n");
+	}
 	else
 	{
 		v->i++;
@@ -40,12 +48,12 @@ static void double_quote2(t_hwqd *v, char *word)
 		v->str_status = ft_itoa(*(v->status));
 		v->result = ft_strjoin(v->result, v->str_status);
 	}
-/*	else if (word[v->i + 1] == '\\')
+	else if (word[v->i + 1] == '\\' || word[v->i + 1] == '\0')
 	{
 		v->result = ft_strjoin_char(v->result, word[v->i++]);
 		v->i++;
 	}
-*/	else
+	else
 	{
 		v->i++;
 		v->len = 0;
@@ -129,7 +137,7 @@ char		*handling_word_quotes_dollar(char *word)
 		else if (word[v->i] == '$')
 		{
 			//printf("dollar\n");
-			if (word[v->i + 1] == '\\' || word[v->i + 1] == '\0')
+			if (word[v->i + 1] == '\\' || word[v->i + 1] == '\0' || word[v->i + 1] == '%')
 			{
 			//	printf("	with baskslah or null after word[%d] [%c] word[i+1] [%c]\n",v->i,word[v->i],word[v->i+1]);
 				v->result = ft_strjoin_char(v->result, word[v->i++]);

@@ -6,6 +6,7 @@ int add_underscore(char *cmd)
 	t_list	*newnode;
 	char	*underscore_env;
 
+	//printf("we add [%s]\n", cmd);
 	env_lst = g_env;
 	cmd = absolute_path(cmd);
 	unset_builtin("_", "void");
@@ -109,7 +110,6 @@ int		env_builtin(char **args, int out)
 	tmp_lst = g_env;
 	cmd = ft_strdup(args[0]);
 	result = ft_strdup("");
-	add_underscore(cmd);
 	while (tmp_lst->next)
 	{
 		result = ft_strjoin(result, tmp_lst->content);
@@ -118,6 +118,7 @@ int		env_builtin(char **args, int out)
 	}
 	result = ft_strjoin(result, tmp_lst->content);
 	print(result, out);
+	add_underscore(ft_strjoin(cmd,"\n"));
 	ft_strdel(&cmd);
 	ft_strdel(&result);
 	return (0);

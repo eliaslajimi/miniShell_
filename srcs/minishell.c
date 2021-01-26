@@ -57,7 +57,8 @@ int			minishell()
 			wrapper(*init);
 		if (parser(ctable, tokens) < 0)
 			wrapper(*init);
-		executor(init);
+		else
+			executor(init);
 		free(tokens);
 	}
 	wrapper(*init);
