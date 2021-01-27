@@ -124,6 +124,7 @@ int			lexer_special(char *input_line)
 	if ((isolated_tokens = lex_line_special(isolated_tokens, input_line)) == NULL)
 		return (-1);
 	lexer_check_status = lexer_check_symbols(isolated_tokens);
+	ft_free_array(isolated_tokens);
 /*	int i = 0;
 	while(isolated_tokens[i])
 		printf("special token: [%s]\n", isolated_tokens[i++]);

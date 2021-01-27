@@ -30,9 +30,11 @@ int add_shlvl()
 	char	*shlvl;
 	t_list	*env_lst;
 	t_list	*newnode;
+	char	*found;
 
 	env_lst = g_env;
-	if (find_node("SHLVL") == NULL)
+	found = find_node("SHLVL");
+	if (found == NULL)
 	{
 		shlvl = ft_strdup("SHLVL=");
 		shlvl = ft_strjoin(shlvl, "1");
@@ -45,6 +47,7 @@ int add_shlvl()
 	{
 		export_shlvl(cleannode(find_node("SHLVL")));
 	}
+	free(found);
 	return (0);
 }
 
