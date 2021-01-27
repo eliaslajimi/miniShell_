@@ -11,18 +11,16 @@ static void dollar(t_hwqd *v, char *word)
 	}
 	else if (word[v->i + 1] == '_' && ft_isalpha(word[v->i + 2]) == 0 && word[v->i + 2] != '_')
 	{
-	//	printf("HERE WE ARE\n");
 		v->i += 2;
 	//	printf("find node [%s]\n", find_node("_"));
 		v->result = ft_strjoin(v->result, cleannode(find_node("_")));
-	//	printf("GOING OUT\n");
 	}
 	else
 	{
 		v->i++;
 		v->len = 0;
 		while (word[v->i] && word[v->i] != '$' && word[v->i] != '\"' && word[v->i] != '\''
-		&& word[v->i] != ',' && word[v->i] != '[' && word[v->i] != ']')
+		&& word[v->i] != ',' && word[v->i] != '[' && word[v->i] != ']' && word[v->i] != '\\' && word[v->i] != '@')
 		{
 			v->len++;
 			v->i++;
@@ -58,7 +56,7 @@ static void double_quote2(t_hwqd *v, char *word)
 		v->i++;
 		v->len = 0;
 		while (word[v->i] != '$' && word[v->i] != '\"' && word[v->i] != '\'' && word[v->i] != '|'
-		&& word[v->i] != ',' && word[v->i] != ']' && word[v->i] != '[' && word[v->i] != '@')
+		&& word[v->i] != ',' && word[v->i] != ']' && word[v->i] != '[' && word[v->i] != '@' && word[v->i] != '\\')
 		{
 			v->len++;
 			v->i++;
@@ -145,13 +143,20 @@ char		*handling_word_quotes_dollar(char *word)
 				//v->i++;
 			}
 			else
+			{
+				//printf("found dollar\n");
 				dollar(v, word);
+			}
+				
 		}
         else if (word[v->i] == '\\')
         {
 		//	printf("backslash\n");
             v->i++;
-			v->result = ft_strjoin_char(v->result, word[v->i++]);
+			if (word[v->i] == 'r' || word[v->i] == 't' || word[v->i] == 'v' || word[v->i] == 'f')
+				v->i++;
+			else
+				v->result = ft_strjoin_char(v->result, word[v->i++]);
 		//	printf("result now : [%s]\n", v->result);
 
         }

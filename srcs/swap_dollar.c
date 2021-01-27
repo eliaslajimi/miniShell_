@@ -2,6 +2,7 @@
 
 char	*swap_dollar(char *s, int i, int len)
 {
+	//printf("trying to swap dollar\n");
 	char	*tofind;
 	char	*result;
 
