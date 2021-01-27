@@ -42,7 +42,7 @@ int fork_cmd(char *cmd, char **args, c_table *ctable)
 	pid = 0;
 	(void)cmd;
 	
-	add_underscore(args[ctable->args_len-1]);
+	add_underscore(args[ctable->args_len-1], 0);
 
 	if (!ft_strlen(cmd))
 	{

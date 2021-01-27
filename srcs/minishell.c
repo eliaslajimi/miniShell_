@@ -53,6 +53,8 @@ int			minishell()
 		end = find_semic(inputcmd, start);
 		cmd = ft_substr(inputcmd, start, end - start);
 		start = end + 1;
+		while (inputcmd[start] == ';')
+			start++;
 		if (!(tokens = lexer(cmd)))
 			wrapper(*init);
 		if (parser(ctable, tokens) < 0)

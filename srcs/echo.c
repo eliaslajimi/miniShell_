@@ -38,10 +38,12 @@ int			echo(char **arg, int args_len, int in, int out)
 		i++;
 	}
 	arg--;
-	add_underscore(*arg);
+	add_underscore(ft_strdup(*arg), 1);
 	if (nflag == 0)
 		print("\n", out);
 	if (out > 2)
 		close(out);	
+	free(buf);
+	free(result);
 	return (0);
 }

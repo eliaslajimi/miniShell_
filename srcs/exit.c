@@ -57,6 +57,12 @@ static int	check_arg(char *str)
 	return (1);
 }
 
+void	final_exit(int status)
+{
+	ft_lstfree(g_env);
+	exit(status);
+}
+
 void	exit_builtin(char **args)
 {
 	int	arg_status;
@@ -69,16 +75,16 @@ void	exit_builtin(char **args)
 			print("minishell: exit: ", 2);
 			print(args[1], 2);
 			print(": numeric argument required\n", 2);
-			exit(255);
+			final_exit(255);
 		}
 		arg_status = ft_atoi_minishell(args[1]) % 256;
 		if (args[2] != NULL)
 		{
 			print("minishell: exit: ", 2);
 			print("too many arguments\n", 2);
-			exit(1);
+			final_exit(1);
 		}
-		exit(arg_status);
+		final_exit(arg_status);
 	}
-	exit(*((int*)getglobal(STATUS)));
+	final_exit(*((int*)getglobal(STATUS)));
 }

@@ -37,11 +37,13 @@ int	isFileEmpty(char *path)
 	stat(path, &buf);
 	return (buf.st_size <= 1);
 }
+
 int	other_command(c_table *ctable)
 {
 	int status;
 	struct stat buf;
 	int rett;
+	char	*abs_path_cmd;
 
 	status= 0;
 	rett = 0;
@@ -90,8 +92,10 @@ int	other_command(c_table *ctable)
 		return (status);
 	}
 //==============================
-	ctable->command = ft_strdup(absolute_path(ctable->command));
-	add_underscore(ctable->command);
+	abs_path_cmd = absolute_path(ctable->command);
+	ctable->command = ft_strdup(abs_path_cmd);
+	free(abs_path_cmd);
+	add_underscore(ctable->command, 0);
 	if (ctable->command[0] != '/' && ctable->command[0] != '.')
 	{
 		if (open(ctable->command, O_RDONLY))

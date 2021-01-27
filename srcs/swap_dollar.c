@@ -13,5 +13,6 @@ char	*swap_dollar(char *s, int i, int len)
 		ft_strdel(&tofind);
 		return (result);
 	}
+	free(tofind);
 	return (NULL);
 }

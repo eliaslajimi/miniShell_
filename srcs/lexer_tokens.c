@@ -112,6 +112,7 @@ char		*word_token(char *line)
 		i++;
 	}
 //	printf("HERE token of len %d\n", i);
+
 	token = ft_strndup(line + start, i);
 //	printf("1 token is [%s]\n", token);
 	token = handling_word_quotes_dollar(token);

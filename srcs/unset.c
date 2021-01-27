@@ -86,6 +86,6 @@ int		unset_builtin_loop(char **arg, char *exportarg)
 		arg++;
 	}
 	arg--;
-	add_underscore(*arg);
+	add_underscore(*arg, 0);
 	return (final_ret);
 }

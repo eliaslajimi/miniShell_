@@ -15,7 +15,7 @@ int	pwd_builtin(char **args, int out)
 	buf = NULL;
 	currentdir = getcwd(buf, bufsize);
 	currentdir = ft_strjoin(currentdir, "\n");
-	free(buf);
 	print(currentdir, out);
+	free(currentdir);
 	return (0);
 }

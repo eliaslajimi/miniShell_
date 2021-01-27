@@ -21,8 +21,11 @@ char *formatpath(char *path)
 
 int applycmd(char *cmd)
 {
-	int status;
+	int		status;
+	char	*tmp;
+	char	*newcmd;
 
+	newcmd = NULL;
 	status = 0;
 	if (!ft_strcmp(cmd, ""))
 		status = chdir(cleannode(find_node("HOME")));
@@ -30,16 +33,20 @@ int applycmd(char *cmd)
 		status = chdir(cmd);
 	else
 	{
+		tmp = cmd;
 		cmd = ft_strtrim(cmd, "/");
+		free(tmp);
 		cmd = ft_strjoin(cmd, "/");
 		if (!ft_strcmp(cleannode(find_node("PWD")), "/"))
-			cmd = ft_strjoin(ft_strdup(cleannode(find_node("PWD"))), cmd);
+			newcmd = ft_strjoin(ft_strdup(cleannode(find_node("PWD"))), cmd);
 		else
-			cmd = ft_strjoin(ft_strjoin(ft_strdup(cleannode(find_node("PWD"))), "/"), cmd);
-		status = chdir(cmd);
+			newcmd = ft_strjoin(ft_strjoin(ft_strdup(cleannode(find_node("PWD"))), "/"), cmd);
+		status = chdir(newcmd);
 	}
 	if (!status)
 		add_pwd();
+	free(cmd);
+	free(newcmd);
 	return (status);
 }
 
@@ -74,6 +81,7 @@ char **removeidentical(char **cmd)
 	}
 	return (cmd);
 }
+
 int cd(char **args, int in, int out)
 {
 	int status;
@@ -91,7 +99,7 @@ int cd(char **args, int in, int out)
 		if (!ft_strlen(*args))
 			*args = ft_strjoin(*args, cleannode(find_node("PWD")));
 		args = removeidentical(args);	
-	    	argtocmd(*args);
+	    argtocmd(*args);
 		args++;
 	}
 	return (status);

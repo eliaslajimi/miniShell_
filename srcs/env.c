@@ -1,6 +1,10 @@
 #include "minishell.h"
 
-int add_underscore(char *cmd)
+/*
+** if tofree = 1, 'cmd' will be freed
+*/
+
+int add_underscore(char *cmd, int tofree)
 {
 	t_list	*env_lst;
 	t_list	*newnode;
@@ -12,10 +16,12 @@ int add_underscore(char *cmd)
 	unset_builtin("_", "void");
 	underscore_env = ft_strdup("_=");
 	underscore_env = ft_strjoin(underscore_env, cmd);
+	if (tofree == 1)
+		free(cmd);
 	newnode = ft_lstnew(NULL);
 	newnode->content = ft_strdup(underscore_env);
 	ft_lstadd_back(&g_env, newnode);
-	ft_strdel(&underscore_env);
+	free(underscore_env);
 	return (0);
 }
 
@@ -49,10 +55,13 @@ int			add_oldpwd()
 
 	if ((oldpwd = find_node("PWD")) != NULL)
 	{
-		oldpwd_env = ft_strdup("OLDPWD=");
-		oldpwd = cleannode(oldpwd);
-		oldpwd = ft_strjoin(oldpwd_env, oldpwd);
-		export_builtin(oldpwd, 0);
+
+		oldpwd_env = ft_strdup("OLDPWD=");		
+		oldpwd = cleannode(oldpwd);		
+		oldpwd_env = ft_strjoin(oldpwd_env, oldpwd);		
+		//free(oldpwd);		
+		export_builtin(oldpwd_env, 0);
+		free(oldpwd_env);
 	}
 	return (0);
 }
@@ -72,6 +81,7 @@ int	add_pwd()
 	pwd_env = ft_strjoin(pwd_env, currentdir);
 	export_builtin(pwd_env, 0);
 	free(pwd_env);
+	free(currentdir);
 	free(buf);
 	return (0);
 }
@@ -108,7 +118,7 @@ int		env_builtin(char **args, int out)
 		return(1);
 	}
 	unset_builtin("_", "void");
-	add_underscore("env");
+	add_underscore("env", 0);
 	tmp_lst = g_env;
 	cmd = ft_strdup(args[0]);
 	result = ft_strdup("");

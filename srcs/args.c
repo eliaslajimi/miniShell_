@@ -38,5 +38,5 @@ void args(char **argv)
 		free(t.tokens);
 	}
 	exitroutine(*init);
-	exit(*(int*)getglobal(STATUS));
+	final_exit(*(int*)getglobal(STATUS));
 }

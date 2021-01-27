@@ -2,6 +2,8 @@
 
 static void dollar(t_hwqd *v, char *word)
 {
+	char	*res_swap_dollar;
+
 	if (word[v->i + 1] == '?')
 	{
 		v->i += 2;
@@ -25,14 +27,16 @@ static void dollar(t_hwqd *v, char *word)
 			v->len++;
 			v->i++;
 		}
-		if (swap_dollar(word, v->i - v->len, v->len) != NULL)
+		res_swap_dollar = swap_dollar(word, v->i - v->len, v->len);
+		if (res_swap_dollar != NULL)
 		{
-			v->result = ft_strjoin(v->result, swap_dollar(word, v->i - v->len, v->len));
+			v->result = ft_strjoin(v->result, res_swap_dollar);
 		}
 		else
 		{
 			v->result = ft_strjoin(v->result, "");
 		}
+		free(res_swap_dollar);
 	}
 }
 
@@ -117,6 +121,7 @@ static void single_quote(t_hwqd *v, char *word)
 
 char		*handling_word_quotes_dollar(char *word)
 {
+	char	*result;
 	t_hwqd	*v;
 
 	if (!(v = malloc(sizeof(t_hwqd))))
@@ -163,5 +168,9 @@ char		*handling_word_quotes_dollar(char *word)
 		else
 			v->result = ft_strjoin_char(v->result, word[v->i++]);
 	}
-	return (v->result);
+	result = ft_strdup(v->result);
+	free(v->result);
+	free(v);
+	free(word);
+	return (result);
 }

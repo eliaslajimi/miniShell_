@@ -42,6 +42,7 @@ int			export_builtin(char *arg, int out)
 	char	**split_arg;
 	t_list	*env_lst;
 	t_list	*newnode;
+	char	*found;
 
 	i = 0;
 	env_lst = g_env;
@@ -78,7 +79,6 @@ int			export_builtin(char *arg, int out)
 			ft_free_array(split_arg);
 			return (0);
 		}
-		split_arg = ft_split(arg, '=');
 
 		while (split_arg[0][j])
 		{
@@ -91,10 +91,12 @@ int			export_builtin(char *arg, int out)
 			}
 			j++;
 		}
-		if (find_node(split_arg[0]) != NULL)
+		found = find_node(split_arg[0]);
+		if (found != NULL)
 		{
 			unset_builtin(split_arg[0], "void");
 		}
+		free(found);
 		ft_free_array(split_arg);
 		while (arg[i] != '=')
 			i++;
@@ -149,7 +151,7 @@ int			export_builtin_loop(char **arg, int args_len, int out)
 	while((*arg)[i] && (*arg)[i] != '=')
 		i++;
 	underscore = ft_strndup(*arg, i);
-	add_underscore(underscore);
+	add_underscore(underscore, 0);
 	if (args_len == 1)
 		export_builtin("null", out);
 	return (ret);
