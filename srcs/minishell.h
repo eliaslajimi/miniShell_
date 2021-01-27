@@ -134,6 +134,8 @@ int 	ft_atoi_shlvl(const char *str);
 void	ft_putstr_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
 void	ft_putchar_fd(char c, int fd);
+void	ft_lstfree(t_list	*head);
+void	final_exit(int status);
 
 
 
@@ -175,7 +177,7 @@ int		env_builtin(char **args, int out);
 t_list	*setEnv(char **envp);
 int		add_pwd();
 int		add_shlvl();
-int		add_underscore(char *cmd);
+int		add_underscore(char *cmd, int tofree);
 
 ///*export*/
 int		export_builtin(char *arg, int out);
