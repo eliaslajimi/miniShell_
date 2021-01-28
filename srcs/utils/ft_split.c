@@ -3,89 +3,74 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elajimi <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/19 20:11:28 by elajimi           #+#    #+#             */
-/*   Updated: 2019/10/29 21:02:23 by elajimi          ###   ########.fr       */
+/*   Created: 2021/01/28 14:36:06 by cmcgahan          #+#    #+#             */
+/*   Updated: 2021/01/28 14:36:07 by cmcgahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int      ft_malloc_s(char *s, char c)
+static char			**ft_free(char **str, int len)
 {
-        int a;
-        int counter;
-
-        a = 0;
-        counter = 0;
-        while (s[a] != '\0')
-        {
-                while (s[a] != '\0' && s[a] == c)
-                        a++;
-                if (s[a] != '\0' && s[a] != c)
-                {
-                        counter++;
-                        while (s[a] != '\0' && s[a] != c)
-                                a++;
-                }
-        }
-        return (counter);
+	while (len > 0)
+	{
+		free(str[len]);
+		str[len] = NULL;
+		len--;
+	}
+	free(str);
+	str = NULL;
+	return (NULL);
 }
 
-static void     ft_free(char **tab)
+static int			ft_count_words(const char *str, char c)
 {
-        int i;
+	int				i;
+	int				count;
 
-        i = 0;
-        while (tab[i] != NULL)
-        {
-                free(tab[i]);
-                i++;
-        }
+	if (!str)
+		return (0);
+	i = 0;
+	count = (str[i] == '\0') ? 0 : 1;
+	while (str[i] && str[i] == c)
+		i++;
+	if (i == ft_strlen(str))
+		return (0);
+	while (str[i])
+	{
+		if (str[i] == c && str[i + 1] != c && str[i + 1] != '\0')
+			count += 1;
+		i++;
+	}
+	return (count);
 }
 
-static char     *ft_write(char *s, char c, char **tab)
+char				**ft_split(char *s, char c)
 {
-        size_t                  i;
-        unsigned int    j;
-        char                    *dest;
+	char			**strsplit;
+	unsigned int	i;
+	int				j;
+	size_t			len;
 
-        i = 0;
-        j = 0;
-        while (s[i] && s[i] != c)
-                i++;
-        dest = ft_substr(s, (int)j, (int)i);
-        if (dest == NULL)
-                ft_free(tab);
-        return (dest);
-}
-
-char            **ft_split(char *s, char c)
-{
-        int             i;
-        int             j;
-        int             counter;
-        char    **tab;
-
-        i = 0;
-        j = 0;
-        counter = 0;
-    	if (s == NULL)
-                return (NULL);
-        if (!(tab = malloc((ft_malloc_s(s, c) + 2) * sizeof(char*))))
-                return (NULL);
-        while (s[i])
-        {
-                while (s[i] == c)
-                        i++;
-                if (s[i] && s[i] != c)
-                {
-                        tab[j++] = ft_write(&s[i], c, tab);
-                        while (s[i] != c && s[i])
-                                i++;
-                }
-        }
-        tab[j] = (NULL);
-        return (tab);
+	j = ft_count_words(s, c);
+	if (s == NULL || !(strsplit = (char **)malloc(sizeof(char *) * j + 1)))
+		return (NULL);
+	strsplit[j] = NULL;
+	i = 0;
+	j = -1;
+	while (s[i])
+	{
+		while (s[i] == c)
+			i++;
+		len = 0;
+		while (s[i] && s[i] != c && ++len > 0)
+			i++;
+		if (len == 0)
+			break ;
+		if (++j >= 0 && !(strsplit[j] = ft_substr(s, i - len, len)))
+			return (ft_free(strsplit, j));
+	}
+	return (strsplit);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/28 14:39:41 by cmcgahan          #+#    #+#             */
+/*   Updated: 2021/01/28 14:39:43 by cmcgahan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int			ft_strncmp(const char *s1, const char *s2, size_t n)
@@ -18,7 +30,7 @@ int			ft_strncmp(const char *s1, const char *s2, size_t n)
 
 int			ft_strcmp(const char *s1, const char *s2)
 {
-	size_t		i;
+	size_t			i;
 	unsigned char	*str1;
 	unsigned char	*str2;
 

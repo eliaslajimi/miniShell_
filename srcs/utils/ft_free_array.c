@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_free_array.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/28 14:44:08 by cmcgahan          #+#    #+#             */
+/*   Updated: 2021/01/28 14:45:02 by cmcgahan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void		ft_free_array(char **tab)
@@ -8,12 +20,10 @@ void		ft_free_array(char **tab)
 	if (!tab || !*tab)
 		return ;
 	while (tab[i])
-		i++;
-	while (i > 0)
 	{
 		free(tab[i]);
 		tab[i] = NULL;
-		i--;
+		i++;
 	}
 	free(tab);
 	tab = NULL;
