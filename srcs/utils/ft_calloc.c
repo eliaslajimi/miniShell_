@@ -6,15 +6,15 @@
 /*   By: elajimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 19:17:56 by elajimi           #+#    #+#             */
-/*   Updated: 2019/11/02 15:20:51 by elajimi          ###   ########.fr       */
+/*   Updated: 2021/01/28 14:43:35 by cmcgahan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	*ft_calloc(int count, int size)
+void		*ft_calloc(int count, int size)
 {
-	int i;
+	int		i;
 	char	*calloc;
 
 	i = 0;

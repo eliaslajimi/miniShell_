@@ -37,6 +37,7 @@ void args(char **argv)
 			executor(init);
 		free(t.tokens);
 	}
+	free(t.inputcmd);
 	exitroutine(*init);
 	final_exit(*(int*)getglobal(STATUS));
 }

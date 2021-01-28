@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstdelnode.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/28 14:40:05 by cmcgahan          #+#    #+#             */
+/*   Updated: 2021/01/28 14:40:06 by cmcgahan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-int	 ft_lstdelnode(t_list **lst, char *data, int datalen)
+int			ft_lstdelnode(t_list **lst, char *data, int datalen)
 {
 	t_list	*current;
 	t_list	*previous;
@@ -19,7 +31,7 @@ int	 ft_lstdelnode(t_list **lst, char *data, int datalen)
 			return (1);
 		}
 		if (current->next == NULL)
-			break;
+			break ;
 		previous = current;
 		current = current->next;
 	}
