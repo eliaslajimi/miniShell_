@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	file_exists(const char *path)
+int             file_exists(const char *path)
 {
 	struct stat	stats;
 
@@ -12,13 +12,13 @@ int	file_exists(const char *path)
 	return (0);
 }
 
-static char *cmdpath(char *path, char *cmd)
+static char     *cmdpath(char *path, char *cmd)
 {
-    int     i;
-    int     bin_exists;
-    char    *bin;
-    char    **path_split;
-	char	*tmp;
+    int         i;
+    int         bin_exists;
+    char        *bin;
+    char        **path_split;
+	char	    *tmp;
 
     i = 0;
     bin_exists = 0;
@@ -54,10 +54,10 @@ static char *cmdpath(char *path, char *cmd)
     }
 }
 
-char    *absolute_path(char *cmd)
+char            *absolute_path(char *cmd)
 {
-    char    *path;
-    t_list  *tmp;
+    char        *path;
+    t_list      *tmp;
 
     tmp = g_env;
     while (tmp->next && ft_strncmp(tmp->content, "PATH", 4) != 0)
