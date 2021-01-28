@@ -166,7 +166,6 @@ char		*handling_word_quotes_dollar(char *word)
 		}
 		else if (word[v->i] == '\\')
 		{
-			printf("backslash\n");
 			v->i++;
 			if (word[v->i] == 'r' || word[v->i] == 't' ||
 					word[v->i] == 'v' || word[v->i] == 'f')
