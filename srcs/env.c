@@ -100,6 +100,7 @@ t_list	*setEnv(char **envp)
 	env_lst->content = ft_strdup(envp[i++]);
 	while (envp[i])
 	{
+		envp[i] = ft_strtrim(envp[i], " ");
 		newlst = ft_lstnew(NULL);
 		newlst->content = ft_strdup(envp[i]);
 		ft_lstadd_back(&env_lst, newlst);

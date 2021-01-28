@@ -105,6 +105,7 @@ int	token_to_command(c_table *ctable, char **tokens)
 	}
 	else
 	{
+		//printf("[%s\n]", *tokens);
 		ctable->args = expanse_array(ctable->args, ctable->args_len, *tokens);	
 		if (ctable->command_exists == 0)
 			ctable->command = ft_strdup(ctable->args[0]);

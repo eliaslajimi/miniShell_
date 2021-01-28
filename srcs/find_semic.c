@@ -62,7 +62,7 @@ int main(int argc, char **argv)
 		end = find_semic(test, start);
 		result = ft_substr(test, start, end - start);
 		start = end + 1;
-		printf("%s\n", result);
+		//printf("%s\n", result);
 		free(result);
 	}
 	return (0);

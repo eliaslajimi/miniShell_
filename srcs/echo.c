@@ -18,7 +18,6 @@ int			echo(char **arg, int args_len, int in, int out)
 		if ((ret = read(in, buf, 9)) > 0)
 			result = ft_strjoin(result, buf);
 	}
-	//printf("arg is [%s]\n",*arg);
 	arg++;
 	while (i < args_len && (ft_strncmp(*arg, "-n", 2) == 0))
 	{

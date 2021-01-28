@@ -10,6 +10,9 @@ char	*swap_dollar(char *s, int i, int len)
 	if (find_node(tofind) != NULL)
 	{
 		result = ft_strdup(find_node(tofind) + ft_strlen(tofind) + 1);
+		result = ft_strtrim(result, " ");	
+		//printf("result is %s\n", result);
+		//printf("tofind is %s\n", );
 		ft_strdel(&tofind);
 		return (result);
 	}

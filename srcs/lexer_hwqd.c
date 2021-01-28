@@ -14,7 +14,6 @@ static void dollar(t_hwqd *v, char *word)
 	else if (word[v->i + 1] == '_' && ft_isalpha(word[v->i + 2]) == 0 && word[v->i + 2] != '_')
 	{
 		v->i += 2;
-	//	printf("find node [%s]\n", find_node("_"));
 		v->result = ft_strjoin(v->result, cleannode(find_node("_")));
 	}
 	else
@@ -42,7 +41,6 @@ static void dollar(t_hwqd *v, char *word)
 
 static void double_quote2(t_hwqd *v, char *word)
 {
-	//printf("we here [%s]\n", word);
 	if (word[v->i + 1] == '?')
 	{
 		v->i += 2;
@@ -77,8 +75,6 @@ static void double_quote2(t_hwqd *v, char *word)
 static void double_quote(t_hwqd *v, char *word)
 {
     v->i++;
-	//printf("word double quote [%s]\n", word);
-	//printf("word double quote [%s]\n", word + v->i);
 
 	while (word[v->i] && word[v->i] != '\"')
 	{
@@ -128,7 +124,6 @@ char		*handling_word_quotes_dollar(char *word)
         return (NULL);
 	v->i = 0;
 	v->result = ft_strdup("");
-	//printf("word hwqd: [%s]\n", word);
 	while (word[v->i])
 	{
 		if (word[v->i] == '\'')
@@ -139,31 +134,23 @@ char		*handling_word_quotes_dollar(char *word)
 		}
 		else if (word[v->i] == '$')
 		{
-			//printf("dollar\n");
 			if (word[v->i + 1] == '\\' || word[v->i + 1] == '\0' || word[v->i + 1] == '%')
 			{
-			//	printf("	with baskslah or null after word[%d] [%c] word[i+1] [%c]\n",v->i,word[v->i],word[v->i+1]);
 				v->result = ft_strjoin_char(v->result, word[v->i++]);
-			//	printf("result now : [%s]\n", v->result);
-				//v->i++;
 			}
 			else
 			{
-				//printf("found dollar\n");
 				dollar(v, word);
 			}
 				
 		}
         else if (word[v->i] == '\\')
         {
-		//	printf("backslash\n");
             v->i++;
 			if (word[v->i] == 'r' || word[v->i] == 't' || word[v->i] == 'v' || word[v->i] == 'f')
 				v->i++;
 			else
 				v->result = ft_strjoin_char(v->result, word[v->i++]);
-		//	printf("result now : [%s]\n", v->result);
-
         }
 		else
 			v->result = ft_strjoin_char(v->result, word[v->i++]);

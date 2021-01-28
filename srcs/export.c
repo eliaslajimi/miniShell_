@@ -48,7 +48,6 @@ int			export_builtin(char *arg, int out)
 	env_lst = g_env;
 
 	int k ;
-	//printf("arg is [%s]\n", arg);
 	if (arg[0] == '\0')
 	{
 		print("minishell: export: `': not a valid identifier\n", 2);
@@ -63,15 +62,11 @@ int			export_builtin(char *arg, int out)
 	}
 	else if (ft_isin('=', arg))
 	{
-	//	printf("arg is %s\n",arg);
-
-		split_arg = ft_split(arg, '=');
-		
 		int j = 0;
 
+		split_arg = ft_split(arg, '=');
 		if (ft_strcmp(split_arg[0], "SHLVL") == 0)
 		{
-	//		printf("split_arg[1] is %s\n",split_arg[1]);
 			if (split_arg[1])
 				export_shlvl(split_arg[1]);
 			else
@@ -79,7 +74,6 @@ int			export_builtin(char *arg, int out)
 			ft_free_array(split_arg);
 			return (0);
 		}
-
 		while (split_arg[0][j])
 		{
 			if (ft_isin(split_arg[0][j], "\'\"\\$@!|;& "))
@@ -104,13 +98,11 @@ int			export_builtin(char *arg, int out)
 			return (1);
 		newnode = ft_lstnew(NULL);
 		newnode->content = ft_strdup(arg);
-	//	printf("we add %s\n", newnode->content);
 		ft_lstadd_back(&env_lst, newnode);
 		return (0);
 	}
 	else if (ft_strcmp(arg, "null") == 0)
 	{
-//		add_underscore("export");
 		return (join_sorted_list(env_lst, out));
 	}
 	else
