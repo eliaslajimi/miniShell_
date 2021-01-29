@@ -4,7 +4,11 @@
 char *formatpath(char *path)
 {
 	if (!ft_strlen(path))
-		path = cleannode(find_node("HOME"));
+		if (!(path = cleannode(find_node("HOME"))))
+		{
+			print("minishell: cd: HOME not set\n", 1);
+			return (NULL);
+		}
 	if (ft_strlen(path) > 1 && path[ft_strlen(path)] == '/')
 		path[ft_strlen(path)] = 0;
 	if (!ft_strcmp(path, "-"))
@@ -42,32 +46,43 @@ int applycmd(char *cmd)
 		else
 			newcmd = ft_strjoin(ft_strjoin(ft_strdup(cleannode(find_node("PWD"))), "/"), cmd);
 		status = chdir(newcmd);
+		free(cmd);
 	}
 	if (!status)
 		add_pwd();
-	free(cmd);
 	free(newcmd);
 	return (status);
 }
 
+char *getaccesserr(char *path)
+{
+	opendir(path);
+	if (errno == EACCES)
+		return (": Permission denied");
+	return (": No such file or directory");
+	
+}
 int argtocmd(char *arg)
 {
 	int *status;
+	char *arg2;
 
 	if (!arg)
 		return (0);
 	status = (int*)getglobal(STATUS);
-	arg = formatpath(arg);
-	*status = applycmd(arg);
+	arg2 = ft_strdup(arg);
+	if (!(arg2 = formatpath(arg2)))
+		return (0);
+	*status = applycmd(arg2);
 	if (*status != 0)
 	{
 		print("minishell: ", 1);
 		print("cd: ", 1);
 		print(arg, 1);
-		print(": No such file or directory", 1);
+		print(getaccesserr(arg), 1);
+		//print(": No such file or directory", 1);
 		print("\n", 1);
 	 }
-
 	return (0);
 }
 
@@ -86,15 +101,13 @@ int cd(char **args, int in, int out)
 {
 	int status;
 
-	//if (!find_node("PWD"))
-	//	add_pwd();
 	status = 0;
 	(void)in;
 	(void)out;
 	args++;
 	if (!ptr_len((void*)args))
 		argtocmd("");
-	while (*args)
+	if (*args)
 	{
 		if (!ft_strlen(*args))
 			*args = ft_strjoin(*args, cleannode(find_node("PWD")));
