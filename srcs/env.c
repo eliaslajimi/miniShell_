@@ -1,10 +1,21 @@
 #include "minishell.h"
 
-/*
-** if tofree = 1, 'cmd' will be freed
-*/
+int add_underscore_main()
+{
+	t_list	*env_lst;
+	t_list	*newnode;
+	char	*underscore_env;
 
-int add_underscore(char *cmd, int tofree)
+	env_lst = g_env;
+	underscore_env = ft_strdup("_=/bin/bash");
+	newnode = ft_lstnew(NULL);
+	newnode->content = ft_strdup(underscore_env);
+	ft_lstadd_back(&g_env, newnode);
+	free(underscore_env);
+	return (0);
+}
+
+int add_underscore(char *cmd)
 {
 	t_list	*env_lst;
 	t_list	*newnode;
@@ -16,12 +27,10 @@ int add_underscore(char *cmd, int tofree)
 	unset_builtin("_", "void");
 	underscore_env = ft_strdup("_=");
 	underscore_env = ft_strjoin(underscore_env, cmd);
-	if (tofree == 1)
-		free(cmd);
 	newnode = ft_lstnew(NULL);
-	newnode->content = ft_strdup(underscore_env);
+	newnode->content = underscore_env;
 	ft_lstadd_back(&g_env, newnode);
-	free(underscore_env);
+	//free(underscore_env);
 	return (0);
 }
 
@@ -36,8 +45,7 @@ int add_shlvl()
 	found = find_node("SHLVL");
 	if (found == NULL)
 	{
-		shlvl = ft_strdup("SHLVL=");
-		shlvl = ft_strjoin(shlvl, "1");
+		shlvl = ft_strdup("SHLVL=1");
 		newnode = ft_lstnew(NULL);
 		newnode->content = ft_strdup(shlvl);
 		ft_lstadd_back(&env_lst, newnode);
@@ -51,14 +59,13 @@ int add_shlvl()
 	return (0);
 }
 
-int			add_oldpwd()
+int	add_oldpwd()
 {
 	char	*oldpwd;
 	char	*oldpwd_env;
 
 	if ((oldpwd = find_node("PWD")) != NULL)
 	{
-
 		oldpwd_env = ft_strdup("OLDPWD=");		
 		oldpwd = cleannode(oldpwd);		
 		oldpwd_env = ft_strjoin(oldpwd_env, oldpwd);		
@@ -122,7 +129,7 @@ int		env_builtin(char **args, int out)
 		return(1);
 	}
 	unset_builtin("_", "void");
-	add_underscore("env", 0);
+	add_underscore("env");
 	tmp_lst = g_env;
 	cmd = ft_strdup(args[0]);
 	result = ft_strdup("");

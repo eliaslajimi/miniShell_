@@ -10,6 +10,7 @@ static void		shlvl_err_msg(int shlvl)
 
 int					export_shlvl(char *nb)
 {
+	char	*itoa_shlvl;
 	t_list	*env_lst;
 	t_list	*newnode;
 	int		shlvl;
@@ -26,7 +27,9 @@ int					export_shlvl(char *nb)
 		shlvl = 1;
 	}
 	toexport = ft_strdup("SHLVL=");
-	toexport = ft_strjoin(toexport, ft_itoa(shlvl));
+	itoa_shlvl = ft_itoa(shlvl);
+	toexport = ft_strjoin(toexport, itoa_shlvl);
+	free(itoa_shlvl);
 	if (find_node("SHLVL") != NULL)
 		unset_builtin("SHLVL", "void");
 	newnode = ft_lstnew(NULL);
@@ -143,7 +146,7 @@ int			export_builtin_loop(char **arg, int args_len, int out)
 	while((*arg)[i] && (*arg)[i] != '=')
 		i++;
 	underscore = ft_strndup(*arg, i);
-	add_underscore(underscore, 0);
+	add_underscore(underscore);
 	if (args_len == 1)
 		export_builtin("null", out);
 	return (ret);
