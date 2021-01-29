@@ -154,27 +154,14 @@ char		*handling_word_quotes_dollar(char *word)
 				dollar(v, word);
 			}
 		}
-//<<<<<<< HEAD
-        else if (word[v->i] == '\\')
-        {
-            v->i++;
-			if (word[v->i] == 'r' || word[v->i] == 't' || word[v->i] == 'v' || word[v->i] == 'f')
-				v->i++;
-			else
-				v->result = ft_strjoin_char(v->result, word[v->i++]);
-        }
-//=======
-//		else if (word[v->i] == '\\')
-//		{
-//			v->i++;
-//			if (word[v->i] == 'r' || word[v->i] == 't' ||
-//					word[v->i] == 'v' || word[v->i] == 'f')
-//				v->i++;
-//			else
-//				v->result = ft_strjoin_char(v->result, word[v->i++]);
-//			//printf("result now : [%s]\n", v->result);
-//		}
-//>>>>>>> abc8630a00f4c41df947dda5467ee59be19e06fa
+       		else if (word[v->i] == '\\')
+       		{
+       		    v->i++;
+       				if (word[v->i] == 'r' || word[v->i] == 't' || word[v->i] == 'v' || word[v->i] == 'f')
+       					v->i++;
+       				else
+       					v->result = ft_strjoin_char(v->result, word[v->i++]);
+       		}
 		else
 			v->result = ft_strjoin_char(v->result, word[v->i++]);
 	}
