@@ -49,7 +49,6 @@ char	*getabspath(char *command)
 	cmd = ft_strdup(path[i]);
 	cmd = ft_strjoin(cmd, "/");
 	cmd = ft_strjoin(cmd, command);
-	//char *cmd = ft_strjoin(ft_strjoin(ft_strdup(path[i]), "/"), command);	
 	while(path[i] && ((ret = stat(cmd, &buf)) < 0))
 	{
 		free(cmd);
@@ -99,7 +98,7 @@ int	other_command(c_table *ctable)
 			free(cmd);
 			return (126);
 		}
-		if (!(bits & S_IXUSR) && !(bits & S_IXGRP) && !(bits & S_IXOTH))
+		if (!(bits & S_IXUSR))// || !(bits & S_IXGRP))// && !(bits & S_IXOTH))
 		{
 			print("minishell: ", 1);
 			print(cmd, 1);
@@ -132,7 +131,8 @@ int	other_command(c_table *ctable)
 			print(": is a directory\n", 1);
 			return (126);
 		}
-		if (!(bits & S_IXUSR) && !(bits & S_IXGRP) && !(bits & S_IXOTH))
+		//if (!(bits & S_IXUSR) && !(bits & S_IXGRP))// && !(bits & S_IXOTH))
+		if (!(bits & S_IXUSR))// || !(bits & S_IXGRP))// && !(bits & S_IXOTH))
 		{
 			print("minishell: ", 1);
 			print(ctable->command, 1);
