@@ -40,18 +40,29 @@ int	isFileEmpty(char *path)
 
 char	*getabspath(char *command)
 {
+	char	*cmd;
 	char *env = cleannode(find_node("PATH"));
 	char **path = ft_split(env, ':');
 	struct stat buf;
 	int i = 0;
 	int ret = 0;
-	char *cmd = ft_strjoin(ft_strjoin(ft_strdup(path[i]), "/"), command);	
+	cmd = ft_strdup(path[i]);
+	cmd = ft_strjoin(cmd, "/");
+	cmd = ft_strjoin(cmd, command);
+	//char *cmd = ft_strjoin(ft_strjoin(ft_strdup(path[i]), "/"), command);	
 	while(path[i] && ((ret = stat(cmd, &buf)) < 0))
-		cmd = ft_strjoin(ft_strjoin(ft_strdup(path[i++]), "/"), command);	
+	{
+		free(cmd);
+		cmd = ft_strjoin(ft_strjoin(ft_strdup(path[i++]), "/"), command);
+	}
+	ft_free_array(path);
 	if (ret >=0)
 		return (cmd);
 	else
+	{
+		free(cmd);
 		return (command);
+	}
 }
 
 int	other_command(c_table *ctable)
@@ -67,7 +78,7 @@ int	other_command(c_table *ctable)
 	if (ctable->command[0] != '.' && ctable->command[0] != '/')
 		cmd = getabspath(ctable->command);
 	else 
-		cmd = ctable->command;
+		cmd = ft_strdup(ctable->command);
 	ret = stat(cmd, &buf);
 	mode_t bits = buf.st_mode;	
 	if (ft_strcmp(ctable->command, cmd))
@@ -77,6 +88,7 @@ int	other_command(c_table *ctable)
 			print("minishell: ",1);	//could be refactored as print_error(char *command, int error);
 			print(cmd, 1);
 			print(": command not found\n", 1);
+			free(cmd);
 			return (127);
 		}
 		if (isDir(cmd))
@@ -84,6 +96,7 @@ int	other_command(c_table *ctable)
 			print("minishell: ", 1);
 			print(cmd, 1);
 			print(": is a directory\n", 1);
+			free(cmd);
 			return (126);
 		}
 		if (!(bits & S_IXUSR) && !(bits & S_IXGRP) && !(bits & S_IXOTH))
@@ -91,11 +104,16 @@ int	other_command(c_table *ctable)
 			print("minishell: ", 1);
 			print(cmd, 1);
 			print(": Permission denied\n", 1);
+			free(cmd);
 			return (126);
 		}
 		status = fork_cmd(cmd, ctable->args, ctable);
 		if (status == 256)
+		{
+			free(cmd);
 			return (1);
+		}
+		free(cmd);
 		return (status%256);
 	}
 	else

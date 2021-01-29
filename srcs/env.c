@@ -28,9 +28,9 @@ int add_underscore(char *cmd)
 	underscore_env = ft_strdup("_=");
 	underscore_env = ft_strjoin(underscore_env, cmd);
 	newnode = ft_lstnew(NULL);
-	newnode->content = ft_strdup(underscore_env);
+	newnode->content = underscore_env;
 	ft_lstadd_back(&g_env, newnode);
-	free(underscore_env);
+	//free(underscore_env);
 	return (0);
 }
 
