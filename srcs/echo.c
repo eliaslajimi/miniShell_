@@ -37,7 +37,7 @@ int			echo(char **arg, int args_len, int in, int out)
 		i++;
 	}
 	arg--;
-	add_underscore(ft_strdup(*arg), 1);
+	add_underscore(ft_strdup(*arg));
 	if (nflag == 0)
 		print("\n", out);
 	if (out > 2)

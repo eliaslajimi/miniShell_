@@ -37,14 +37,13 @@ static char     *cmdpath(char *path, char *cmd)
             bin = ft_strjoin(bin, cmd);
             if (file_exists(bin) == 1)
                 break;
+            else
+                free(bin);            
             i++;
         }
         ft_free_array(path_split);
         if (file_exists(bin) == 0)
-        {
-            free(bin);
             return(cmd);
-        }
 		return (bin);
     }
     else

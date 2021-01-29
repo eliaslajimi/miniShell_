@@ -102,5 +102,6 @@ int cd(char **args, int in, int out)
 	    argtocmd(*args);
 		args++;
 	}
+
 	return (status);
 }

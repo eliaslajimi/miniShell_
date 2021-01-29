@@ -177,7 +177,8 @@ int		env_builtin(char **args, int out);
 t_list	*setEnv(char **envp);
 int		add_pwd();
 int		add_shlvl();
-int		add_underscore(char *cmd, int tofree);
+int		add_underscore(char *cmd);
+int		add_underscore_main();
 
 ///*export*/
 int		export_builtin(char *arg, int out);

@@ -6,7 +6,8 @@ char *cleannode(char *node)
 		return (NULL);
 	while(*node && *node != '=')
 		++node;
-	ft_strtrim(++node, " ");
+	//ft_strtrim(++node, " ");
+	++node;
 	return (node);
 }
 
