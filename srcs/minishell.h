@@ -24,6 +24,15 @@
 
 /*command table*/
 
+typedef struct	s_lex
+{
+	int			i;
+	int			i_word;
+	int			array_size;
+	char		*token;
+	char		**isolated_tokens;
+}				t_lex;
+
 typedef struct	s_arg
 {
 	int			start;

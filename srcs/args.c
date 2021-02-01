@@ -43,9 +43,18 @@ void args(char **argv)
 			wrapper(*init);
 		free(t.cmd);
 		if (parser(ctable, t.tokens) < 0)
+		{
 			*status = 1;
+		}
 		else
+		{
 			executor(init);
+		}
+		int i = 0;
+		while (t.tokens[i])
+		{
+			free(t.tokens[i++]);
+		}
 		free(t.tokens);
 	}
 	free(t.inputcmd);

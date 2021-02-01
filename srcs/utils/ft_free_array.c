@@ -12,12 +12,30 @@
 
 #include "../minishell.h"
 
+void		ft_free_array_size(char **tab, int size)
+{
+	int		i;
+
+	i = 0;
+	if (size > 0)
+	{
+		while (i < size)
+		{
+			free(tab[i]);
+			tab[i] = NULL;
+			i++;
+		}
+	}
+	free(tab);
+	tab = NULL;
+}
+
 void		ft_free_array(char **tab)
 {
 	int	i;
 
 	i = 0;
-	if (!tab || !*tab)
+	if (!tab)
 		return ;
 	while (tab[i])
 	{

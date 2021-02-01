@@ -3,6 +3,7 @@
 
 char *formatpath(char *path)
 {
+	char	*tmp;
 	if (!ft_strlen(path))
 		if (!(path = cleannode(find_node("HOME"))))
 		{
@@ -16,10 +17,16 @@ char *formatpath(char *path)
 	if ((!ft_strcmp(path, "~")) || (!ft_strncmp(path, "~/", 2)))
 	{
 		path++;
+		tmp = path;
 		path = ft_strjoin(ft_strjoin(ft_strdup(cleannode(find_node("HOME"))), "/"), path + 1);
-	 }
+		free(tmp); 
+	}
 	if (!ft_strncmp(path, "./", 2))
-		path= ft_strtrim(path, "./");
+	{
+		tmp = path;
+		path = ft_strtrim(path, "./");
+		free(tmp);
+	}
 	return (path);
 }
 
@@ -46,11 +53,11 @@ int applycmd(char *cmd)
 		else
 			newcmd = ft_strjoin(ft_strjoin(ft_strdup(cleannode(find_node("PWD"))), "/"), cmd);
 		status = chdir(newcmd);
-		free(cmd);
+		free(newcmd);
 	}
 	if (!status)
 		add_pwd();
-	free(newcmd);
+	free(cmd);
 	return (status);
 }
 
@@ -70,8 +77,7 @@ int argtocmd(char *arg)
 	if (!arg)
 		return (0);
 	status = (int*)getglobal(STATUS);
-	arg2 = ft_strdup(arg);
-	if (!(arg2 = formatpath(arg2)))
+	if (!(arg2 = formatpath(ft_strdup(arg))))
 		return (0);
 	*status = applycmd(arg2);
 	if (*status != 0)
@@ -82,7 +88,7 @@ int argtocmd(char *arg)
 		print(getaccesserr(arg), 1);
 		//print(": No such file or directory", 1);
 		print("\n", 1);
-	 }
+	}
 	return (0);
 }
 
