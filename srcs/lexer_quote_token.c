@@ -14,6 +14,7 @@ static char	*inputline_join(char *line)
 
 char	*matching_quotes(char *line)
 {
+//	char	*tmp;
 	int	i = 0;
 	if (ft_strlen(line) == 0)
 		return (NULL);
@@ -42,6 +43,8 @@ char	*matching_quotes(char *line)
 		else if (line[i] == '\\')
 				i += 2;
 	}
+//	tmp = line;
 	line = ft_strtrim(line, " \r\t\v\f");
+//	free(tmp);
 	return (line);
 }

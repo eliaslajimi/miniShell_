@@ -111,18 +111,23 @@ static char	**lex_line_special(char **isolated_tokens, char *input_line)
 
 int			lexer_special(char *input_line)
 {
+	char	*matched_line;
 	int		lexer_check_status;
 	char	**isolated_tokens;
 
 	lexer_check_status = 0;
 	if (!ft_strlen(input_line))
 		return (-1);
-	input_line = matching_quotes(input_line);
+	matched_line = matching_quotes(input_line);
 	if (!(isolated_tokens = malloc(sizeof(char *) * (1))))
 		return (-1);
 	isolated_tokens[0] = NULL;
-	if ((isolated_tokens = lex_line_special(isolated_tokens, input_line)) == NULL)
+	if ((isolated_tokens = lex_line_special(isolated_tokens, matched_line)) == NULL)
+	{
+		free(matched_line);
 		return (-1);
+	}
+	free(matched_line);
 	lexer_check_status = lexer_check_symbols(isolated_tokens);
 	ft_free_array(isolated_tokens);
 /*	int i = 0;
