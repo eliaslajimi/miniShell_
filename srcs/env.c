@@ -21,8 +21,7 @@ int add_underscore(char *cmd)
 	env_lst = g_env;
 	cmd = absolute_path(cmd);
 	unset_builtin("_", "void");
-	underscore_env = ft_strdup("_=");
-	underscore_env = ft_strjoin(underscore_env, cmd);
+	underscore_env = ft_strjoin(ft_strdup("_="), cmd);
 	newnode = ft_lstnew(underscore_env);
 	ft_lstadd_back(&g_env, newnode);
 	//free(underscore_env);
@@ -46,7 +45,6 @@ int add_shlvl()
 	{
 		export_shlvl(cleannode(find_node("SHLVL")));
 	}
-	free(found);
 	return (0);
 }
 
@@ -60,7 +58,7 @@ int	add_oldpwd()
 		oldpwd_env = ft_strdup("OLDPWD=");		
 		oldpwd = cleannode(oldpwd);		
 		oldpwd_env = ft_strjoin(oldpwd_env, oldpwd);		
-		//free(oldpwd);		
+		//free(oldpwd);
 		export_builtin(oldpwd_env, 0);
 		free(oldpwd_env);
 	}

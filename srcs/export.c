@@ -87,7 +87,7 @@ int			export_builtin(char *arg, int out)
 			}
 			j++;
 		}
-		found = find_node(split_arg[0]);
+		found = ft_strdup(find_node(split_arg[0]));
 		if (found != NULL)
 		{
 			unset_builtin(split_arg[0], "void");

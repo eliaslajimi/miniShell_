@@ -16,7 +16,7 @@ static int	 ft_lstdelnode(t_list **lst, char *data, int datalen)
 				*lst = current->next;
 			else
 				previous->next = current->next;
-			//free(current->content);
+			free(current->content);
 			free(current);
 			return (0);
 		}
@@ -68,6 +68,7 @@ int	unset_builtin(char *arg, char *exportarg)
 		arglen = ft_strlen(param);
 	//	printf("\nwe unset [%s]\n", param);
 		ret = ft_lstdelnode(&env_lst, param, arglen);
+
 	}
 	return (ret);
 }
