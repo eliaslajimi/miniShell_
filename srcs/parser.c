@@ -6,11 +6,6 @@ int			is_redirec(char *token)
 	|| ft_strcmp(token, "<") == 0);
 }
 
-int			is_flag(char *token)
-{
-	return (token[0] == '-');
-}
-
 int			is_pipe(char *token, c_table *ctable)
 {
 	if (ft_strcmp(token, "|") == 0)

@@ -41,6 +41,7 @@ void args(char **argv)
 		t.start = t.end + 1;
 		if (!(t.tokens = lexer(t.cmd)))
 			wrapper(*init);
+		free(t.cmd);
 		if (parser(ctable, t.tokens) < 0)
 			*status = 1;
 		else

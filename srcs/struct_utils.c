@@ -17,7 +17,6 @@ c_table *init_struct()
 	init->pipein = 0;
 	init->pipeout = 0;
 	init->command = "";
-	init->flags = ft_calloc(1, 1);
 	init_args(&init);
 	init->args_len = 0;
 	init->in = 0;
@@ -51,9 +50,9 @@ void free_struct(c_table *ctable)
 {
 	(void)ctable;
 	//free(ctable->flags);
-	//if (ctable->args)
-	//	ft_free_array(ctable->args);
-	//free(ctable);
+	if (ctable->args)
+		ft_free_array(ctable->args);
+	free(ctable);
 }
 
 void print_struct(c_table *ctable)
@@ -69,7 +68,6 @@ void print_struct(c_table *ctable)
 	printf("ctable: pipeout:	[%d]\n", ctable->pipeout); 
 	printf("ctable: command:	[%s]\n", ctable->command); 
 	printf("ctable: proc.id:	[%d]\n", ctable->id); 
-	printf("ctable: flag:		[%s]\n", ctable->flags); 
 	int i = 0;
 	while (ctable->args[i])
 	{
