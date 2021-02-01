@@ -25,7 +25,6 @@ int	main(int argc, char **argv, char **envp)
 	add_underscore_main(); //leaks OK
 	if (argc == 3 && ft_strcmp(argv[1], "-c") == 0)
 	{
-	//	printf("salut\n");
 		args(argv);
 	}
 	else if (argc != 1)

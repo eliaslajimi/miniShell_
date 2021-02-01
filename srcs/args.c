@@ -5,7 +5,12 @@ static t_arg	init_targ(char **argv)
 	t_arg	t;
 	t.start = 0;
 	t.end = 0;
-	t.inputcmd = ft_strdup(argv[2]);
+	t.inputcmd = ft_strtrim(ft_strdup(argv[2]), " \t\v\f\r");
+	if (ft_strlen(t.inputcmd) == 0)
+	{
+		free(t.inputcmd);
+		final_exit(0);
+	}
 	t.cmd = NULL;
 	t.tokens = NULL;
 	args_checker(t.inputcmd);
@@ -21,6 +26,7 @@ void args(char **argv)
 
 	status = (int*)getglobal(STATUS);
 	t = init_targ(argv);
+	
 	while (t.start < ft_strlen(t.inputcmd))
 	{
 		init = getstruct();

@@ -128,6 +128,7 @@ char	*remove_char(char *str, char c);
 char	*remove_char_pos(char *str, int c);
 char	*remove_all_char(char *str, char c);
 int		ft_isdigit(int c);
+int		ft_isascii(int c);
 int		find_semic(char *line, int start);
 int		ptr_len(void **ptr);
 int		ft_isalpha(int c);

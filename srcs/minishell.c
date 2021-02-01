@@ -41,8 +41,14 @@ int			minishell()
 
 	c_table **init, *ctable;
 	write(1, ">> ", 3);
-
 	get_next_line(1, &inputcmd);
+//	printf("ret [%d] [%s]\n", ret, inputcmd);
+	while (ft_strlen(ft_strtrim(inputcmd, " \t\v\f\r")) == 0)
+	{
+		write(1, ">> ", 3);
+		get_next_line(1, &inputcmd);
+	}
+	
 	if ((inputcmd = matching_quotes(inputcmd)) == NULL)
 		minishell();
 	while (start < ft_strlen(inputcmd))

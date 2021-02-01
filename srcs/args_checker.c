@@ -102,26 +102,26 @@ int		args_checker(char *inputcmd)
 	if (matching_quotes_args(inputcmd) == -1)
 	{
 		print("minishell: unexpected EOF while looking for matching `\"\'\n",2);
-		exit(2);
+		final_exit(2);
 	}
 	else if (matching_quotes_args(inputcmd) == -2)
 	{
 		print("minishell: unexpected EOF while looking for matching `\'\'\n",2);
-		exit(2);
+		final_exit(2);
 	}
 	if (checking_semic(inputcmd) == -1)
 	{
 		print("minishell: syntax error near unexpected token `;'\n", 2);
-		exit(2);
+		final_exit(2);
 	}
 	if (checking_pipes(inputcmd) == -1)
 	{
 		print("minishell: syntax error near unexpected token `|'\n", 2);
-		exit(2);
+		final_exit(2);
 	}
 	lexer_check_status = lexer_special(inputcmd);
 	if (lexer_check_status != 0)
-		exit(lexer_check_status);
+		final_exit(lexer_check_status);
 
 	return (0);
 }

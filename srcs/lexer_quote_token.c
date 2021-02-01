@@ -42,5 +42,6 @@ char	*matching_quotes(char *line)
 		else if (line[i] == '\\')
 				i += 2;
 	}
+	line = ft_strtrim(line, " \r\t\v\f");
 	return (line);
 }
