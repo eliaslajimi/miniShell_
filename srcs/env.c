@@ -4,14 +4,10 @@ int add_underscore_main()
 {
 	t_list	*env_lst;
 	t_list	*newnode;
-	char	*underscore_env;
 
 	env_lst = g_env;
-	underscore_env = ft_strdup("_=/bin/bash");
-	newnode = ft_lstnew(NULL);
-	newnode->content = ft_strdup(underscore_env);
+	newnode = ft_lstnew("_=/bin/bash");
 	ft_lstadd_back(&g_env, newnode);
-	free(underscore_env);
 	return (0);
 }
 
@@ -27,8 +23,7 @@ int add_underscore(char *cmd)
 	unset_builtin("_", "void");
 	underscore_env = ft_strdup("_=");
 	underscore_env = ft_strjoin(underscore_env, cmd);
-	newnode = ft_lstnew(NULL);
-	newnode->content = underscore_env;
+	newnode = ft_lstnew(underscore_env);
 	ft_lstadd_back(&g_env, newnode);
 	//free(underscore_env);
 	return (0);
@@ -36,7 +31,6 @@ int add_underscore(char *cmd)
 
 int add_shlvl()
 {
-	char	*shlvl;
 	t_list	*env_lst;
 	t_list	*newnode;
 	char	*found;
@@ -45,11 +39,8 @@ int add_shlvl()
 	found = find_node("SHLVL");
 	if (found == NULL)
 	{
-		shlvl = ft_strdup("SHLVL=1");
-		newnode = ft_lstnew(NULL);
-		newnode->content = ft_strdup(shlvl);
+		newnode = ft_lstnew("SHLVL=1");
 		ft_lstadd_back(&env_lst, newnode);
-		ft_strdel(&shlvl);
 	}
 	else
 	{
@@ -103,17 +94,14 @@ t_list	*setEnv(char **envp)
 	t_list	*newlst;
 
 	i = 0;
-	env_lst = ft_lstnew(NULL);
-	env_lst->content = ft_strdup(envp[i++]);
+	env_lst = ft_lstnew(envp[i++]);
 	while (envp[i])
 	{
 		envp[i] = ft_strtrim(envp[i], " ");
-		newlst = ft_lstnew(NULL);
-		newlst->content = ft_strdup(envp[i]);
+		newlst = ft_lstnew(envp[i]);
 		ft_lstadd_back(&env_lst, newlst);
 		i++;
 	}
-	ft_lstadd_back(&env_lst, NULL);
 	return (env_lst);
 }
 

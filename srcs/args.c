@@ -2,10 +2,14 @@
 
 static t_arg	init_targ(char **argv)
 {
+	char	*tmp;
+
 	t_arg	t;
 	t.start = 0;
 	t.end = 0;
-	t.inputcmd = ft_strtrim(ft_strdup(argv[2]), " \t\v\f\r");
+	tmp = ft_strdup(argv[2]);
+	t.inputcmd = ft_strtrim(tmp, " \t\v\f\r");
+	free(tmp);
 	if (ft_strlen(t.inputcmd) == 0)
 	{
 		free(t.inputcmd);

@@ -32,8 +32,7 @@ int					export_shlvl(char *nb)
 	free(itoa_shlvl);
 	if (find_node("SHLVL") != NULL)
 		unset_builtin("SHLVL", "void");
-	newnode = ft_lstnew(NULL);
-	newnode->content = ft_strdup(toexport);
+	newnode = ft_lstnew(toexport);
 	ft_lstadd_back(&env_lst, newnode);
 	free(toexport);
 	return (0);
@@ -99,8 +98,7 @@ int			export_builtin(char *arg, int out)
 			i++;
 		if (i == 0)
 			return (1);
-		newnode = ft_lstnew(NULL);
-		newnode->content = ft_strdup(arg);
+		newnode = ft_lstnew(arg);
 		ft_lstadd_back(&env_lst, newnode);
 		return (0);
 	}

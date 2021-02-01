@@ -22,9 +22,8 @@ t_list	*ft_lstnew(void *content)
 		newlist->content = NULL;
 	else
 	{
-		if (!(newlist->content = (void*)malloc(sizeof(content) + 1)))
+		if (!(newlist->content = ft_strdup(content)))
 			return (NULL);
-		ft_memcpy(newlist->content, content, ft_strlen(content) + 1);
 	}
 	newlist->next = NULL;
 	return (newlist);
