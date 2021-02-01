@@ -123,13 +123,12 @@ int		env_builtin(char **args, int out)
 	result = ft_strdup("");
 	while (tmp_lst->next)
 	{
-		result = ft_strjoin(result, tmp_lst->content);
-		result = ft_strjoin(result, "\n");
+		result = ft_strjoin(ft_strjoin(result, tmp_lst->content), "\n");
 		tmp_lst = tmp_lst->next;
 	}
 	result = ft_strjoin(result, tmp_lst->content);
 	print(result, out);
-	print("\n",out);
+	print("\n", out);
 	ft_strdel(&cmd);
 	ft_strdel(&result);
 	return (0);
