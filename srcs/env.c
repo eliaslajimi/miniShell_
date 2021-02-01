@@ -13,18 +13,20 @@ int add_underscore_main()
 
 int add_underscore(char *cmd)
 {
+	char	*abs_path;
 	t_list	*env_lst;
 	t_list	*newnode;
 	char	*underscore_env;
 
 	//printf("we add [%s]\n", cmd);
 	env_lst = g_env;
-	cmd = absolute_path(cmd);
+	abs_path = absolute_path(cmd);
 	unset_builtin("_", "void");
-	underscore_env = ft_strjoin(ft_strdup("_="), cmd);
+	underscore_env = ft_strjoin(ft_strdup("_="), abs_path);
 	newnode = ft_lstnew(underscore_env);
 	ft_lstadd_back(&g_env, newnode);
-	//free(underscore_env);
+	free(underscore_env);
+	free(abs_path);
 	return (0);
 }
 

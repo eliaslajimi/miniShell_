@@ -43,7 +43,7 @@ static char     *cmdpath(char *path, char *cmd)
         }
         ft_free_array(path_split);
         if (file_exists(bin) == 0)
-            return(cmd);
+            return(ft_strdup(cmd));
 		return (bin);
     }
     else
