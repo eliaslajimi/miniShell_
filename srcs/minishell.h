@@ -24,6 +24,15 @@
 
 /*command table*/
 
+typedef struct	s_mini
+{
+	int			i;
+	char		**cmd;
+	int			nb_cmd;
+	char		*inputcmd;
+	char		**tokens;
+}				t_mini;
+
 typedef struct	s_lex
 {
 	int			i;
@@ -98,6 +107,10 @@ int	print(char *s, int fd);
 int	echo(char **arg, int args_len, int in, int out);
 int	cd(char **arg, int in, int out);
 
+/*minishell_utils*/
+t_mini		init_mini(void);
+char		*get_inputcmd(void);
+
 /*args*/
 int		checking_pipes(char *inputcmd);
 int		checking_semic(char *inputcmd);
@@ -143,12 +156,11 @@ int		ptr_len(void **ptr);
 int		ft_isalpha(int c);
 int 	ft_atoi_shlvl(const char *str);
 void	ft_putstr_fd(char *s, int fd);
-void				ft_putnbr_fd(int n, int fd);
+void	ft_putnbr_fd(int n, int fd);
 void	ft_putchar_fd(char c, int fd);
 void	ft_lstfree(t_list	*head);
 void	final_exit(int status);
-
-
+char	**ft_split_cmd(char *s, int *nbr_cmd);
 
 /*Struct Utils*/
 void	add_struct(c_table **ctable);
@@ -176,6 +188,8 @@ char	*handling_word_quotes_dollar(char *word);
 int		lexer_check(char *inputline);
 int		lexer_special(char *input_line);
 char	*check_token(char *line);
+t_mini		init_mini_args(char *line);
+
 
 /*parser utils*/
 char		*hdoublequotes(char *word);

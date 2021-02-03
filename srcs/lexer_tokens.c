@@ -27,14 +27,12 @@ int			word_token_len(char *line)
 		{
 			if (line[i + 1] == 'r' || line[i + 1] == 't' || line[i + 1] == 'v' || line[i + 1] == 'f')
 			{
-//				printf("THIS is where we break\n");
 				break;
 			}
 			i++;
 		}
-		else if ((ft_isin(line[i], " ;|><")))
+		else if ((ft_isin(line[i], " |><")))
 		{
-//			printf("thats where we break\n");
 			break;
 		}
 		else if (line[i] == '&' && line[i + 1] == '&')
@@ -55,7 +53,6 @@ int			word_token_len(char *line)
 		}
 		i++;
 	}
-//	printf("token of len %d\n", i);
 	return (i);
 }
 
@@ -67,7 +64,6 @@ char		*word_token(char *line)
 	char	*token;
 
 	i = 0;
-	//printf("word token line [%s]\n", line);
 	while (line[i] == '\\')
 	{
 		if (line[i + 1] == 'r' || line[i + 1] == 't' || line[i + 1] == 'v' || line[i + 1] == 'f')
@@ -76,7 +72,6 @@ char		*word_token(char *line)
 			break;
 		i++;
 	}
-	//printf("line + i = [%s]\n", line+ i);
 	start = 0;
 	while (ft_isprint(line[i]) == 1)
 	{	
@@ -92,9 +87,8 @@ char		*word_token(char *line)
 				break;
 			i++;
 		}
-		else if ((ft_isin(line[i], " ;|><")))
+		else if ((ft_isin(line[i], " |><")))
 		{
-//			printf("break 1 at line[i] [%c]\n", line[i]);
 			break;
 		}
 		else if (line[i] == '&' && line[i + 1] == '&')
@@ -111,12 +105,10 @@ char		*word_token(char *line)
 		}
 		i++;
 	}
-//	printf("HERE token of len %d\n", i);
-
 	token = ft_strndup(line + start, i);
-//	printf("1 token is [%s]\n", token);
+	//printf("1 token is [%s]\n", token);
 	token = handling_word_quotes_dollar(token);
-//	printf("2 token is [%s]\n", token);
+	//printf("2 token is [%s]\n", token);
 	return (token);
 }
 

@@ -16,7 +16,7 @@ void *getglobal(int mode)
 	return (NULL);
 }
 
-c_table **getstruct()
+c_table **getstruct(void)
 {
 	static c_table *ret;
 	return (&ret);
@@ -33,42 +33,28 @@ void	wrapper(c_table *ctable)
 
 int			minishell()
 {
-	int		start = 0;
-	int		end;
-	char	*cmd;
-	char	*inputcmd;
-	char	**tokens;
+	t_mini	m;
+	c_table	**init;
+	c_table	*ctable;
 
-	c_table **init, *ctable;
-	write(1, ">> ", 3);
-	get_next_line(1, &inputcmd);
-//	printf("ret [%d] [%s]\n", ret, inputcmd);
-	while (ft_strlen(ft_strtrim(inputcmd, " \t\v\f\r")) == 0)
+	m = init_mini();
+	while (++m.i < m.nb_cmd)
 	{
-		write(1, ">> ", 3);
-		get_next_line(1, &inputcmd);
+		if (ft_strlen(ft_strtrim(m.cmd[m.i], " \r\t\v\f")) != 0)
+		{
+			init = getstruct();
+			*init = init_struct();
+			ctable = *init;
+			if (!(m.tokens = lexer(m.cmd[m.i])))
+				wrapper(*init);
+			if (parser(ctable, m.tokens) < 0)
+				wrapper(*init);
+			else
+				executor(init);
+			ft_free_array(m.tokens);
+		}
 	}
-	
-	if ((inputcmd = matching_quotes(inputcmd)) == NULL)
-		minishell();
-	while (start < ft_strlen(inputcmd))
-	{
-		init = getstruct();
-		*init = init_struct();
-		ctable = *init;
-		end = find_semic(inputcmd, start);
-		cmd = ft_substr(inputcmd, start, end - start);
-		start = end + 1;
-		while (inputcmd[start] == ';')
-			start++;
-		if (!(tokens = lexer(cmd)))
-			wrapper(*init);
-		if (parser(ctable, tokens) < 0)
-			wrapper(*init);
-		else
-			executor(init);
-		free(tokens);
-	}
+	ft_free_array(m.cmd);
 	wrapper(*init);
 	return (1);
 }

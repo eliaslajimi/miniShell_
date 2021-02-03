@@ -118,7 +118,7 @@ int			lexer_special(char *input_line)
 	lexer_check_status = 0;
 	if (!ft_strlen(input_line))
 		return (-1);
-	matched_line = matching_quotes(input_line);
+	matched_line = ft_strdup(input_line);
 	if (!(isolated_tokens = malloc(sizeof(char *) * (1))))
 		return (-1);
 	isolated_tokens[0] = NULL;

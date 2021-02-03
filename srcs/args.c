@@ -1,63 +1,30 @@
 #include "minishell.h"
 
-static t_arg	init_targ(char **argv)
-{
-	char	*tmp;
-
-	t_arg	t;
-	t.start = 0;
-	t.end = 0;
-	tmp = ft_strdup(argv[2]);
-	t.inputcmd = ft_strtrim(tmp, " \t\v\f\r");
-	free(tmp);
-	if (ft_strlen(t.inputcmd) == 0)
-	{
-		free(t.inputcmd);
-		final_exit(0);
-	}
-	t.cmd = NULL;
-	t.tokens = NULL;
-	args_checker(t.inputcmd);
-	return (t);
-}
-
 void args(char **argv)
 {
-	t_arg	t;
+	t_mini	m;
 	c_table	**init;
 	c_table	*ctable;
 	int	*status;
 
 	status = (int*)getglobal(STATUS);
-	t = init_targ(argv);
+	m = init_mini_args(argv[2]);
 	
-	while (t.start < ft_strlen(t.inputcmd))
+	while (++m.i < m.nb_cmd)
 	{
-		init = getstruct();
-		*init = init_struct();
-		ctable = *init;
-		t.end = find_semic(t.inputcmd, t.start);
-		t.cmd = ft_substr(t.inputcmd, t.start, t.end - t.start);
-		t.start = t.end + 1;
-		if (!(t.tokens = lexer(t.cmd)))
-			wrapper(*init);
-		free(t.cmd);
-		if (parser(ctable, t.tokens) < 0)
+		if (ft_strlen(ft_strtrim(m.cmd[m.i], " \r\t\v\f")) != 0)
 		{
-			*status = 1;
+			init = getstruct();
+			*init = init_struct();
+			ctable = *init;
+			if (!(m.tokens = lexer(m.cmd[m.i])))
+				wrapper(*init);
+			if (parser(ctable, m.tokens) < 0)
+				wrapper(*init);
+			else
+				executor(init);
 		}
-		else
-		{
-			executor(init);
-		}
-		int i = 0;
-		while (t.tokens[i])
-		{
-			free(t.tokens[i++]);
-		}
-		free(t.tokens);
 	}
-	free(t.inputcmd);
 	exitroutine(*init);
 	final_exit(*(int*)getglobal(STATUS));
 }

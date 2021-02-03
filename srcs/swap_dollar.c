@@ -6,7 +6,7 @@ char    *handlspace(char *str)
         int j = 0;
         char *result;
 
-        result = malloc(sizeof(ft_strlen(str) + 1));
+        result = malloc(sizeof(char) * (ft_strlen(str) + 1));
         while(str[i])
         {
                 if (str[i] == ' ')
@@ -26,7 +26,6 @@ char    *handlspace(char *str)
 
 char	*swap_dollar(char *s, int i, int len)
 {
-	//printf("trying to swap dollar\n");
 	char	*tmp;
 	char	*tofind;
 	char	*result;
@@ -36,8 +35,7 @@ char	*swap_dollar(char *s, int i, int len)
 	{
 		result = ft_strdup(find_node(tofind) + ft_strlen(tofind) + 1);
 		tmp = result;
-		result = ft_strtrim(result, " ");
-		//result = handlspace(tmp);
+		result = handlspace(tmp);
 		free(tmp);
 		ft_strdel(&tofind);
 		return (result);
