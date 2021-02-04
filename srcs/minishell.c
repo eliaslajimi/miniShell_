@@ -21,6 +21,7 @@ c_table **getstruct(void)
 	static c_table *ret;
 	return (&ret);
 }
+
 void	wrapper(c_table *ctable)
 {
 	//c_table *ctable = (c_table*)getglobal(STRUCT);
@@ -51,10 +52,10 @@ int			minishell()
 				wrapper(*init);
 			else
 				executor(init);
-			ft_free_array(m.tokens);
+			//ft_free_array(m.tokens);
 		}
 	}
-	ft_free_array(m.cmd);
+	//ft_free_array(m.cmd);
 	wrapper(*init);
 	return (1);
 }

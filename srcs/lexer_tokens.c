@@ -85,6 +85,11 @@ char		*word_token(char *line)
 		{
 			if (line[i + 1] == 'r' || line[i + 1] == 't' || line[i + 1] == 'v' || line[i + 1] == 'f')
 				break;
+			if (line[i + 1] == '\0')
+			{
+				i++;
+				break;
+			}
 			i++;
 		}
 		else if ((ft_isin(line[i], " |><")))

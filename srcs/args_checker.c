@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   args_checker.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/04 14:57:25 by cmcgahan          #+#    #+#             */
+/*   Updated: 2021/02/04 15:06:24 by cmcgahan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int		checking_pipes(char *inputcmd)
@@ -14,7 +26,7 @@ int		checking_pipes(char *inputcmd)
 	{
 		i += skip_spaces(inputcmd + i);
 		if (!(inputcmd[i]))
-			break;
+			break ;
 		if (inputcmd[i] == '|' && flag == 0)
 			flag = 1;
 		else if (inputcmd[i] == '|' && flag == 1)
@@ -60,7 +72,7 @@ int		skip_quote_lexer(char *line, char quote)
 	while (line[skip] && line[skip] != quote)
 	{
 		if (quote == '\"' && line[skip] == '\\')
-				skip += 2;
+			skip += 2;
 		else
 			skip++;
 	}
@@ -69,7 +81,9 @@ int		skip_quote_lexer(char *line, char quote)
 
 int		matching_quotes_args(char *line)
 {
-	int	i = 0;
+	int	i;
+
+	i = 0;
 	while (line[i])
 	{
 		while (line[i] && line[i] != '\"' && line[i] != '\'' && line[i] != '\\')
@@ -88,7 +102,7 @@ int		matching_quotes_args(char *line)
 		}
 		else if (line[i] == '\\')
 		{
-				i += 2;
+			i += 2;
 		}
 	}
 	return (0);
@@ -99,29 +113,18 @@ int		args_checker(char *inputcmd)
 	int	lexer_check_status;
 
 	lexer_check_status = 0;
-	if (matching_quotes_args(inputcmd) == -1)
-	{
-		print("minishell: unexpected EOF while looking for matching `\"\'\n",2);
-		final_exit(2);
-	}
-	else if (matching_quotes_args(inputcmd) == -2)
-	{
-		print("minishell: unexpected EOF while looking for matching `\'\'\n",2);
-		final_exit(2);
-	}
-	if (checking_semic(inputcmd) == -1)
-	{
+	if ((lexer_check_status = matching_quotes_args(inputcmd)) == -1)
+		print("minishell: unexpected EOF while looking for matching `\"\'\n", 2);
+	else if ((lexer_check_status = matching_quotes_args(inputcmd)) == -2)
+		print("minishell: unexpected EOF while looking for matching `\'\'\n", 2);
+	else if ((lexer_check_status = checking_semic(inputcmd)) == -1)
 		print("minishell: syntax error near unexpected token `;'\n", 2);
-		final_exit(2);
-	}
-	if (checking_pipes(inputcmd) == -1)
-	{
+	else if ((lexer_check_status = checking_pipes(inputcmd)) == -1)
 		print("minishell: syntax error near unexpected token `|'\n", 2);
+	if (lexer_check_status != 0)
 		final_exit(2);
-	}
 	lexer_check_status = lexer_special(inputcmd);
 	if (lexer_check_status != 0)
 		final_exit(lexer_check_status);
-
 	return (0);
 }

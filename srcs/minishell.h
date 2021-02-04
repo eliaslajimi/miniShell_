@@ -195,7 +195,7 @@ t_mini		init_mini_args(char *line);
 char		*hdoublequotes(char *word);
 char	*handle_double_quote(char *token);
 char	*handle_simple_quote(char *token);
-char	*swap_dollar(char *s, int i, int len);
+char	*swap_dollar(char *s, int i, int len, int quotes);
 
 /*env*/
 int		env_builtin(char **args, int out);

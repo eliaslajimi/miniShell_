@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/04 15:06:32 by cmcgahan          #+#    #+#             */
+/*   Updated: 2021/02/04 15:12:26 by cmcgahan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-
-char *formatpath(char *path)
+char		*formatpath(char *path)
 {
 	char	*tmp;
+
 	if (!ft_strlen(path))
 		if (!(path = cleannode(find_node("HOME"))))
 		{
@@ -16,10 +28,9 @@ char *formatpath(char *path)
 		path = cleannode(find_node("OLDPWD"));
 	if ((!ft_strcmp(path, "~")) || (!ft_strncmp(path, "~/", 2)))
 	{
-		path++;
-		tmp = path;
+		tmp = ++path;
 		path = ft_strjoin(ft_strjoin(ft_strdup(cleannode(find_node("HOME"))), "/"), path + 1);
-		free(tmp); 
+		free(tmp);
 	}
 	if (!ft_strncmp(path, "./", 2))
 	{
@@ -30,7 +41,7 @@ char *formatpath(char *path)
 	return (path);
 }
 
-int applycmd(char *cmd)
+int			applycmd(char *cmd)
 {
 	int		status;
 	char	*tmp;
@@ -61,18 +72,18 @@ int applycmd(char *cmd)
 	return (status);
 }
 
-char *getaccesserr(char *path)
+char		*getaccesserr(char *path)
 {
 	opendir(path);
 	if (errno == EACCES)
 		return (": Permission denied");
 	return (": No such file or directory");
-	
 }
-int argtocmd(char *arg)
+
+int			argtocmd(char *arg)
 {
-	int *status;
-	char *arg2;
+	int		*status;
+	char	*arg2;
 
 	if (!arg)
 		return (0);
@@ -86,15 +97,14 @@ int argtocmd(char *arg)
 		print("cd: ", 1);
 		print(arg, 1);
 		print(getaccesserr(arg), 1);
-		//print(": No such file or directory", 1);
 		print("\n", 1);
 	}
 	return (0);
 }
 
-char **removeidentical(char **cmd)
+char		**removeidentical(char **cmd)
 {
-	while (cmd && *cmd && *(cmd+1))
+	while (cmd && *cmd && *(cmd + 1))
 	{
 		if (ft_strcmp(*cmd, *(cmd + 1)))
 			return (cmd);
@@ -103,9 +113,9 @@ char **removeidentical(char **cmd)
 	return (cmd);
 }
 
-int cd(char **args, int in, int out)
+int			cd(char **args, int in, int out)
 {
-	int status;
+	int		status;
 
 	status = 0;
 	(void)in;
@@ -117,10 +127,9 @@ int cd(char **args, int in, int out)
 	{
 		if (!ft_strlen(*args))
 			*args = ft_strjoin(*args, cleannode(find_node("PWD")));
-		args = removeidentical(args);	
-	    argtocmd(*args);
+		args = removeidentical(args);
+		argtocmd(*args);
 		args++;
 	}
-
 	return (status);
 }

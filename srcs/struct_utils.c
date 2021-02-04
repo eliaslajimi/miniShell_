@@ -51,11 +51,11 @@ void free_struct(c_table *ctable)
 {
 	(void)ctable;
 	//free(ctable->flags);
-	if (ctable->command)
-		free(ctable->command);
-	if (ctable->args)
-		ft_free_array(ctable->args);
-	free(ctable);
+//	if (ctable->command)
+//		free(ctable->command);
+//	if (ctable->args)
+//		ft_free_array(ctable->args);
+//	free(ctable);
 }
 
 void print_struct(c_table *ctable)

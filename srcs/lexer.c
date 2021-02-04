@@ -81,6 +81,6 @@ char		**lexer(char *input_line)
 		return (NULL); // we have to exit because non printable characters (ex with dir. arrows keys.)
 	//int i = 0;
 	//while (isolated_tokens[i])
-	//	printf("token: [%s]\n", isolated_tokens[i++]);
+//		printf("token: [%s]\n", isolated_tokens[i++]);
 	return (isolated_tokens);
 }

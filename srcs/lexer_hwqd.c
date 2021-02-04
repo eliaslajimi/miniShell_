@@ -38,7 +38,7 @@ static void	dollar(t_hwqd *v, char *word)
 			v->len++;
 			v->i++;
 		}
-		res_swap_dollar = swap_dollar(word, v->i - v->len, v->len);
+		res_swap_dollar = swap_dollar(word, v->i - v->len, v->len, 1);
 		if (res_swap_dollar != NULL)
 		{
 			v->result = ft_strjoin(v->result, res_swap_dollar);
@@ -75,9 +75,9 @@ static void	double_quote2(t_hwqd *v, char *word)
 			v->len++;
 			v->i++;
 		}
-		if (swap_dollar(word, v->i - v->len, v->len) != NULL)
+		if (swap_dollar(word, v->i - v->len, v->len, 0) != NULL)
 		{
-			v->result = ft_strjoin(v->result, swap_dollar(word, v->i - v->len, v->len));
+			v->result = ft_strjoin(v->result, swap_dollar(word, v->i - v->len, v->len, 0));
 		}
 		else
 			v->result = ft_strjoin(v->result, "");
@@ -86,7 +86,7 @@ static void	double_quote2(t_hwqd *v, char *word)
 
 static void	double_quote(t_hwqd *v, char *word)
 {
-    	v->i++;
+    v->i++;
 	while (word[v->i] && word[v->i] != '\"')
 	{
 		if (word[v->i] == '\\')
@@ -138,7 +138,9 @@ char		*handling_word_quotes_dollar(char *word)
 	while (word[v->i])
 	{
 		if (word[v->i] == '\'')
+		{
 			single_quote(v, word);
+		}
 		else if (word[v->i] == '\"')
 		{
 			double_quote(v, word);
@@ -158,7 +160,9 @@ char		*handling_word_quotes_dollar(char *word)
        	{
        	    v->i++;
        		if (word[v->i] == 'r' || word[v->i] == 't' || word[v->i] == 'v' || word[v->i] == 'f')
-       			v->i++;
+       			v->result = ft_strjoin_char(v->result, word[v->i++]);
+			//else if (word[v->i] == '\0')
+			//	v->result = ft_strjoin_char(v->result, word[v->i-1]);
 			else
        			v->result = ft_strjoin_char(v->result, word[v->i++]);
        	}

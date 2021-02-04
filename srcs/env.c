@@ -97,7 +97,6 @@ t_list	*setEnv(char **envp)
 	env_lst = ft_lstnew(envp[i++]);
 	while (envp[i])
 	{
-		envp[i] = ft_strtrim(envp[i], " ");
 		newlst = ft_lstnew(envp[i]);
 		ft_lstadd_back(&env_lst, newlst);
 		i++;
