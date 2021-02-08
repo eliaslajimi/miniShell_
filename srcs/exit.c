@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/08 15:05:45 by cmcgahan          #+#    #+#             */
+/*   Updated: 2021/02/08 15:05:46 by cmcgahan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static int	check_extremes(char *str)
+static int				check_extremes(char *str)
 {
 	int					i;
 	int					sign;
@@ -19,26 +31,17 @@ static int	check_extremes(char *str)
 	if (str[i] == '-' || str[i] == '+')
 		i++;
 	while (str[i] >= '0' && str[i] <= '9')
-	{
-		result = 10 * result + str[i] - '0';
-		i++;
-	}
-	if (sign == -1)
-	{
-		if (result == 9223372036854775808UL)
-			return (1);
-	}
+		result = 10 * result + str[i++] - '0';
+	if (sign == -1 && result == 9223372036854775808UL)
+		return (1);
 	if (result >= 9223372036854775808UL)
-	{
 		return (0);
-	}
 	return (1);
 }
 
-
-static int	check_arg(char *str)
+static int				check_arg(char *str)
 {
-	int i;
+	int					i;
 
 	i = 0;
 	while (str[i] == '\t' || str[i] == '\n' || str[i] == '\r' ||\
@@ -57,15 +60,15 @@ static int	check_arg(char *str)
 	return (1);
 }
 
-void	final_exit(int status)
+void					final_exit(int status)
 {
 	ft_lstfree(g_env);
 	exit(status);
 }
 
-void	exit_builtin(char **args)
+void					exit_builtin(char **args)
 {
-	int	arg_status;
+	int					arg_status;
 
 	arg_status = 0;
 	if (args[1] != NULL)

@@ -12,18 +12,30 @@
 
 #include "minishell.h"
 
+int		isonlyspace(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] && ft_isin(s[i], " \t\v\f\r"))
+		i++;
+	if (i == ft_strlen(s))
+		return (0);
+	return (1);
+}
+
 void	args(char **argv)
 {
 	t_mini	m;
-	c_table	**init;
-	c_table	*ctable;
+	t_table	**init;
+	t_table	*ctable;
 	int		*status;
 
 	status = (int*)getglobal(STATUS);
 	m = init_mini_args(argv[2]);
 	while (++m.i < m.nb_cmd)
 	{
-		if (ft_strlen(ft_strtrim(m.cmd[m.i], " \r\t\v\f")) != 0)
+		if (isonlyspace(m.cmd[m.i]) == 1)
 		{
 			init = getstruct();
 			*init = init_struct();

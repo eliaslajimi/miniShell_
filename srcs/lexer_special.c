@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer_special.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/08 14:35:13 by cmcgahan          #+#    #+#             */
+/*   Updated: 2021/02/08 14:35:14 by cmcgahan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	check_next_token(char **tokens, int i)
@@ -11,15 +23,15 @@ static int	check_next_token(char **tokens, int i)
 		return (1);
 	}
 	else if (ft_strcmp(tokens[i + 1], "<") == 0)
-		return(2);
+		return (2);
 	else if (ft_strcmp(tokens[i + 1], ";") == 0)
-		return(3);
+		return (3);
 	else if (ft_strcmp(tokens[i + 1], "|") == 0)
-		return(4);
+		return (4);
 	else if (ft_strcmp(tokens[i + 1], ">>") == 0)
-		return(5);
+		return (5);
 	else if (ft_strcmp(tokens[i + 1], "<<") == 0)
-		return(6);
+		return (6);
 	if (!tokens[i + 1])
 		return (0);
 	return (0);
@@ -42,20 +54,20 @@ static int	print_prob(int prob)
 	else if (prob == 7)
 		print("minishell: syntax error near unexpected token `newline'\n", 2);
 	if (prob != 0)
-		return(2);
+		return (2);
 	return (0);
 }
 
 static int	lexer_check_symbols(char **tokens)
 {
-	int 	i;
+	int		i;
 	int		prob;
 
 	i = 0;
 	prob = 0;
 	while (tokens[i] && prob == 0)
 	{
-		if (ft_strcmp(tokens[i], ">") == 0 )
+		if (ft_strcmp(tokens[i], ">") == 0)
 			prob = check_next_token(tokens, i);
 		else if (ft_strcmp(tokens[i], "<") == 0)
 			prob = check_next_token(tokens, i);
@@ -69,13 +81,12 @@ static int	lexer_check_symbols(char **tokens)
 			prob = check_next_token(tokens, i);
 		i++;
 	}
-
 	if (prob != 0)
-		return(print_prob(prob));
+		return (print_prob(prob));
 	return (0);
 }
 
-static char	**lex_line_special(char **isolated_tokens, char *input_line)
+static char	**lex_line_special(char **isolated_tokens, char *input)
 {
 	int		i;
 	int		i_word;
@@ -84,24 +95,17 @@ static char	**lex_line_special(char **isolated_tokens, char *input_line)
 
 	i = 0;
 	array_size = 0;
-	while (input_line[i])
+	while (input[i])
 	{
-		i += skip_spaces(input_line + i);
-		if (input_line[i] != '\0')
+		i += skip_spaces(input + i);
+		if (input[i] != '\0')
 		{
 			i_word = 0;
-			if (ft_isprint(input_line[i]) == 1 && !(ft_isin(input_line[i], "|;<>")))
-			{
-				i_word = word_token_len(input_line + i);
-			}
-			if ((token = check_token(input_line + i)) == NULL)
-			{
+			if (ft_isprint(input[i]) == 1 && !(ft_isin(input[i], "|;<>")))
+				i_word = word_token_len(input + i);
+			if ((token = check_token(input + i)) == NULL)
 				return (NULL);
-			}
-			if (i_word == 0)
-				i += ft_strlen(token);
-			else
-				i += i_word;
+			i = (i_word == 0) ? i + ft_strlen(token) : i + i_word;
 			isolated_tokens = expanse_array(isolated_tokens, array_size, token);
 			array_size++;
 		}
@@ -122,7 +126,8 @@ int			lexer_special(char *input_line)
 	if (!(isolated_tokens = malloc(sizeof(char *) * (1))))
 		return (-1);
 	isolated_tokens[0] = NULL;
-	if ((isolated_tokens = lex_line_special(isolated_tokens, matched_line)) == NULL)
+	if ((isolated_tokens =
+	lex_line_special(isolated_tokens, matched_line)) == NULL)
 	{
 		free(matched_line);
 		return (-1);
@@ -130,8 +135,5 @@ int			lexer_special(char *input_line)
 	free(matched_line);
 	lexer_check_status = lexer_check_symbols(isolated_tokens);
 	ft_free_array(isolated_tokens);
-/*	int i = 0;
-	while(isolated_tokens[i])
-		printf("special token: [%s]\n", isolated_tokens[i++]);
-*/	return (lexer_check_status);
+	return (lexer_check_status);
 }

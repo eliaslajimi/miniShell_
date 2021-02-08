@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/08 16:23:31 by cmcgahan          #+#    #+#             */
+/*   Updated: 2021/02/08 16:23:32 by cmcgahan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void exitroutine(c_table *ctable)
+void exitroutine(t_table *ctable)
 {
 	(void)ctable;
 	//while (ctable)
@@ -16,15 +28,15 @@ void *getglobal(int mode)
 	return (NULL);
 }
 
-c_table **getstruct(void)
+t_table **getstruct(void)
 {
-	static c_table *ret;
+	static t_table *ret;
 	return (&ret);
 }
 
-void	wrapper(c_table *ctable)
+void	wrapper(t_table *ctable)
 {
-	//c_table *ctable = (c_table*)getglobal(STRUCT);
+	//t_table *ctable = (t_table*)getglobal(STRUCT);
 	//ctable->command_exists = 0;
 	exitroutine(ctable);
 	while (ctable)
@@ -35,8 +47,8 @@ void	wrapper(c_table *ctable)
 int			minishell()
 {
 	t_mini	m;
-	c_table	**init;
-	c_table	*ctable;
+	t_table	**init;
+	t_table	*ctable;
 
 	m = init_mini();
 	while (++m.i < m.nb_cmd)
@@ -52,10 +64,10 @@ int			minishell()
 				wrapper(*init);
 			else
 				executor(init);
-			//ft_free_array(m.tokens);
+			ft_free_array(m.tokens);
 		}
 	}
-	//ft_free_array(m.cmd);
+	ft_free_array(m.cmd);
 	wrapper(*init);
 	return (1);
 }

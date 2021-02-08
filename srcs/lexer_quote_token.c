@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer_quote_token.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/08 14:28:18 by cmcgahan          #+#    #+#             */
+/*   Updated: 2021/02/08 14:28:19 by cmcgahan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static char	*inputline_join(char *line)
@@ -12,9 +24,11 @@ static char	*inputline_join(char *line)
 	return (join);
 }
 
-char	*matching_quotes(char *line)
+char		*matching_quotes(char *line)
 {
-	int	i = 0;
+	int		i;
+
+	i = 0;
 	if (ft_strlen(line) == 0)
 		return (NULL);
 	while (line[i])
@@ -25,23 +39,16 @@ char	*matching_quotes(char *line)
 		{
 			i += skip_quote_lexer(line + i, '\"');
 			if (i == ft_strlen(line) + 1)
-			{
-				line = inputline_join(line);
-				return (matching_quotes(line));
-			}
+				return (matching_quotes(inputline_join(line)));
 		}
 		else if (line[i] == '\'')
 		{
 			i += skip_quote_lexer(line + i, '\'');
 			if (i == ft_strlen(line) + 1)
-			{
-				line = inputline_join(line);
-				return (matching_quotes(line));
-			}
+				return (matching_quotes(inputline_join(line)));
 		}
 		else if (line[i] == '\\')
-				i += 2;
+			i += 2;
 	}
-	line = ft_strtrim(line, " \r\t\v\f");
 	return (line);
 }

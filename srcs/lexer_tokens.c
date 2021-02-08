@@ -1,141 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer_tokens.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/08 14:35:39 by cmcgahan          #+#    #+#             */
+/*   Updated: 2021/02/08 14:35:39 by cmcgahan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int			word_token_len(char *line)
+char			*pipe_token(char *line)
 {
-	int		i;	
-	char	quote_type;
+	char		*token;
 
-	i = 0;
-//	printf("line is [%s]\n", line);
-	while (line[i] == '\\')
+	if (line)
 	{
-		if (line[i + 1] == 'r' || line[i + 1] == 't' || line[i + 1] == 'v' || line[i + 1] == 'f')
-			i++;
-		else
-			break;
-		i++;
+		token = ft_strdup("|");
+		return (token);
 	}
-	while (ft_isprint(line[i]) == 1)
-	{	
-		if (line[i] == '\'')
-		{
-			quote_type = line[i++];
-			while (line[i] && line[i] != quote_type)
-				i++;
-		}
-		else if (line[i] == '\\')
-		{
-			if (line[i + 1] == 'r' || line[i + 1] == 't' || line[i + 1] == 'v' || line[i + 1] == 'f')
-			{
-				break;
-			}
-			i++;
-		}
-		else if ((ft_isin(line[i], " |><")))
-		{
-			break;
-		}
-		else if (line[i] == '&' && line[i + 1] == '&')
-			break;
-		else if (line[i] == '\"')
-		{
-			quote_type = line[i++];
-			while (line[i] && line[i] != quote_type)
-			{
-				if (line[i] == '\\')
-				{
-					if (line[i + 1] == 'r' || line[i + 1] == 't' || line[i + 1] == 'v' || line[i + 1] == 'f')
-						break;
-					i++;
-				}
-				i++;
-			}
-		}
-		i++;
-	}
-	return (i);
+	return (NULL);
 }
 
-char		*word_token(char *line)
+char			*redirec_token(char *line)
 {
-	int		i;
-	int		start;
-	char	quote_type;
-	char	*token;
-
-	i = 0;
-	while (line[i] == '\\')
-	{
-		if (line[i + 1] == 'r' || line[i + 1] == 't' || line[i + 1] == 'v' || line[i + 1] == 'f')
-			i++;
-		else
-			break;
-		i++;
-	}
-	start = 0;
-	while (ft_isprint(line[i]) == 1)
-	{	
-		if (line[i] == '\'')
-		{
-			quote_type = line[i++];
-			while (line[i] && line[i] != quote_type)
-				i++;
-		}
-		else if (line[i] == '\\')
-		{
-			if (line[i + 1] == 'r' || line[i + 1] == 't' || line[i + 1] == 'v' || line[i + 1] == 'f')
-				break;
-			if (line[i + 1] == '\0')
-			{
-				i++;
-				break;
-			}
-			i++;
-		}
-		else if ((ft_isin(line[i], " |><")))
-		{
-			break;
-		}
-		else if (line[i] == '&' && line[i + 1] == '&')
-			break;
-		else if (line[i] == '\"')
-		{
-			quote_type = line[i++];
-			while (line[i] && line[i] != quote_type)
-			{
-				if (line[i] == '\\')
-					i++;
-				i++;
-			}
-		}
-		i++;
-	}
-	token = ft_strndup(line + start, i);
-	//printf("1 token is [%s]\n", token);
-	token = handling_word_quotes_dollar(token);
-	//printf("2 token is [%s]\n", token);
-	return (token);
-}
-
-char	*pipe_token()
-{
-	char	*token;
-
-	token = ft_strdup("|");
-	return (token);
-}
-
-char	*semic_token()
-{
-	char	*token;
-
-	token = ft_strdup(";");
-	return (token);
-}
-
-char	*redirec_token(char *line)
-{
-	char *token;
+	char		*token;
 
 	token = "";
 	if (line[0] == '>')
@@ -155,11 +46,11 @@ char	*redirec_token(char *line)
 	return (token);
 }
 
-char	*quote_token(char *line)
+char			*quote_token(char *line)
 {
-	int		i;
-	char	quote_type;
-	char	*token;
+	int			i;
+	char		quote_type;
+	char		*token;
 
 	i = 0;
 	quote_type = line[i++];

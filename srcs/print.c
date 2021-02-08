@@ -12,9 +12,20 @@
 
 #include "minishell.h"
 
-int		print(char *s, int fd)
+int			p(char *s1, char *s2, char *s3)
 {
-	int	ret;
+	if (s1)
+		print(s1, 2);
+	if (s2)
+		print(s2, 2);
+	if (s3)
+		print(s3, 2);
+	return (-1);
+}
+
+int			print(char *s, int fd)
+{
+	int		ret;
 
 	ret = 1;
 	if (s)

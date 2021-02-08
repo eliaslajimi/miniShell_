@@ -1,17 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   find_node.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/08 14:01:55 by cmcgahan          #+#    #+#             */
+/*   Updated: 2021/02/08 14:01:56 by cmcgahan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-char *cleannode(char *node)
+char		*cleannode(char *node)
 {
 	if (!node)
 		return (NULL);
-	while(*node && *node != '=')
+	while (*node && *node != '=')
 		++node;
-	//ft_strtrim(++node, " ");
 	++node;
 	return (node);
 }
 
-char	*find_node(char *data)
+char		*find_node(char *data)
 {
 	t_list	*iter;
 	char	**split_content;

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/08 16:10:46 by cmcgahan          #+#    #+#             */
+/*   Updated: 2021/02/08 16:10:47 by cmcgahan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static int	 ft_lstdelnode(t_list **lst, char *data, int datalen)
+static int	ft_lstdelnode(t_list **lst, char *data, int datalen)
 {
 	t_list	*current;
 	t_list	*previous;
@@ -21,62 +33,44 @@ static int	 ft_lstdelnode(t_list **lst, char *data, int datalen)
 			return (0);
 		}
 		if (current->next == NULL)
-			break;
+			break ;
 		previous = current;
 		current = current->next;
 	}
 	return (127);
 }
 
-int	unset_builtin(char *arg, char *exportarg)
+int			unset_builtin(char *arg, char *exportarg)
 {
 	int		k;
 	int		ret;
 	int		arglen;
 	char	*param;
-	t_list	*env_lst;
 
-	ret = 0;
-	env_lst = g_env;
-	if (arg[0] == '\0')
-	{
-		print("minishell: unset: `': not a valid identifier\n", 2);
-		return (1);
-	}
 	k = 0;
+	ret = 0;
+	if (arg[0] == '\0')
+		return (p("minishell: unset: `': not a valid identifier\n", 0, 0) + 2);
 	while (arg[k])
 	{
 		if (ft_isin(arg[k], "\'\"\\$@!|;&= "))
-		{
-			print("minishell: unset: `", 2);
-			print(arg, 2);
-			print("': not a valid identifier\n", 2);
-			return (1);
-		}
-		k++;
+			return (p("minishell: unset: `",
+			arg, "': not a valid identifier\n") + 2);
+			k++;
 	}
 	if (ft_strcmp(arg, "") != 0)
 	{
-		if (ft_strcmp(exportarg, "void") == 0)
-		{
-			param = arg;
-		}
-		else
-		{
-			param = exportarg;
-		}
+		param = (ft_strcmp(exportarg, "void") == 0) ? arg : exportarg;
 		arglen = ft_strlen(param);
-	//	printf("\nwe unset [%s]\n", param);
-		ret = ft_lstdelnode(&env_lst, param, arglen);
-
+		ret = ft_lstdelnode(&g_env, param, arglen);
 	}
 	return (ret);
 }
 
-int		unset_builtin_loop(char **arg, char *exportarg)
+int			unset_builtin_loop(char **arg, char *exportarg)
 {
-	int	final_ret;
-	int	ret;
+	int		final_ret;
+	int		ret;
 
 	arg++;
 	final_ret = 0;

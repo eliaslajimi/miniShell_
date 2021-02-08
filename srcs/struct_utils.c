@@ -1,17 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   struct_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/08 15:29:34 by cmcgahan          #+#    #+#             */
+/*   Updated: 2021/02/08 15:29:36 by cmcgahan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-//void	init_args(c_table **ctable)
-void	init_args(c_table **ctable)
+void		init_args(t_table **ctable)
 {
 	(*ctable)->args = malloc(sizeof(char*) * 1);
-	(*ctable)->args[0] = 0; 
+	(*ctable)->args[0] = 0;
 }
 
-c_table *init_struct()
+t_table		*init_struct(void)
 {
-	c_table *init;
+	t_table *init;
 
-	init = (c_table*)malloc(sizeof(c_table));
+	init = (t_table*)malloc(sizeof(t_table));
 	init->separator = 0;
 	init->id = -1;
 	init->pipein = 0;
@@ -28,9 +39,9 @@ c_table *init_struct()
 	return (init);
 }
 
-void add_struct(c_table **ctable)
+void		add_struct(t_table **ctable)
 {
-	c_table *next;
+	t_table *next;
 
 	next = init_struct();
 	(*ctable)->next = next;
@@ -38,16 +49,16 @@ void add_struct(c_table **ctable)
 	(*ctable)->next = NULL;
 }
 
-void next_struct(c_table **ctable)
+void		next_struct(t_table **ctable)
 {
-	c_table *n;
+	t_table *n;
 
 	n = *ctable;
 	(*ctable) = (*ctable)->next;
 	free_struct(n);
 }
 
-void free_struct(c_table *ctable)
+void		free_struct(t_table *ctable)
 {
 	(void)ctable;
 	//free(ctable->flags);
@@ -55,32 +66,34 @@ void free_struct(c_table *ctable)
 //		free(ctable->command);
 //	if (ctable->args)
 //		ft_free_array(ctable->args);
-//	free(ctable);
+	free(ctable);
 }
 
-void print_struct(c_table *ctable)
+void		print_struct(t_table *ctable)
 {
+	int		i;
+
+	i = 0;
 	if (!ctable)
 	{
-	printf("ctable is NULL\n");
-	return ;
-}
+		printf("ctable is NULL\n");
+		return ;
+	}
 	printf("\n============================================\n");
-	printf("ctable: separator:	[%d]\n", ctable->separator); 
-	printf("ctable: pipein:		[%d]\n", ctable->pipein); 
-	printf("ctable: pipeout:	[%d]\n", ctable->pipeout); 
-	printf("ctable: command:	[%s]\n", ctable->command); 
-	printf("ctable: proc.id:	[%d]\n", ctable->id); 
-	int i = 0;
+	printf("ctable: separator:	[%d]\n", ctable->separator);
+	printf("ctable: pipein:		[%d]\n", ctable->pipein);
+	printf("ctable: pipeout:	[%d]\n", ctable->pipeout);
+	printf("ctable: command:	[%s]\n", ctable->command);
+	printf("ctable: proc.id:	[%d]\n", ctable->id);
 	while (ctable->args[i])
 	{
-		printf("ctable: args[%d]:		[%s]\n",i, ctable->args[i]); 
+		printf("ctable: args[%d]:		[%s]\n", i, ctable->args[i]);
 		i++;
 	}
 	printf("ctable: args_len:	[%d]\n", ctable->args_len);
-	printf("ctable: in:		[%d]\n", ctable->in); 
-	printf("ctable: out:		[%d]\n", ctable->out); 
-	printf("ctable: file in:	[%s]\n", ctable->filein); 
-	printf("ctable: file out:	[%s]\n", ctable->fileout); 
+	printf("ctable: in:		[%d]\n", ctable->in);
+	printf("ctable: out:		[%d]\n", ctable->out);
+	printf("ctable: file in:	[%s]\n", ctable->filein);
+	printf("ctable: file out:	[%s]\n", ctable->fileout);
 	printf("============================================\n");
 }

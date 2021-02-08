@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split_cmd.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/08 15:36:57 by cmcgahan          #+#    #+#             */
+/*   Updated: 2021/02/08 15:42:04 by cmcgahan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 static char			**ft_free(char **str, int len)
@@ -34,15 +46,18 @@ static int			ft_count_words(const char *str)
 		if (str[i] == '\'')
 			while (str[++i] != '\'')
 				;
-		if (str[i] == ';' && i > 0 && str[i - 1] != '\\' && str[i + 1] != ';' && str[i + 1] != '\0')
+		if (str[i] == ';' && i > 0 && str[i - 1] != '\\' &&
+				str[i + 1] != ';' && str[i + 1] != '\0')
 			count += 1;
 		i++;
 	}
 	return (count);
 }
 
-static char			**ft_split_cmd2(char *s, char **strsplit, int len, int i, int j)
+static char			**ft_split_cmd2(char *s, char **strsplit, int i, int j)
 {
+	int				len;
+
 	while (s[i])
 	{
 		len = 0;
@@ -60,7 +75,7 @@ static char			**ft_split_cmd2(char *s, char **strsplit, int len, int i, int j)
 				break ;
 			i++;
 			len++;
-		}	
+		}
 		if (len == 0)
 			break ;
 		if (++j >= 0 && !(strsplit[j] = ft_substr(s, i - len, len)))
@@ -68,7 +83,6 @@ static char			**ft_split_cmd2(char *s, char **strsplit, int len, int i, int j)
 	}
 	return (strsplit);
 }
-
 
 char				**ft_split_cmd(char *s, int *nbr_cmd)
 {
@@ -82,23 +96,5 @@ char				**ft_split_cmd(char *s, int *nbr_cmd)
 	if (s == NULL || !(strsplit = (char **)malloc(sizeof(char *) * j + 1)))
 		return (NULL);
 	strsplit[j] = NULL;
-	return (ft_split_cmd2(s, strsplit, 0, 0, -1));
+	return (ft_split_cmd2(s, strsplit, 0, -1));
 }
-/*
-int main(int argc, char **argv)
-{
-	int		nbr_cmd = 0;
-	//	char *test = "pwd ; pwd ; ls";
-	//	char *test = "echo 'salut'";
-	//	char *test = "pwd  ;    ;   pwd";
-	char *test = "echo '; echo' pwd 'ls;;;;bite'";
-	//	char *test = "; echo ;";
-
-	printf("test : [%s]\n", argv[1]);
-	char **split = ft_split_cmd(argv[1], &nbr_cmd);
-	int i = 0;
-	printf("nbr cmd = [%d]\n", nbr_cmd);
-	while (split[i])
-		printf("token : [%s]\n", split[i++]);
-	return (0);
-}*/

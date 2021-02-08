@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executor.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/08 15:06:00 by cmcgahan          #+#    #+#             */
+/*   Updated: 2021/02/08 15:06:01 by cmcgahan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	getfd(char *file, int mode)
@@ -16,7 +28,7 @@ int	setpipe(int *fdin)
 	return (fd[0]);
 }
 
-void	next_exec(c_table **ctable)
+void	next_exec(t_table **ctable)
 {
 	if (!(*ctable)->id)
 	{
@@ -64,7 +76,7 @@ char	*getabspath(char *command)
 	}
 }
 
-int	other_command(c_table *ctable)
+int	other_command(t_table *ctable)
 {
 	int status;
 	struct stat buf;
@@ -154,7 +166,7 @@ int	other_command(c_table *ctable)
 	return (status);
 }
 
-void	commands(c_table *ctable)
+void	commands(t_table *ctable)
 {
 	int	*status;
 
@@ -187,7 +199,7 @@ void	commands(c_table *ctable)
 	next_exec(&ctable);
 }
 
-int	pipehandler(c_table *ctable)
+int	pipehandler(t_table *ctable)
 {
 	if (ctable->pipeout)
 		ctable->next->in = setpipe(&ctable->out);
@@ -195,7 +207,7 @@ int	pipehandler(c_table *ctable)
 }
 
 
-int	piperoutine(c_table **ctable)
+int	piperoutine(t_table **ctable)
 {
 	int fd[2];
 	int pid;
@@ -217,7 +229,7 @@ int	piperoutine(c_table **ctable)
 	return (1);
 }
 
-void	executor(c_table **ctable)
+void	executor(t_table **ctable)
 {
 	if (*ctable == NULL)
 		return ;

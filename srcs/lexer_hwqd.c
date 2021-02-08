@@ -12,10 +12,31 @@
 
 #include "minishell.h"
 
-static void	dollar(t_hwqd *v, char *word)
+void		dollar2(t_hwqd *v, char *word)
 {
 	char	*res_swap_dollar;
 
+	v->i++;
+	v->len = 0;
+	while (word[v->i] && ft_isin(word[v->i], "$\"\',[]\\@") == 0)
+	{
+		v->len++;
+		v->i++;
+	}
+	res_swap_dollar = swap_dollar(word, v->i - v->len, v->len, 1);
+	if (res_swap_dollar != NULL)
+	{
+		v->result = ft_strjoin(v->result, res_swap_dollar);
+	}
+	else
+	{
+		v->result = ft_strjoin(v->result, "");
+	}
+	free(res_swap_dollar);
+}
+
+void		dollar(t_hwqd *v, char *word)
+{
 	if (word[v->i + 1] == '?')
 	{
 		v->i += 2;
@@ -23,42 +44,24 @@ static void	dollar(t_hwqd *v, char *word)
 		v->str_status = ft_itoa(*(v->status));
 		v->result = ft_strjoin(v->result, v->str_status);
 	}
-	else if (word[v->i + 1] == '_' && ft_isalpha(word[v->i + 2]) == 0 && word[v->i + 2] != '_')
+	else if (word[v->i + 1] == '_' &&
+	ft_isalpha(word[v->i + 2]) == 0 && word[v->i + 2] != '_')
 	{
 		v->i += 2;
 		v->result = ft_strjoin(v->result, cleannode(find_node("_")));
 	}
 	else
 	{
-		v->i++;
-		v->len = 0;
-		while (word[v->i] && word[v->i] != '$' && word[v->i] != '\"' && word[v->i] != '\''
-		&& word[v->i] != ',' && word[v->i] != '[' && word[v->i] != ']' && word[v->i] != '\\' && word[v->i] != '@')
-		{
-			v->len++;
-			v->i++;
-		}
-		res_swap_dollar = swap_dollar(word, v->i - v->len, v->len, 1);
-		if (res_swap_dollar != NULL)
-		{
-			v->result = ft_strjoin(v->result, res_swap_dollar);
-		}
-		else
-		{
-			v->result = ft_strjoin(v->result, "");
-		}
-		free(res_swap_dollar);
+		dollar2(v, word);
 	}
 }
 
-static void	double_quote2(t_hwqd *v, char *word)
+void		double_quote2(t_hwqd *v, char *word)
 {
 	if (word[v->i + 1] == '?')
 	{
 		v->i += 2;
-		v->status = (int*)getglobal(STATUS);
-		v->str_status = ft_itoa(*(v->status));
-		v->result = ft_strjoin(v->result, v->str_status);
+		v->result = ft_strjoin(v->result, ft_itoa(*((int*)getglobal(STATUS))));
 	}
 	else if (word[v->i + 1] == '\\' || word[v->i + 1] == '\0')
 	{
@@ -69,60 +72,45 @@ static void	double_quote2(t_hwqd *v, char *word)
 	{
 		v->i++;
 		v->len = 0;
-		while (word[v->i] != '$' && word[v->i] != '\"' && word[v->i] != '\'' && word[v->i] != '|'
-		&& word[v->i] != ',' && word[v->i] != ']' && word[v->i] != '[' && word[v->i] != '@' && word[v->i] != '\\')
+		while (ft_isin(word[v->i], "$\"\'|,][@\\") == 0)
 		{
 			v->len++;
 			v->i++;
 		}
 		if (swap_dollar(word, v->i - v->len, v->len, 0) != NULL)
-		{
-			v->result = ft_strjoin(v->result, swap_dollar(word, v->i - v->len, v->len, 0));
-		}
+			v->result = ft_strjoin(v->result,
+			swap_dollar(word, v->i - v->len, v->len, 0));
 		else
 			v->result = ft_strjoin(v->result, "");
 	}
 }
 
-static void	double_quote(t_hwqd *v, char *word)
+void		double_quote(t_hwqd *v, char *word)
 {
-    v->i++;
+	v->i++;
 	while (word[v->i] && word[v->i] != '\"')
 	{
 		if (word[v->i] == '\\')
-	   	{
-		   	if ( word[v->i + 1] == '\"' || word[v->i + 1] == '\\'
-			   || word[v->i + 1] == '$')
-		   	{
-			   	v->i++;
-			   	v->result = ft_strjoin_char(v->result, word[v->i++]);
-		   	}
-			else if (word[v->i + 1] == '\'' || word[v->i + 1] == ' ' 
+		{
+			if (word[v->i + 1] == '\"' || word[v->i + 1] == '\\'
+				|| word[v->i + 1] == '$')
+			{
+				v->i++;
+				v->result = ft_strjoin_char(v->result, word[v->i++]);
+			}
+			else if (word[v->i + 1] == '\'' || word[v->i + 1] == ' '
 			|| word[v->i + 1] == '|' || word[v->i + 1] == '@'
 			|| word[v->i + 1] == '!')
-			{
 				v->result = ft_strjoin_char(v->result, word[v->i++]);
-
-			}
 			else if (ft_isalpha(word[v->i + 1]) == 1)
-			{
-				v->result = ft_strjoin_char(v->result, word[v->i++]);
-				v->result = ft_strjoin_char(v->result, word[v->i++]);
-			}
-	   	}
+				v->result = ft_strjoin_char(ft_strjoin_char(
+					v->result, word[v->i++]), word[v->i++]);
+		}
 		else if (word[v->i] != '$')
 			v->result = ft_strjoin_char(v->result, word[v->i++]);
-		else // if its a dollar
-	   		double_quote2(v, word);
+		else
+			double_quote2(v, word);
 	}
-	v->i++;
-}
-
-static void	single_quote(t_hwqd *v, char *word)
-{
-	v->i++;
-	while (word[v->i] && word[v->i] != '\'')
-		v->result = ft_strjoin_char(v->result, word[v->i++]);
 	v->i++;
 }
 
@@ -137,37 +125,7 @@ char		*handling_word_quotes_dollar(char *word)
 	v->result = ft_strdup("");
 	while (word[v->i])
 	{
-		if (word[v->i] == '\'')
-		{
-			single_quote(v, word);
-		}
-		else if (word[v->i] == '\"')
-		{
-			double_quote(v, word);
-		}
-		else if (word[v->i] == '$')
-		{
-			if (word[v->i + 1] == '\\' || word[v->i + 1] == '\0' || word[v->i + 1] == '%')
-			{
-				v->result = ft_strjoin_char(v->result, word[v->i++]);
-			}
-			else
-			{
-				dollar(v, word);
-			}
-		}
-       	else if (word[v->i] == '\\')
-       	{
-       	    v->i++;
-       		if (word[v->i] == 'r' || word[v->i] == 't' || word[v->i] == 'v' || word[v->i] == 'f')
-       			v->result = ft_strjoin_char(v->result, word[v->i++]);
-			//else if (word[v->i] == '\0')
-			//	v->result = ft_strjoin_char(v->result, word[v->i-1]);
-			else
-       			v->result = ft_strjoin_char(v->result, word[v->i++]);
-       	}
-		else
-			v->result = ft_strjoin_char(v->result, word[v->i++]);
+		handling_word_quotes_dollar2(v, word);
 	}
 	result = ft_strdup(v->result);
 	free(v->result);

@@ -24,17 +24,33 @@ int				file_exists(const char *path)
 	return (0);
 }
 
+static char		*cmdpath2(char **path_split, char *cmd)
+{
+	int			i;
+	char		*bin;
+
+	i = -1;
+	while (path_split[++i])
+	{
+		bin = ft_strjoin(ft_strjoin(ft_strdup(path_split[i]), "/"), cmd);
+		if (file_exists(bin) == 1)
+			break ;
+		else
+			free(bin);
+	}
+	ft_free_array(path_split);
+	if (file_exists(bin) == 0)
+		return (ft_strdup(cmd));
+	return (bin);
+}
+
 static char		*cmdpath(char *path, char *cmd)
 {
 	int			i;
-	int			bin_exists;
-	char		*bin;
 	char		**path_split;
 	char		*tmp;
 
-	i = 0;
-	bin_exists = 0;
-	bin = NULL;
+	i = -1;
 	tmp = path;
 	if (cmd[0] != '/' || ft_strncmp(cmd, "./", 2) != 0)
 	{
@@ -42,19 +58,7 @@ static char		*cmdpath(char *path, char *cmd)
 		ft_strdel(&tmp);
 		path_split = ft_split(path, ':');
 		ft_strdel(&path);
-		while (path_split[i])
-		{
-			bin= ft_strjoin(ft_strjoin(ft_strdup(path_split[i]), "/"), cmd);
-			if (file_exists(bin) == 1)
-				break ;
-			else
-				free(bin);
-			i++;
-		}
-		ft_free_array(path_split);
-		if (file_exists(bin) == 0)
-			return (ft_strdup(cmd));
-		return (bin);
+		return (cmdpath2(path_split, cmd));
 	}
 	else
 	{

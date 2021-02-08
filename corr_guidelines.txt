@@ -1,0 +1,97 @@
+
+"- Check if << is working fine\n",
+      "kind": "bonus",
+
+      "name": "Simple Command",
+      "guidelines": "- Execute a simple command with an absolute path like /bin/ls or any other command without options\n",
+      "kind": "standard",
+     
+      "name": "Line editing",
+      "guidelines": "- Can we move the cursor left and right and edit the line by inserting or deleting characters at cursor location\n- Can we navigate through history with up and down\n- Can we copy paste all/part of a line using a key sequence\n- Can we move word by word with ctrl+left or ctrl+right\n- Go directly to the beginning or the end of the line with home or end\n- Write and edit commands with multilines\n",
+    
+      "kind": "bonus",
+      
+      "name": "Arguments",
+      "guidelines": "- Execute a simple command with an absolute path like /bin/ls or any other command with arguments but without quotes and double quotes\n- Repeat multiple times with different commands and arguments\n",
+      
+      "kind": "standard",
+     
+      "name": "echo",
+      "guidelines": "- Execute the echo command with or without arguments or options\n- Repeat multiple times with different arguments\n",
+      "kind": "standard",
+      
+      "name": "And, Or",
+      "guidelines": "- Use &&, || and parenthesis with commands and check if it works like bash\n- For each working flag give 1 point\n- If all flags are working give 1 bonus point\n",
+      "kind": "bonus",
+      
+      "name": "WildCard",
+      "guidelines": "- Use wildcards in arguments\n- Try things like */*\n- Go crazy with wildcards\n",
+      "kind": "bonus",
+      
+      "name": "exit",
+      "guidelines": "- Execute exit command with or without arguments\n- Repeat multiple times with different arguments\n- Don't forget to relaunch the minishell\n",
+      "kind": "standard",
+      
+      "name": "Return value of a process",
+      "guidelines": "- Execute a simple command with absolute path like /bin/ls or any other command with arguments but without quotes and double quotes then execute echo $?\n- Check the printed value. You can repeat the same in bash and compare it.\n- Repeat multiple times with different commands and arguments, use some failing commands like '/bin/ls filethatdoesntexist'\n",
+      "kind": "standard",
+     
+      "name": "Semicolons",
+      "guidelines": "- Execute multiple simple commands with absolute path with arguments but separate them with semicolons\n- Repeat multiple times with different commands and don't forget to try with or without whitespaces around the semicolons\n",
+      "kind": "standard",
+     
+      "name": "Signals",
+      "guidelines": "- Try ctrl-C in an empty prompt\n- Try ctrl-\\ in an empty prompt\n- Try ctrl-D in an empty prompt\n- Try ctrl-C in a prompt after you wrote some stuff\n- Try ctrl-D in a prompt after you wrote some stuff\n- Try ctrl-\\ in a prompt after you wrote some stuff\n- Try ctrl-C after running a blocking command like cat or grep without arguments\n- Try ctrl-\\ after running a blocking command like cat or grep without arguments\n- Try ctrl-D after running a blocking command like cat or grep without arguments\n- Repeat multiple times with different commands\n",
+      "kind": "standard",
+     
+      "name": "Double Quotes",
+      "guidelines": "- Execute a simple command with absolute path with arguments but this time double quotes (you should include whitespaces and semicolons in the quotes)\n- Think about empty arguments or a weird use of '\\'\n- Do not try multiline strings\n",
+      "kind": "standard",
+      
+      "name": "env",
+      "guidelines": "- Check if env shows you the current environment variables\n",
+      "kind": "standard",
+      
+      "name": "export",
+      "guidelines": "- Export environment variables, create new ones and replace old ones\n- Check them with env\n",
+      "kind": "standard",
+     
+      "name": "unset",
+      "guidelines": "- Export environment variables, create new ones and replace old ones\n- Use unset to remove some of them\n- Check the result with env\n",
+      "kind": "standard",
+     
+      "name": "Environment Variables",
+      "guidelines": "- Execute echo with some $ variables as arguments\n- Check if double quotes around $ variables is working correctly (like in bash)\n",
+      "kind": "standard",
+     
+      "name": "cd",
+      "guidelines": "- Use the command cd to move the working directory and check if you are in the right directory with /bin/ls\n- Repeat multiple times with working and not working cd\n- try '.' '..' as arguments too\n",
+      "kind": "standard",
+      
+      "name": "pwd",
+      "guidelines": "- Use the command pwd\n- Repeat multiple times in multiple directories\n- try '.' '..' as arguments too\n",
+      "kind": "standard",
+      
+      "name": "Relative Path",
+      "guidelines": "- Execute commands but this time use a relative path\n- Repeat multiple times in multiple directories with complex relative path (lots of ..)\n",
+      "kind": "standard",
+     
+      "name": "Environment Path",
+      "guidelines": "- Execute commands but this time without any path. (ls, wc, awk etc...)\n- Unset the $PATH and check if it is not working anymore\n- Set the $PATH to a multiple directory value (directory1:directory2) and check that directories are checked in order from left to right\n",
+      "kind": "standard",
+     
+      "name": "Simple Quotes",
+      "guidelines": "- Execute commands with simple quotes as argument\n- Try empty arguments\n- Try environment variables, whitespaces and semicolons in the simple quotes\n",
+      "kind": "standard",
+      
+      "name": "Redirection",
+      "guidelines": "- Execute commands with redirections < and/or >\n- Repeat multiple times with different commands and arguments and sometimes change > with >>\n- Check if multiple of the same redirections fail\n",
+      "kind": "standard",
+      
+      "name": "Pipes",
+      "guidelines": "- Execute commands with pipes like 'cat file | grep bla | more'\n- Repeat multiple times with different commands and arguments\n- Try some failing commands like 'ls filethatdoesntexist | grep bla | more'\n- Try to mix pipes and redirections.\n",
+      "kind": "standard",
+    
+      "name": "Go Crazy",
+      "guidelines": "- Execute commands that should not work like 'dsbksdgbksdghsd' and check if the shell doesn't crash and prints an error\n- Try to execute a really really really long command with a ton of arguments\n- Have fun with that beautiful minishell and enjoy it\n",
+      "kind": "standard",

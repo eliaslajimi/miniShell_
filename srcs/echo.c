@@ -1,48 +1,59 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/08 15:05:16 by cmcgahan          #+#    #+#             */
+/*   Updated: 2021/02/08 15:05:17 by cmcgahan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int			echo(char **arg, int args_len, int in, int out)
+int			echo2(char **arg, int args_len, int out)
 {
 	int		i;
-	char	*result;
-	char	*buf;
-	int		ret;
+	int		j;
 	int		nflag;
 
-	i = 1;
-	ret = 0;
+	i = 0;
 	nflag = 0;
-	buf = malloc(10);
-	result = ft_calloc(1,1);
-	if (in)
-	{
-		if ((ret = read(in, buf, 9)) > 0)
-			result = ft_strjoin(result, buf);
-	}
-	arg++;
-	while (i < args_len && (ft_strncmp(*arg, "-n", 2) == 0))
-	{
+	while (++i < args_len && (ft_strncmp(arg[i], "-n", 2) == 0))
 		nflag = 1;
-		arg++;
-		i++;
-	}
-	while (i < args_len)
+	j = i;
+	while (i++ < args_len)
 	{
-		if (*arg)
+		if (arg[j])
 		{
-			print(*arg, out);
-			arg++;
-			if (*arg)
+			print(arg[j++], out);
+			if (arg[j])
 				print(" ", out);
 		}
-		i++;
 	}
-	arg--;
-	add_underscore(*arg);
+	j--;
+	add_underscore(arg[j]);
 	if (nflag == 0)
 		print("\n", out);
 	if (out > 2)
-		close(out);	
+		close(out);
+	return (0);
+}
+
+int			echo(char **arg, int args_len, int in, int out)
+{
+	char	*result;
+	char	*buf;
+	int		ret;
+
+	ret = 0;
+	buf = ft_calloc(10, 1);
+	result = ft_calloc(1, 1);
+	if (in)
+		if ((ret = read(in, buf, 9)) > 0)
+			result = ft_strjoin(result, buf);
 	free(buf);
 	free(result);
-	return (0);
+	return (echo2(arg, args_len, out));
 }

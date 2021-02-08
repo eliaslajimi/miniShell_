@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fork_cmd.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/08 15:05:49 by cmcgahan          #+#    #+#             */
+/*   Updated: 2021/02/08 15:05:50 by cmcgahan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static char	**build_env_tab()
@@ -22,7 +34,7 @@ static char	**build_env_tab()
 	return (env_tab);
 }
 
-int fork_cmd(char *cmd, char **args, c_table *ctable)
+int fork_cmd(char *cmd, char **args, t_table *ctable)
 {
 	pid_t	pid;
 	char	**env_tab;
