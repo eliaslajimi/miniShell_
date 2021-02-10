@@ -14,8 +14,9 @@
 
 void		init_args(t_table **ctable)
 {
-	(*ctable)->args = malloc(sizeof(char*) * 1);
-	(*ctable)->args[0] = 0;
+	(*ctable)->args = NULL;
+//	(*ctable)->args = malloc(sizeof(char*) * 1);
+//	(*ctable)->args[0] = 0;
 }
 
 t_table		*init_struct(void)
