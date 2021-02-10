@@ -12,6 +12,50 @@
 
 #include "minishell.h"
 
+void		dollar2(t_hwqd *v, char *word)
+{
+	char	*res_swap_dollar;
+
+	v->i++;
+	v->len = 0;
+	while (word[v->i] && ft_isin(word[v->i], "$\"\',[]\\@") == 0)
+	{
+		v->len++;
+		v->i++;
+	}
+	res_swap_dollar = swap_dollar(word, v->i - v->len, v->len, 1);
+	if (res_swap_dollar != NULL)
+	{
+		v->result = ft_strjoin(v->result, res_swap_dollar);
+	}
+	else
+	{
+		v->result = ft_strjoin(v->result, "");
+	}
+	free(res_swap_dollar);
+}
+
+void		dollar(t_hwqd *v, char *word)
+{
+	if (word[v->i + 1] == '?')
+	{
+		v->i += 2;
+		v->status = (int*)getglobal(STATUS);
+		v->str_status = ft_itoa(*(v->status));
+		v->result = ft_strjoin(v->result, v->str_status);
+	}
+	else if (word[v->i + 1] == '_' &&
+	ft_isalpha(word[v->i + 2]) == 0 && word[v->i + 2] != '_')
+	{
+		v->i += 2;
+		v->result = ft_strjoin(v->result, cleannode(find_node("_")));
+	}
+	else
+	{
+		dollar2(v, word);
+	}
+}
+
 void		handling_word_quotes_dollar2(t_hwqd *v, char *word)
 {
 	if (word[v->i] == '\'')

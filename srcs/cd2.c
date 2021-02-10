@@ -81,6 +81,5 @@ int			applycmd(char *cmd)
 		status = applycmd2(cmd, newcmd, status);
 	if (!status)
 		add_pwd();
-	//free(cmd);
 	return (status);
 }

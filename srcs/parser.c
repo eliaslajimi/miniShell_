@@ -45,14 +45,14 @@ int			redirection(t_table *ctable, char **token)
 		ctable->fileout = ft_strdup(file);
 		if (ft_strcmp(ctable->fileout, "") != 0)
 			ctable->out = open(ctable->fileout,
-			O_CREAT | O_RDWR | O_APPEND, 0644);
+			O_CREAT | O_RDWR | O_APPEND, 0777);
 	}
 	else if (ft_strcmp(redirec, ">") == 0)
 	{
 		ctable->fileout = ft_strdup(file);
 		if (ft_strcmp(ctable->fileout, "") != 0)
 			ctable->out = open(ctable->fileout,
-			O_CREAT | O_RDWR | O_TRUNC, 0644);
+			O_CREAT | O_RDWR | O_TRUNC, 0777);
 	}
 	else if (redirection2(ctable, redirec, file) == -1)
 		return (-1);
