@@ -48,15 +48,15 @@ char	*get_inputcmd(void)
 	return (inputcmd);
 }
 
-t_mini		init_mini()
+t_mini		init_mini(t_mini *m)
 {
-	t_mini	m;
+	//t_mini	m;
 
-	m.i = -1;
-	m.inputcmd = get_inputcmd();
-	m.cmd = ft_split_cmd(m.inputcmd, &(m.nb_cmd));
-	free(m.inputcmd);
-	return (m);
+	m->i = -1;
+	//m.inputcmd = get_inputcmd();
+	m->cmd = ft_split_cmd(m->inputcmd, &(m->nb_cmd));
+	free(m->inputcmd);
+	return (*m);
 }
 
 t_mini		init_mini_args(char *line)

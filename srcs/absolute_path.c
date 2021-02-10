@@ -6,7 +6,7 @@
 /*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 14:32:33 by cmcgahan          #+#    #+#             */
-/*   Updated: 2021/02/04 14:37:06 by cmcgahan         ###   ########.fr       */
+/*   Updated: 2021/02/08 17:09:25 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,9 @@ static char		*cmdpath2(char **path_split, char *cmd)
 
 static char		*cmdpath(char *path, char *cmd)
 {
-	int			i;
 	char		**path_split;
 	char		*tmp;
 
-	i = -1;
 	tmp = path;
 	if (cmd[0] != '/' || ft_strncmp(cmd, "./", 2) != 0)
 	{

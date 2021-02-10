@@ -6,7 +6,7 @@
 /*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 16:10:46 by cmcgahan          #+#    #+#             */
-/*   Updated: 2021/02/08 16:10:47 by cmcgahan         ###   ########.fr       */
+/*   Updated: 2021/02/09 08:08:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,11 @@ int			unset_builtin(char *arg, char *exportarg)
 	while (arg[k])
 	{
 		if (ft_isin(arg[k], "\'\"\\$@!|;&= "))
+		{
 			return (p("minishell: unset: `",
 			arg, "': not a valid identifier\n") + 2);
-			k++;
+		}
+		k++;
 	}
 	if (ft_strcmp(arg, "") != 0)
 	{

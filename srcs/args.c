@@ -6,7 +6,7 @@
 /*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 14:56:41 by cmcgahan          #+#    #+#             */
-/*   Updated: 2021/02/04 14:57:22 by cmcgahan         ###   ########.fr       */
+/*   Updated: 2021/02/08 17:10:09 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,7 @@ void	args(char **argv)
 	t_mini	m;
 	t_table	**init;
 	t_table	*ctable;
-	int		*status;
 
-	status = (int*)getglobal(STATUS);
 	m = init_mini_args(argv[2]);
 	while (++m.i < m.nb_cmd)
 	{

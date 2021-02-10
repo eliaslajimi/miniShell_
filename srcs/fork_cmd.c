@@ -6,7 +6,7 @@
 /*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 15:05:49 by cmcgahan          #+#    #+#             */
-/*   Updated: 2021/02/08 15:05:50 by cmcgahan         ###   ########.fr       */
+/*   Updated: 2021/02/08 17:14:52 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,13 @@ int fork_cmd(char *cmd, char **args, t_table *ctable)
 	pid_t	pid;
 	char	**env_tab;
 	int	*status;
-	int in, out;
+	int sstdin, sstdout;
 
 	status = (int*)getglobal(STATUS);
 	env_tab = build_env_tab();
 
-	in = ctable->in;
-	out = ctable->out;
-	int sstdin, sstdout;
 	sstdin = dup(0);
 	sstdout = dup(1);
-	//print_struct(ctable);
 	args[0] = ft_strdup(cmd);
 	pid = 0;
 	(void)cmd;
@@ -86,9 +82,6 @@ int fork_cmd(char *cmd, char **args, t_table *ctable)
 		return (-1);
 	}
 	waitpid(pid, status, 0);
-
-//	printfk("YOU SHOULD NOT SEE THIS MESSAGE\n");
-	//close(ctable->in);
 	dup2(sstdin, 0);
 	dup2(sstdout, 1);
 	ft_free_array(env_tab);

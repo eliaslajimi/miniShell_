@@ -6,7 +6,7 @@
 /*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 14:01:32 by cmcgahan          #+#    #+#             */
-/*   Updated: 2021/02/08 14:01:33 by cmcgahan         ###   ########.fr       */
+/*   Updated: 2021/02/09 08:07:18 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int			export_builtin2(t_exp *t, char *arg)
 		unset_builtin(t->split_arg[0], "void");
 	free(t->found);
 	ft_free_array(t->split_arg);
-	while (arg[t->i] != '=')
+	while (arg[t->i] && arg[t->i] != '=')
 		t->i++;
 	if (t->i == 0)
 		return (1);
@@ -66,11 +66,15 @@ int			export_builtin(char *arg, int out)
 
 	init_texp(&t);
 	if (arg[0] == '\0')
+	{
 		return (export_print_error(
 			"minishell: export: `': not a valid identifier\n", NULL, 0));
+	}
 	else if (ft_isin(arg[0], "0123456789="))
+	{
 		return (export_print_error(
 			"minishell: export: `", arg, 1));
+	}
 	else if (ft_isin('=', arg))
 	{
 		t.split_arg = ft_split(arg, '=');
@@ -79,11 +83,14 @@ int			export_builtin(char *arg, int out)
 	else if (ft_strcmp(arg, "null") == 0)
 		return (join_sorted_list(t.env_lst, out));
 	else
-		while (arg[++t.k])
+	{
+		while (arg && arg[++t.k])
 			if (ft_isin(arg[t.k], "\'\"\\$@!|;& "))
 			{
+				write(1, "this is going through\n", ft_strlen("this is going through\n"));
 				return (export_print_error(
 					"minishell: export: `", arg, 1));
 			}
+	}
 	return (0);
 }

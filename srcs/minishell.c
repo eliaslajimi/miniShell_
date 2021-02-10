@@ -6,7 +6,7 @@
 /*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 16:23:31 by cmcgahan          #+#    #+#             */
-/*   Updated: 2021/02/08 16:23:32 by cmcgahan         ###   ########.fr       */
+/*   Updated: 2021/02/10 12:02:47 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void exitroutine(t_table *ctable)
 {
 	(void)ctable;
 	//while (ctable)
-	//	next_struct(&ctable);
+		//next_struct(&ctable);
 }
 
 void *getglobal(int mode)
@@ -44,15 +44,26 @@ void	wrapper(t_table *ctable)
 	//minishell();
 }
 
-int			minishell()
+t_mini prompt()
 {
 	t_mini	m;
+	m.inputcmd = 0;
+	while (!m.inputcmd)
+	{
+		m.inputcmd = get_inputcmd();
+	}
+	m = init_mini(&m);
+	return (m);
+}
+
+int			minishell(t_mini m)
+{
 	t_table	**init;
 	t_table	*ctable;
 
-	m = init_mini();
 	while (++m.i < m.nb_cmd)
 	{
+
 		if (ft_strlen(ft_strtrim(m.cmd[m.i], " \r\t\v\f")) != 0)
 		{
 			init = getstruct();
@@ -69,5 +80,6 @@ int			minishell()
 	}
 	ft_free_array(m.cmd);
 	wrapper(*init);
+	minishell(prompt());
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: elajimi <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/19 20:11:28 by elajimi           #+#    #+#             */
-/*   Updated: 2021/02/08 15:45:46 by cmcgahan         ###   ########.fr       */
+/*   Updated: 2021/02/08 17:12:39 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,10 @@ char				**ft_split(char *s, char c)
 {
 	int				i;
 	int				j;
-	int				counter;
 	char			**tab;
 
 	i = 0;
 	j = 0;
-	counter = 0;
 	if (s == NULL)
 		return (NULL);
 	if (!(tab = malloc((ft_malloc_s(s, c) + 2) * sizeof(char*))))

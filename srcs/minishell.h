@@ -6,7 +6,7 @@
 /*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 15:52:56 by cmcgahan          #+#    #+#             */
-/*   Updated: 2021/02/08 15:52:57 by cmcgahan         ###   ########.fr       */
+/*   Updated: 2021/02/10 11:34:58 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <signal.h>
 # include <sys/types.h>
+# include <sys/wait.h>
 # include <sys/stat.h>
 # include <dirent.h>
 # include <errno.h>
@@ -134,7 +135,7 @@ typedef struct		s_table
 t_list				*g_env;
 void				*getglobal(int mode);
 void				exitroutine(t_table *ctable);
-int					minishell(void);
+int					minishell(t_mini);
 void				wrapper(t_table *ctable);
 char				**lexer(char *input_line);
 int					subshell(char *str);
@@ -144,7 +145,7 @@ void				args(char **argv);
 int					print(char *s, int fd);
 int					echo(char **arg, int args_len, int in, int out);
 int					cd(char **arg, int in, int out);
-t_mini				init_mini(void);
+t_mini				init_mini(t_mini *);
 char				*get_inputcmd(void);
 int					checking_pipes(char *inputcmd);
 int					checking_semic(char *inputcmd);
@@ -256,5 +257,7 @@ char				*dollar_swap(char *tokens);
 char				*interrodollar_swap(char *itoa_id, char *cmd);
 char				*formatpath(char *path);
 int					applycmd(char *cmd);
+t_mini				prompt();
+void				sighandler(int num);
 
 #endif

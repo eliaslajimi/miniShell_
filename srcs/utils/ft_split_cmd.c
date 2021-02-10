@@ -6,7 +6,7 @@
 /*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 15:36:57 by cmcgahan          #+#    #+#             */
-/*   Updated: 2021/02/08 15:42:04 by cmcgahan         ###   ########.fr       */
+/*   Updated: 2021/02/08 17:13:36 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,7 @@ char				**ft_split_cmd(char *s, int *nbr_cmd)
 {
 	char			**strsplit;
 	int				j;
-	size_t			len;
 
-	len = 0;
 	j = ft_count_words(s);
 	*nbr_cmd = j;
 	if (s == NULL || !(strsplit = (char **)malloc(sizeof(char *) * j + 1)))
