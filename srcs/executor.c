@@ -6,7 +6,7 @@
 /*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 15:06:00 by cmcgahan          #+#    #+#             */
-/*   Updated: 2021/02/08 15:06:01 by cmcgahan         ###   ########.fr       */
+/*   Updated: 2021/02/11 06:21:13 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,8 @@ void	commands(t_table *ctable)
 	int	*status;
 
 	status = (int*)getglobal(STATUS);
+
+
 //should be refactored as formatcmd()
 	if (!ft_strlen(ctable->command))
 	{
@@ -194,8 +196,22 @@ void	commands(t_table *ctable)
 		*status = cd(ctable->args, ctable->in, ctable->out);
 	else
 		*status = other_command(ctable);
-	if (ctable->id > 0)
-		kill(ctable->id, 0);
+//	//--------------
+//		int sstdin = dup(0);
+//		print_struct(ctable);
+//		if (ctable->id == 0 && ctable->out > 1 && ctable->in > 1) {dup2(ctable->out, 0); close(ctable->out);}
+//	//--------------
+	if (ctable->pipein > 0)
+	{
+		close(ctable->pipein);
+		close(ctable->in);
+	}
+	else
+	{
+		if (ctable->id == 0 && ctable->out > 1)
+			close(ctable->out);
+	}
+	waitpid(ctable->id, status, 0);
 	next_exec(&ctable);
 }
 
@@ -226,6 +242,7 @@ int	piperoutine(t_table **ctable)
 	(*ctable)->next->id = (*ctable)->id;
 	next_struct(ctable);
 	(*ctable)->in = fd[0];
+	(*ctable)->pipein = fd[1];
 	return (1);
 }
 

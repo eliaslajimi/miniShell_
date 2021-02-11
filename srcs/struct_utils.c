@@ -12,12 +12,6 @@
 
 #include "minishell.h"
 
-void		init_args(t_table **ctable)
-{
-	(*ctable)->args = malloc(sizeof(char*) * 1);
-	(*ctable)->args[0] = 0;
-}
-
 t_table		*init_struct(void)
 {
 	t_table *init;
@@ -28,7 +22,7 @@ t_table		*init_struct(void)
 	init->pipein = 0;
 	init->pipeout = 0;
 	init->command = "";
-	init_args(&init);
+	init->args = NULL;
 	init->args_len = 0;
 	init->in = 0;
 	init->out = 1;
@@ -61,11 +55,10 @@ void		next_struct(t_table **ctable)
 void		free_struct(t_table *ctable)
 {
 	(void)ctable;
-	//free(ctable->flags);
-//	if (ctable->command)
-//		free(ctable->command);
-//	if (ctable->args)
-//		ft_free_array(ctable->args);
+	if (ctable->command)
+		free(ctable->command);
+	if (ctable->args)
+		ft_free_array(ctable->args);
 	free(ctable);
 }
 

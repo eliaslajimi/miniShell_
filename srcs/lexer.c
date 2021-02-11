@@ -80,9 +80,8 @@ char		**lexer(char *input_line)
 {
 	char	**isolated_tokens;
 
+	isolated_tokens = NULL;
 	if (!ft_strlen(input_line))
-		return (NULL);
-	if (!(isolated_tokens = ft_calloc(sizeof(char *), 1)))
 		return (NULL);
 	if ((isolated_tokens = lex_line(isolated_tokens, input_line)) == NULL)
 		return (NULL);

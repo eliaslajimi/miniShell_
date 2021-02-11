@@ -35,12 +35,14 @@ static char		*cmdpath2(char **path_split, char *cmd)
 		bin = ft_strjoin(ft_strjoin(ft_strdup(path_split[i]), "/"), cmd);
 		if (file_exists(bin) == 1)
 			break ;
-		else
+		else if (bin)
 			free(bin);
 	}
 	ft_free_array(path_split);
 	if (file_exists(bin) == 0)
+	{
 		return (ft_strdup(cmd));
+	}
 	return (bin);
 }
 

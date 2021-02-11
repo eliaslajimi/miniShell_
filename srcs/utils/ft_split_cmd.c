@@ -91,7 +91,7 @@ char				**ft_split_cmd(char *s, int *nbr_cmd)
 
 	j = ft_count_words(s);
 	*nbr_cmd = j;
-	if (s == NULL || !(strsplit = (char **)malloc(sizeof(char *) * j + 1)))
+	if (s == NULL || !(strsplit = (char **)malloc(sizeof(char *) * (j + 1))))
 		return (NULL);
 	strsplit[j] = NULL;
 	return (ft_split_cmd2(s, strsplit, 0, -1));

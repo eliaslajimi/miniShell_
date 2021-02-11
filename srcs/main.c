@@ -6,7 +6,7 @@
 /*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 15:06:10 by cmcgahan          #+#    #+#             */
-/*   Updated: 2021/02/10 16:09:06 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/11 05:49:34 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int			main(int argc, char **argv, char **envp)
 	}
 	while (1)
 	{
+		signal(SIGINT, sighandler);
+		signal(SIGQUIT, sighandler);
 		t_mini m = prompt();
 		minishell(m);
 	}

@@ -62,6 +62,7 @@ int			applycmd2(char *cmd, char *newcmd, int status)
 	}
 	status = chdir(newcmd);
 	free(newcmd);
+	free(cmd);
 	return (status);
 }
 
@@ -80,6 +81,5 @@ int			applycmd(char *cmd)
 		status = applycmd2(cmd, newcmd, status);
 	if (!status)
 		add_pwd();
-	free(cmd);
 	return (status);
 }

@@ -6,7 +6,7 @@
 /*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 15:52:56 by cmcgahan          #+#    #+#             */
-/*   Updated: 2021/02/10 15:01:12 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/11 05:58:53 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,27 +115,27 @@ typedef struct		s_hwqd
 
 typedef struct		s_table
 {
-	int				separator;
-	int				pipein;
-	int				pipeout;
-	pid_t			id;
-	char			*command;
-	char			*flags;
-	char			**args;
-	int				args_len;
-	int				in;
-	int				out;
-	char			*filein;
-	char			*fileout;
+	int		separator;
+	int		pipein;
+	int		pipeout;
+	pid_t		id;
+	char		*command;
+	char		*flags;
+	char		**args;
+	int		args_len;
+	int		in;
+	int		out;
+	char		*filein;
+	char		*fileout;
 	struct s_table	*next;
-	t_list			*env;
-	int				command_exists;
-}					t_table;
+	t_list		*env;
+	int		command_exists;
+}			t_table;
 
 t_list				*g_env;
 void				*getglobal(int mode);
 void				exitroutine(t_table *ctable);
-int					minishell(t_mini );
+int					minishell(t_mini t);
 void				wrapper(t_table *ctable);
 char				**lexer(char *input_line);
 int					subshell(char *str);
@@ -145,7 +145,7 @@ void				args(char **argv);
 int					print(char *s, int fd);
 int					echo(char **arg, int args_len, int in, int out);
 int					cd(char **arg, int in, int out);
-t_mini				init_mini(t_mini *);
+t_mini				init_mini(t_mini *t);
 char				*get_inputcmd(void);
 int					checking_pipes(char *inputcmd);
 int					checking_semic(char *inputcmd);
@@ -259,5 +259,6 @@ char				*formatpath(char *path);
 int					applycmd(char *cmd);
 t_mini				prompt();
 void				sighandler(int num);
+int					isonlyspace(char *s);
 
 #endif
