@@ -6,7 +6,7 @@
 /*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 15:52:56 by cmcgahan          #+#    #+#             */
-/*   Updated: 2021/02/10 11:34:58 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/10 15:01:12 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ typedef struct		s_table
 t_list				*g_env;
 void				*getglobal(int mode);
 void				exitroutine(t_table *ctable);
-int					minishell(t_mini);
+int					minishell(t_mini );
 void				wrapper(t_table *ctable);
 char				**lexer(char *input_line);
 int					subshell(char *str);

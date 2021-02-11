@@ -35,6 +35,8 @@ char	*get_inputcmd(void)
 	{
 		write(1, ">> ", 3);
 		get_next_line(0, &inputcmd);
+		signal(SIGINT, sighandler);
+		signal(SIGQUIT, sighandler);
 		if (inputcmd != NULL && ft_strlen(inputcmd) != 0)
 			empty = 0;
 	}

@@ -6,12 +6,11 @@
 /*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 16:23:31 by cmcgahan          #+#    #+#             */
-/*   Updated: 2021/02/10 12:02:47 by user42           ###   ########.fr       */
+/*   Updated: 2021/02/10 16:05:56 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 void exitroutine(t_table *ctable)
 {
 	(void)ctable;
@@ -48,10 +47,7 @@ t_mini prompt()
 {
 	t_mini	m;
 	m.inputcmd = 0;
-	while (!m.inputcmd)
-	{
-		m.inputcmd = get_inputcmd();
-	}
+	m.inputcmd = get_inputcmd();
 	m = init_mini(&m);
 	return (m);
 }
@@ -80,6 +76,5 @@ int			minishell(t_mini m)
 	}
 	ft_free_array(m.cmd);
 	wrapper(*init);
-	minishell(prompt());
 	return (1);
 }
