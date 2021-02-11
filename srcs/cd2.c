@@ -6,7 +6,7 @@
 /*   By: cmcgahan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 15:05:09 by cmcgahan          #+#    #+#             */
-/*   Updated: 2021/02/08 15:05:10 by cmcgahan         ###   ########.fr       */
+/*   Updated: 2021/02/11 15:44:18 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,18 @@ int			applycmd2(char *cmd, char *newcmd, int status)
 	cmd = ft_strtrim(cmd, "/");
 	free(tmp);
 	cmd = ft_strjoin(cmd, "/");
-	if (!ft_strcmp(cleannode(find_node("PWD")), "/"))
-		newcmd = ft_strjoin(ft_strdup(cleannode(find_node("PWD"))), cmd);
-	else
+	if (find_node("PWD"))
 	{
-		newcmd = ft_strdup(cleannode(find_node("PWD")));
-		newcmd = ft_strjoin(ft_strjoin(newcmd, "/"), cmd);
+		if (!ft_strcmp(cleannode(find_node("PWD")), "/"))
+			newcmd = ft_strjoin(ft_strdup(cleannode(find_node("PWD"))), cmd);
+		else
+		{
+			newcmd = ft_strdup(cleannode(find_node("PWD")));
+			newcmd = ft_strjoin(ft_strjoin(newcmd, "/"), cmd);
+		}
 	}
+	else
+		return (-1);
 	status = chdir(newcmd);
 	free(newcmd);
 	free(cmd);
