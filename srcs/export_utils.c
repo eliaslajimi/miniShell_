@@ -41,6 +41,8 @@ static char		*iter_and_join(int nbfalse, char *booltab, t_list *env_lst)
 	init_tiaj(&t);
 	while (--nbfalse >= 0)
 	{
+		t.i = -1;
+		t.j = 0;
 		t.declarex_str = ft_strdup("declare -x ");
 		t.iter = env_lst;
 		while (booltab[++t.i] == '0')
@@ -52,10 +54,10 @@ static char		*iter_and_join(int nbfalse, char *booltab, t_list *env_lst)
 		while (t.tmp[t.n] != '=')
 			t.n++;
 		t.n++;
-		t.other = ft_strjoin(ft_strjoin(ft_strjoin(ft_strjoin(
-			ft_strndup(t.tmp, t.n), "\""), t.tmp + t.n), "\""), t.other);
-		t.declarex_lst = ft_strjoin(t.declarex_lst, t.other);
-		t.declarex_lst = ft_strjoin(t.declarex_lst, "\n");
+		t.other = ft_strjoin(ft_strjoin(
+			ft_strjoin(ft_strndup(t.tmp, t.n), "\""), t.tmp + t.n), "\"");
+		t.other = ft_strjoin(t.declarex_str, t.other);
+		t.declarex_lst = ft_strjoin(ft_strjoin(t.declarex_lst, t.other), "\n");
 	}
 	free(booltab);
 	return (t.declarex_lst);
