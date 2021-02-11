@@ -41,6 +41,25 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
+typedef struct		s_fork
+{
+	pid_t			pid;
+	char			**env_tab;
+	int				*status;
+	int				sstdin;
+	int				sstdout;
+}					t_fork;
+
+typedef struct		s_exec
+{
+	int				status;
+	int				toreturn;
+	struct stat		buf;
+	int				ret;
+	char			*cmd;
+	mode_t			bits;
+}					t_exec;
+
 typedef struct		s_pars
 {
 	int				i;
@@ -63,7 +82,9 @@ typedef struct		s_iaj
 	int				n;
 	t_list			*iter;
 	char			*tmp;
+	char			*other;
 	char			*declarex_lst;
+	char			*declarex_str;
 }					t_iaj;
 
 typedef struct		s_exp
@@ -115,22 +136,22 @@ typedef struct		s_hwqd
 
 typedef struct		s_table
 {
-	int		separator;
-	int		pipein;
-	int		pipeout;
-	pid_t		id;
-	char		*command;
-	char		*flags;
-	char		**args;
-	int		args_len;
-	int		in;
-	int		out;
-	char		*filein;
-	char		*fileout;
+	int				separator;
+	int				pipein;
+	int				pipeout;
+	pid_t			id;
+	char			*command;
+	char			*flags;
+	char			**args;
+	int				args_len;
+	int				in;
+	int				out;
+	char			*filein;
+	char			*fileout;
 	struct s_table	*next;
-	t_list		*env;
-	int		command_exists;
-}			t_table;
+	t_list			*env;
+	int				command_exists;
+}					t_table;
 
 t_list				*g_env;
 void				*getglobal(int mode);
@@ -260,5 +281,20 @@ int					applycmd(char *cmd);
 t_mini				prompt();
 void				sighandler(int num);
 int					isonlyspace(char *s);
+int					getfd(char *file, int mode);
+int					setpipe(int *fdin);
+void				next_exec(t_table **ctable);
+int					is_dir(char *path);
+char				*getabspath(char *command);
+char				*checkfileformat(char *command);
+void				init_texec(t_exec *t, t_table *ctable);
+int					other_command3(t_table *ctable, t_exec *t);
+int					other_command2(t_table *ctable, t_exec *t);
+int					other_command(t_table *ctable);
+void				commands2(t_table *ctable);
+void				commands(t_table *ctable);
+int					pipehandler(t_table *ctable);
+int					piperoutine(t_table **ctable);
+void				executor(t_table **ctable);
 
 #endif

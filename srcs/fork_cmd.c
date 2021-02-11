@@ -12,12 +12,12 @@
 
 #include "minishell.h"
 
-static char	**build_env_tab()
+static char		**build_env_tab(void)
 {
-	int		i;
-	int		lstsize;
-	char	**env_tab;
-	t_list	*envlst;
+	int			i;
+	int			lstsize;
+	char		**env_tab;
+	t_list		*envlst;
 
 	i = 0;
 	envlst = g_env;
@@ -34,56 +34,54 @@ static char	**build_env_tab()
 	return (env_tab);
 }
 
-int fork_cmd(char *cmd, char **args, t_table *ctable)
+void			init_tfork(t_fork *t)
 {
-	pid_t	pid;
-	char	**env_tab;
-	int	*status;
-	int sstdin, sstdout;
+	t->status = (int*)getglobal(STATUS);
+	t->env_tab = build_env_tab();
+	t->sstdin = dup(0);
+	t->sstdout = dup(1);
+	t->pid = 0;
+}
 
-	status = (int*)getglobal(STATUS);
-	env_tab = build_env_tab();
+int				fork_cmd2(char **args, t_table *ctable, t_fork *t)
+{
+	if (ctable->out > 2)
+		dup2(ctable->out, 1);
+	if (ctable->in > 2)
+		dup2(ctable->in, 0);
+	errno = 0;
+	*t->status = execve(args[0], &args[0], t->env_tab);
+	if (errno != 0 && ft_strncmp(args[0], "./", 2))
+	{
+		p("minishell: ", args[0], ": ");
+		print(strerror(errno), 2);
+		print("\n", 2);
+		return (126);
+	}
+	exit(*t->status);
+	return (0);
+}
 
-	sstdin = dup(0);
-	sstdout = dup(1);
+int				fork_cmd(char *cmd, char **args, t_table *ctable)
+{
+	t_fork		t;
+
+	init_tfork(&t);
 	args[0] = ft_strdup(cmd);
-	pid = 0;
-	(void)cmd;
-	
-	add_underscore(args[ctable->args_len-1]);
-
+	add_underscore(args[ctable->args_len - 1]);
 	if (!ft_strlen(cmd))
+		return (*t.status = 2);
+	t.pid = fork();
+	if (t.pid == 0)
 	{
-		*status = 2;
-		return (*status);	
-	}
-	pid = fork();
-	if (pid == 0)//CHILD
-	{
-		if (ctable->out > 2)
-			dup2(ctable->out, 1);
-		if (ctable->in > 2)
-			dup2(ctable->in, 0);
-		errno = 0;
-		*status = execve(args[0], &args[0], env_tab);
-		if (errno != 0 && ft_strncmp(args[0], "./", 2))
-		{
-			print("minishell: ", 2);
-			print(args[0], 2);
-			print(": ", 2);
-			print(strerror(errno), 2);
-			print("\n", 2);
+		if (fork_cmd2(args, ctable, &t) == 126)
 			return (126);
-		}
-		exit(*status);
 	}
-	else if (pid < 0)
-	{
+	else if (t.pid < 0)
 		return (-1);
-	}
-	waitpid(pid, status, 0);
-	dup2(sstdin, 0);
-	dup2(sstdout, 1);
-	ft_free_array(env_tab);
-	return (*status);
+	waitpid(t.pid, t.status, 0);
+	dup2(t.sstdin, 0);
+	dup2(t.sstdout, 1);
+	ft_free_array(t.env_tab);
+	return (*t.status);
 }

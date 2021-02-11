@@ -12,13 +12,6 @@
 
 #include "minishell.h"
 
-void		exitroutine(t_table *ctable)
-{
-	(void)ctable;
-	//while (ctable)
-		//next_struct(&ctable);
-}
-
 void		*getglobal(int mode)
 {
 	static int *ret_status;
@@ -31,17 +24,14 @@ void		*getglobal(int mode)
 t_table		**getstruct(void)
 {
 	static t_table *ret;
+
 	return (&ret);
 }
 
 void		wrapper(t_table *ctable)
 {
-	//t_table *ctable = (t_table*)getglobal(STRUCT);
-	//ctable->command_exists = 0;
-	exitroutine(ctable);
 	while (ctable)
 		next_struct(&ctable);
-	//minishell();
 }
 
 t_mini		prompt(void)
@@ -56,11 +46,9 @@ t_mini		prompt(void)
 
 int			minishell(t_mini m)
 {
-	int		go;
 	t_table	**init;
 	t_table	*ctable;
 
-	go = 1;
 	while (++m.i < m.nb_cmd)
 	{
 		if (isonlyspace(m.cmd[m.i]) != 0)
@@ -79,7 +67,7 @@ int			minishell(t_mini m)
 	}
 	ft_free_array(m.cmd);
 	wrapper(*init);
-	if (go == 1)
+	while (m.i != -1)
 		minishell(prompt());
 	return (1);
 }

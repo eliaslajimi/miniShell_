@@ -15,13 +15,10 @@
 void		sighandler(int num)
 {
 	t_table *ctable;
-	
+
 	ctable = (t_table*)getstruct();
 	if (num == SIGQUIT)
 	{
-		//exitroutine(ctable);
-		//exit(*((int*)getglobal(STATUS)));
-		exitroutine(ctable);
 		write(1, "core dumped\n", ft_strlen("core dumped\n"));
 	}
 	if (num == SIGINT)
@@ -32,6 +29,8 @@ void		sighandler(int num)
 
 int			main(int argc, char **argv, char **envp)
 {
+	t_mini	m;
+
 	g_env = set_env(envp);
 	add_pwd();
 	add_shlvl();
@@ -49,7 +48,7 @@ int			main(int argc, char **argv, char **envp)
 	{
 		signal(SIGINT, sighandler);
 		signal(SIGQUIT, sighandler);
-		t_mini m = prompt();
+		m = prompt();
 		minishell(m);
 	}
 	return (0);
