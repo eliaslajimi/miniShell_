@@ -12,6 +12,13 @@
 
 #include "../minishell.h"
 
+static int			ft_issemic(char *s, int i)
+{
+	while (s[i] == ';')
+		i++;
+	return (i);
+}
+
 static char			**ft_free(char **str, int len)
 {
 	while (len > 0)
@@ -61,8 +68,7 @@ static char			**ft_split_cmd2(char *s, char **strsplit, int i, int j)
 	while (s[i])
 	{
 		len = 0;
-		while (s[i] == ';')
-			i++;
+		i = ft_issemic(s, i);
 		while (s[i])
 		{
 			if (s[i] == '\'' && s[i - 1] != '\\' && ++len > 0)

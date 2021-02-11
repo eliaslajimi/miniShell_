@@ -12,52 +12,55 @@
 
 #include "minishell.h"
 
+void			init_tiaj(t_iaj *t)
+{
+	t->i = -1;
+	t->j = 0;
+	t->n = 0;
+	t->declarex_lst = ft_strdup("");
+}
+
+static void		iter_and_join2(char *booltab, t_list *env_lst, t_iaj *t)
+{
+	while (t->i < ft_lstsize(env_lst))
+	{
+		if (ft_strcmp(t->tmp, t->iter->content) >= 0 && booltab[t->i] == '1')
+		{
+			t->tmp = t->iter->content;
+			t->j = t->i;
+		}
+		t->i++;
+		t->iter = t->iter->next;
+	}
+}
+
 static char		*iter_and_join(int nbfalse, char *booltab, t_list *env_lst)
 {
-	int			i;
-	int			j;
-	int			n;
-	t_list		*iter;
-	char		*tmp;
-	char		*other;
-	char		*declarex_lst;
-	char		*declarex_str;
+	t_iaj		t;
 
-	declarex_lst = ft_strdup("");
+	init_tiaj(&t);
 	while (--nbfalse >= 0)
 	{
-		declarex_str = ft_strdup("declare -x ");
-		i = -1;
-		j = 0;
-		iter = env_lst;
-		while (booltab[++i] == '0')
-			iter = iter->next;
-		tmp = iter->content;
-		while (i < ft_lstsize(env_lst))
-		{
-			if (ft_strcmp(tmp, iter->content) >= 0 && booltab[i] == '1')
-			{
-				tmp = iter->content;
-				j = i;
-			}
-			i++;
-			iter = iter->next;
-		}
-		booltab[j] = '0';
-		n = 0;
-		while (tmp[n] != '=')
-			n++;
-		n++;
-		other = ft_strndup(tmp, n);
-		other = ft_strjoin(other, "\"");
-		other = ft_strjoin(other, tmp + n);
-		other = ft_strjoin(other, "\"");
-		other = ft_strjoin(declarex_str, other);
-		declarex_lst = ft_strjoin(declarex_lst, other);
-		declarex_lst = ft_strjoin(declarex_lst, "\n");
+		t.i = -1;
+		t.j = 0;
+		t.declarex_str = ft_strdup("declare -x ");
+		t.iter = env_lst;
+		while (booltab[++t.i] == '0')
+			t.iter = t.iter->next;
+		t.tmp = t.iter->content;
+		iter_and_join2(booltab, env_lst, &t);
+		booltab[t.j] = '0';
+		t.n = 0;
+		while (t.tmp[t.n] != '=')
+			t.n++;
+		t.n++;
+		t.other = ft_strjoin(ft_strjoin(
+			ft_strjoin(ft_strndup(t.tmp, t.n), "\""), t.tmp + t.n), "\"");
+		t.other = ft_strjoin(t.declarex_str, t.other);
+		t.declarex_lst = ft_strjoin(ft_strjoin(t.declarex_lst, t.other), "\n");
 	}
 	free(booltab);
-	return (declarex_lst);
+	return (t.declarex_lst);
 }
 
 int				join_sorted_list(t_list *env_lst, int out)

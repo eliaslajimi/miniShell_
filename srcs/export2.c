@@ -66,15 +66,10 @@ int			export_builtin(char *arg, int out)
 
 	init_texp(&t);
 	if (arg[0] == '\0')
-	{
 		return (export_print_error(
 			"minishell: export: `': not a valid identifier\n", NULL, 0));
-	}
 	else if (ft_isin(arg[0], "0123456789="))
-	{
-		return (export_print_error(
-			"minishell: export: `", arg, 1));
-	}
+		return (export_print_error("minishell: export: `", arg, 1));
 	else if (ft_isin('=', arg))
 	{
 		t.split_arg = ft_split(arg, '=');
@@ -86,11 +81,8 @@ int			export_builtin(char *arg, int out)
 	{
 		while (arg && arg[++t.k])
 			if (ft_isin(arg[t.k], "\'\"\\$@!|;& "))
-			{
-				write(1, "this is going through\n", ft_strlen("this is going through\n"));
 				return (export_print_error(
 					"minishell: export: `", arg, 1));
-			}
 	}
 	return (0);
 }
