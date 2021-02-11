@@ -12,6 +12,22 @@
 
 #include "minishell.h"
 
+static int		hasnonascii(char *s)
+{
+	int			i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (ft_isprint(s[i]) == 0)
+		{
+			return (-1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 static int		quotes(char *line)
 {
 	int			i;
@@ -48,7 +64,7 @@ char			*get_inputcmd(void)
 		write(1, ">> ", 3);
 		get_next_line(0, &inputcmd);
 		if (inputcmd != NULL && ft_strlen(inputcmd) != 0 &&
-		isonlyspace(inputcmd) != 0)
+		isonlyspace(inputcmd) != 0 && hasnonascii(inputcmd) == 0)
 			empty = 0;
 	}
 	while (quotes(inputcmd) != 0)
