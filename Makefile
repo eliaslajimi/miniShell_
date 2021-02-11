@@ -82,7 +82,8 @@ OBJ = $(SRC:%c=%o)
 
 all:		$(TARGET)
 
-$(TARGET):	$(OBJ) 
+$(TARGET):	
+			$(OBJ) 
 			$(CC) $(FLAGS) -o $@ $(OBJ) $(HEADR)
 			make clean
 clean:
@@ -92,3 +93,8 @@ fclean: clean
 			make clean
 			$(RM) $(RMFLAG) $(TARGET)
 re: fclean all
+
+mac: $(OBJ)
+	@gcc -o $(TARGET) $(FLAGS) $(OBJ)
+	@make clean
+	@echo "Compilation\t\t\033[0;32m[OK]\033[0m"
