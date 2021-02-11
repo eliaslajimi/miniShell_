@@ -9,12 +9,15 @@ FILES	=	main.c\
 		env2.c\
 		env.c\
 		executor.c\
+		executor2.c\
+		executor3.c\
 		exit.c\
 		export2.c\
 		export.c\
 		export_utils.c\
 		find_node.c\
 		fork_cmd.c\
+		isonlyspace.c\
 		lexer.c\
 		lexer_hwqd2.c\
 		lexer_hwqd.c\
